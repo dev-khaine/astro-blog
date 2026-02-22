@@ -3,83 +3,307 @@ import HeaderLink from './HeaderLink.astro';
 import { SITE_TITLE } from '../consts';
 ---
 
-<header>
-	<nav>
-		<h2><a href="/">{SITE_TITLE}</a></h2>
-		<div class="internal-links">
-			<HeaderLink href="/">Home</HeaderLink>
-			<HeaderLink href="/blog">Blog</HeaderLink>
-			<HeaderLink href="/about">About</HeaderLink>
-		</div>
-		<div class="social-links">
-			<a href="https://m.webtoo.ls/@astro" target="_blank">
-				<span class="sr-only">Follow Astro on Mastodon</span>
-				<svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32"
-					><path
-						fill="currentColor"
-						d="M11.19 12.195c2.016-.24 3.77-1.475 3.99-2.603.348-1.778.32-4.339.32-4.339 0-3.47-2.286-4.488-2.286-4.488C12.062.238 10.083.017 8.027 0h-.05C5.92.017 3.942.238 2.79.765c0 0-2.285 1.017-2.285 4.488l-.002.662c-.004.64-.007 1.35.011 2.091.083 3.394.626 6.74 3.78 7.57 1.454.383 2.703.463 3.709.408 1.823-.1 2.847-.647 2.847-.647l-.06-1.317s-1.303.41-2.767.36c-1.45-.05-2.98-.156-3.215-1.928a3.614 3.614 0 0 1-.033-.496s1.424.346 3.228.428c1.103.05 2.137-.064 3.188-.189zm1.613-2.47H11.13v-4.08c0-.859-.364-1.295-1.091-1.295-.804 0-1.207.517-1.207 1.541v2.233H7.168V5.89c0-1.024-.403-1.541-1.207-1.541-.727 0-1.091.436-1.091 1.296v4.079H3.197V5.522c0-.859.22-1.541.66-2.046.456-.505 1.052-.764 1.793-.764.856 0 1.504.328 1.933.983L8 4.39l.417-.695c.429-.655 1.077-.983 1.934-.983.74 0 1.336.259 1.791.764.442.505.661 1.187.661 2.046v4.203z"
-					></path></svg
-				>
-			</a>
-			<a href="https://twitter.com/astrodotbuild" target="_blank">
-				<span class="sr-only">Follow Astro on Twitter</span>
-				<svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32"
-					><path
-						fill="currentColor"
-						d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"
-					></path></svg
-				>
-			</a>
-			<a href="https://github.com/withastro/astro" target="_blank">
-				<span class="sr-only">Go to Astro's GitHub repo</span>
-				<svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32"
-					><path
-						fill="currentColor"
-						d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"
-					></path></svg
-				>
-			</a>
-		</div>
-	</nav>
-</header>
-<style>
-	header {
-		margin: 0;
-		padding: 0 1em;
-		background: white;
-		box-shadow: 0 2px 8px rgba(var(--black), 5%);
-	}
-	h2 {
-		margin: 0;
-		font-size: 1em;
-	}
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div id="scroll-progress" role="progressbar" aria-label="Reading progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
 
-	h2 a,
-	h2 a.active {
-		text-decoration: none;
-	}
-	nav {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-	}
-	nav a {
-		padding: 1em 0.5em;
-		color: var(--black);
-		border-bottom: 4px solid transparent;
-		text-decoration: none;
-	}
-	nav a.active {
-		text-decoration: none;
-		border-bottom-color: var(--accent);
-	}
-	.social-links,
-	.social-links a {
-		display: flex;
-	}
-	@media (max-width: 720px) {
-		.social-links {
-			display: none;
-		}
-	}
+<!-- Market ticker strip -->
+<div class="ticker-strip" aria-label="Market data" role="marquee">
+  <div class="ticker-track" aria-hidden="true">
+    <span class="ticker-item"><span class="t-sym">SPX</span> <span class="t-val">5,234.18</span> <span class="t-chg up">+0.82%</span></span>
+    <span class="ticker-sep">|</span>
+    <span class="ticker-item"><span class="t-sym">NDX</span> <span class="t-val">18,290.40</span> <span class="t-chg up">+1.12%</span></span>
+    <span class="ticker-sep">|</span>
+    <span class="ticker-item"><span class="t-sym">DJI</span> <span class="t-val">39,112.77</span> <span class="t-chg down">−0.21%</span></span>
+    <span class="ticker-sep">|</span>
+    <span class="ticker-item"><span class="t-sym">BTC</span> <span class="t-val">67,840</span> <span class="t-chg up">+2.4%</span></span>
+    <span class="ticker-sep">|</span>
+    <span class="ticker-item"><span class="t-sym">10Y</span> <span class="t-val">4.31%</span> <span class="t-chg down">−3bps</span></span>
+    <span class="ticker-sep">|</span>
+    <span class="ticker-item"><span class="t-sym">EUR/USD</span> <span class="t-val">1.0842</span> <span class="t-chg up">+0.14%</span></span>
+    <span class="ticker-sep">|</span>
+    <span class="ticker-item"><span class="t-sym">GOLD</span> <span class="t-val">2,341.20</span> <span class="t-chg up">+0.6%</span></span>
+    <span class="ticker-sep">|</span>
+    <span class="ticker-item"><span class="t-sym">OIL</span> <span class="t-val">81.44</span> <span class="t-chg down">−0.38%</span></span>
+    <!-- duplicate for seamless loop -->
+    <span class="ticker-sep">|</span>
+    <span class="ticker-item"><span class="t-sym">SPX</span> <span class="t-val">5,234.18</span> <span class="t-chg up">+0.82%</span></span>
+    <span class="ticker-sep">|</span>
+    <span class="ticker-item"><span class="t-sym">NDX</span> <span class="t-val">18,290.40</span> <span class="t-chg up">+1.12%</span></span>
+    <span class="ticker-sep">|</span>
+    <span class="ticker-item"><span class="t-sym">DJI</span> <span class="t-val">39,112.77</span> <span class="t-chg down">−0.21%</span></span>
+    <span class="ticker-sep">|</span>
+    <span class="ticker-item"><span class="t-sym">BTC</span> <span class="t-val">67,840</span> <span class="t-chg up">+2.4%</span></span>
+    <span class="ticker-sep">|</span>
+    <span class="ticker-item"><span class="t-sym">10Y</span> <span class="t-val">4.31%</span> <span class="t-chg down">−3bps</span></span>
+    <span class="ticker-sep">|</span>
+    <span class="ticker-item"><span class="t-sym">EUR/USD</span> <span class="t-val">1.0842</span> <span class="t-chg up">+0.14%</span></span>
+    <span class="ticker-sep">|</span>
+    <span class="ticker-item"><span class="t-sym">GOLD</span> <span class="t-val">2,341.20</span> <span class="t-chg up">+0.6%</span></span>
+    <span class="ticker-sep">|</span>
+    <span class="ticker-item"><span class="t-sym">OIL</span> <span class="t-val">81.44</span> <span class="t-chg down">−0.38%</span></span>
+  </div>
+</div>
+
+<header id="site-header">
+  <div class="header-inner">
+    <!-- Logo -->
+    <a href="/" class="logo" aria-label="{SITE_TITLE} — Home">
+      <span class="logo-wordmark">{SITE_TITLE}</span>
+      <span class="logo-rule" aria-hidden="true"></span>
+    </a>
+
+    <!-- Desktop nav -->
+    <nav class="desktop-nav" aria-label="Primary">
+      <HeaderLink href="/">Home</HeaderLink>
+      <HeaderLink href="/blog">Analysis</HeaderLink>
+      <HeaderLink href="/about">About</HeaderLink>
+    </nav>
+
+    <!-- Actions -->
+    <div class="header-actions">
+      <a href="/search" class="icon-btn" aria-label="Search" title="Search">
+        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </a>
+
+      <a href="/rss.xml" class="icon-btn" aria-label="RSS Feed" title="RSS" target="_blank" rel="noopener">
+        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
+      </a>
+
+      <button id="theme-toggle" class="icon-btn" aria-label="Toggle light/dark mode" title="Toggle theme">
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+      </button>
+
+      <button id="mobile-toggle" class="icon-btn mobile-only" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+        <svg class="icon-menu" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" x2="20" y1="8" y2="8"/><line x1="4" x2="20" y1="16" y2="16"/></svg>
+        <svg class="icon-close" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile nav -->
+  <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile navigation" hidden>
+    <HeaderLink href="/">Home</HeaderLink>
+    <HeaderLink href="/blog">Analysis</HeaderLink>
+    <HeaderLink href="/about">About</HeaderLink>
+    <a href="/search" class="mob-link">Search</a>
+    <a href="/rss.xml" class="mob-link" target="_blank">RSS Feed ↗</a>
+  </nav>
+</header>
+
+<style>
+  /* ── TICKER ── */
+  .ticker-strip {
+    background: var(--bg-raised);
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+    height: 28px;
+    display: flex;
+    align-items: center;
+  }
+
+  .ticker-track {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    white-space: nowrap;
+    animation: ticker 40s linear infinite;
+    will-change: transform;
+  }
+
+  .ticker-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    padding-inline: 1.25em;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+  }
+
+  .t-sym { color: var(--fg-subtle); text-transform: uppercase; }
+  .t-val { color: var(--fg); font-weight: 500; }
+  .t-chg { font-weight: 600; }
+  .t-chg.up   { color: var(--positive); }
+  .t-chg.down { color: var(--negative); }
+
+  .ticker-sep { color: var(--border-hi); font-size: 10px; }
+
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* ── HEADER ── */
+  #site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    transition: background var(--t3) var(--ease), box-shadow var(--t2) var(--ease);
+  }
+
+  #site-header.scrolled {
+    box-shadow: 0 4px 32px rgba(0,0,0,0.5);
+    border-bottom-color: var(--gold-dim);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    width: min(var(--wide-w), 100% - 2rem);
+    margin-inline: auto;
+    height: 60px;
+  }
+
+  /* Logo */
+  .logo {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex-shrink: 0;
+  }
+
+  .logo-wordmark {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    line-height: 1;
+    letter-spacing: 0.1em;
+    color: var(--fg);
+    text-transform: uppercase;
+    transition: color var(--t1);
+  }
+
+  .logo:hover .logo-wordmark { color: var(--gold); }
+
+  .logo-rule {
+    display: block;
+    height: 2px;
+    background: var(--gold);
+    width: 0;
+    transition: width var(--t2) var(--ease);
+  }
+  .logo:hover .logo-rule { width: 100%; }
+
+  /* Nav */
+  .desktop-nav { display: flex; align-items: center; gap: 0; }
+
+  /* Actions */
+  .header-actions { display: flex; align-items: center; gap: 0.15rem; flex-shrink: 0; }
+
+  .icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--r);
+    border: none;
+    background: transparent;
+    color: var(--fg-muted);
+    cursor: pointer;
+    text-decoration: none;
+    transition: background var(--t1), color var(--t1);
+  }
+  .icon-btn:hover { background: var(--bg-raised); color: var(--gold); }
+
+  /* Dark mode icon switching */
+  [data-theme="light"] .icon-moon { display: none; }
+  [data-theme="dark"]  .icon-sun  { display: none; }
+  :root:not([data-theme]) .icon-moon { display: none; }
+
+  .mobile-only { display: none; }
+
+  /* Mobile nav */
+  .mobile-nav {
+    border-top: 1px solid var(--border);
+    padding: var(--sp-sm);
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    background: var(--bg);
+    animation: fadeUp 0.18s var(--ease) both;
+  }
+
+  .mob-link {
+    display: block;
+    padding: 0.6em 0.75em;
+    color: var(--fg-muted);
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: var(--s-xs);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-radius: var(--r);
+    transition: background var(--t1), color var(--t1);
+  }
+  .mob-link:hover { background: var(--bg-raised); color: var(--gold); }
+
+  @media (max-width: 720px) {
+    .desktop-nav { display: none; }
+    .mobile-only { display: flex; }
+    .ticker-strip { display: none; }
+  }
 </style>
+
+<script>
+  // Theme
+  const getTheme = () => localStorage.getItem('theme') ||
+    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+
+  const applyTheme = (t: string) => {
+    document.documentElement.setAttribute('data-theme', t);
+    localStorage.setItem('theme', t);
+  };
+
+  applyTheme(getTheme());
+
+  document.getElementById('theme-toggle')?.addEventListener('click', () => {
+    applyTheme(getTheme() === 'dark' ? 'light' : 'dark');
+  });
+
+  // Mobile menu
+  const toggle = document.getElementById('mobile-toggle');
+  const mobileNav = document.getElementById('mobile-nav');
+  const iconMenu = toggle?.querySelector('.icon-menu') as HTMLElement | null;
+  const iconClose = toggle?.querySelector('.icon-close') as HTMLElement | null;
+
+  toggle?.addEventListener('click', () => {
+    const isOpen = !mobileNav?.hidden;
+    if (mobileNav) mobileNav.hidden = isOpen;
+    toggle.setAttribute('aria-expanded', String(!isOpen));
+    if (iconMenu) iconMenu.style.display = isOpen ? '' : 'none';
+    if (iconClose) iconClose.style.display = isOpen ? 'none' : '';
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 720 && mobileNav && !mobileNav.hidden) {
+      mobileNav.hidden = true;
+      toggle?.setAttribute('aria-expanded', 'false');
+      if (iconMenu) iconMenu.style.display = '';
+      if (iconClose) iconClose.style.display = 'none';
+    }
+  });
+
+  // Scroll shadow
+  const header = document.getElementById('site-header');
+  window.addEventListener('scroll', () => {
+    header?.classList.toggle('scrolled', window.scrollY > 8);
+  }, { passive: true });
+
+  // Scroll progress
+  const progress = document.getElementById('scroll-progress');
+  if (progress) {
+    const update = () => {
+      const st = document.documentElement.scrollTop;
+      const dh = document.documentElement.scrollHeight - window.innerHeight;
+      progress.style.transform = `scaleX(${dh > 0 ? st / dh : 0})`;
+    };
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  }
+</script>

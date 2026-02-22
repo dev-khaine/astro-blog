@@ -1,5 +1,10 @@
-// Place any global data in this file.
-// You can import this data from anywhere in your site by using the `import` keyword.
+export const SITE_TITLE = 'Capital';
+export const SITE_DESCRIPTION = 'Sharp analysis on markets, money, and the forces shaping the global economy.';
+export const SITE_URL = 'https://yourcapitalblog.com';
+export const TWITTER_HANDLE = '@yourcapital';
+export const AUTHOR_NAME = 'Your Name';
+export const AUTHOR_BIO = 'Financial analyst and writer covering markets, macro, and money.';
 
-export const SITE_TITLE = "Astro Blog";
-export const SITE_DESCRIPTION = "Welcome to my website!";
+// Analytics — add your IDs here
+export const GA_MEASUREMENT_ID = ''; // e.g. 'G-XXXXXXXXXX'
+export const PLAUSIBLE_DOMAIN = ''; // e.g. 'yourcapitalblog.com'

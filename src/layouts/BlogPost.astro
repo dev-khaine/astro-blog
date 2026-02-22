@@ -4,82 +4,345 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
+import ReadingTime from '../components/ReadingTime.astro';
+import ShareButtons from '../components/ShareButtons.astro';
+import { AUTHOR_NAME } from '../consts';
 
-type Props = CollectionEntry<'blog'>['data'];
+type Props = CollectionEntry<'blog'>['data'] & { rawContent?: string };
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const {
+  title,
+  description,
+  pubDate,
+  updatedDate,
+  heroImage,
+  tags = [],
+  rawContent = '',
+} = Astro.props;
 ---
 
 <html lang="en">
-	<head>
-		<BaseHead title={title} description={description} />
-		<style>
-			main {
-				width: calc(100% - 2em);
-				max-width: 100%;
-				margin: 0;
-			}
-			.hero-image {
-				width: 100%;
-			}
-			.hero-image img {
-				display: block;
-				margin: 0 auto;
-				border-radius: 12px;
-				box-shadow: var(--box-shadow);
-			}
-			.prose {
-				width: 720px;
-				max-width: calc(100% - 2em);
-				margin: auto;
-				padding: 1em;
-				color: rgb(var(--gray-dark));
-			}
-			.title {
-				margin-bottom: 1em;
-				padding: 1em 0;
-				text-align: center;
-				line-height: 1;
-			}
-			.title h1 {
-				margin: 0 0 0.5em 0;
-			}
-			.date {
-				margin-bottom: 0.5em;
-				color: rgb(var(--gray));
-			}
-			.last-updated-on {
-				font-style: italic;
-			}
-		</style>
-	</head>
+  <head>
+    <BaseHead
+      title={title}
+      description={description}
+      image={heroImage}
+      type="article"
+      pubDate={pubDate}
+      updatedDate={updatedDate}
+      author={AUTHOR_NAME}
+      tags={tags}
+    />
+  </head>
+  <body>
+    <Header />
+    <main id="main-content">
+      <article itemscope itemtype="https://schema.org/Article">
+        <!-- Article header -->
+        <header class="art-header">
+          <!-- Category / tags -->
+          {tags.length > 0 && (
+            <div class="art-tags anim-up" aria-label="Categories">
+              {tags.map(tag => <a href={`/blog?tag=${tag}`} class="tag">{tag}</a>)}
+            </div>
+          )}
 
-	<body>
-		<Header />
-		<main>
-			<article>
-				<div class="hero-image">
-					{heroImage && <img width={1020} height={510} src={heroImage} alt="" />}
-				</div>
-				<div class="prose">
-					<div class="title">
-						<div class="date">
-							<FormattedDate date={pubDate} />
-							{
-								updatedDate && (
-									<div class="last-updated-on">
-										Last updated on <FormattedDate date={updatedDate} />
-									</div>
-								)
-							}
-						</div>
-						<h1>{title}</h1>
-						<hr />
-					</div>
-					<slot />
-				</div>
-			</article>
-		</main>
-		<Footer />
-	</body>
+          <!-- Title -->
+          <h1 class="art-title anim-up anim-up-1" itemprop="headline">{title}</h1>
+
+          <!-- Description -->
+          <p class="art-desc anim-up anim-up-2">{description}</p>
+
+          <!-- Meta bar -->
+          <div class="art-meta anim-up anim-up-3" role="group" aria-label="Article details">
+            <span class="meta-item" itemprop="author" itemscope itemtype="https://schema.org/Person">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
+              <span itemprop="name">{AUTHOR_NAME}</span>
+            </span>
+            <span class="meta-sep" aria-hidden="true">—</span>
+            <span class="meta-item">
+              <time datetime={pubDate.toISOString()} itemprop="datePublished">
+                <FormattedDate date={pubDate} />
+              </time>
+            </span>
+            {updatedDate && (
+              <>
+                <span class="meta-sep" aria-hidden="true">—</span>
+                <span class="meta-item">
+                  Updated <time datetime={updatedDate.toISOString()} itemprop="dateModified">
+                    <FormattedDate date={updatedDate} />
+                  </time>
+                </span>
+              </>
+            )}
+            {rawContent && (
+              <>
+                <span class="meta-sep" aria-hidden="true">—</span>
+                <ReadingTime content={rawContent} />
+              </>
+            )}
+          </div>
+
+          <!-- Hero image -->
+          {heroImage && (
+            <div class="art-hero anim-up anim-up-4" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+              <img
+                src={heroImage}
+                alt={`Cover image for: ${title}`}
+                width={1200}
+                height={630}
+                loading="eager"
+                decoding="async"
+                itemprop="url"
+              />
+            </div>
+          )}
+        </header>
+
+        <!-- Article body -->
+        <div class="prose art-body" itemprop="articleBody">
+          <slot />
+        </div>
+
+        <!-- Article footer -->
+        <footer class="art-footer">
+          <div class="art-footer-divider">
+            <span class="divider-text label">End of analysis</span>
+          </div>
+
+          <ShareButtons title={title} />
+
+          <!-- Author card -->
+          <div class="author-card">
+            <div class="author-avatar" aria-hidden="true">
+              {AUTHOR_NAME.charAt(0)}
+            </div>
+            <div class="author-info">
+              <p class="author-name label">{AUTHOR_NAME}</p>
+              <p class="author-bio">
+                Financial analyst covering markets, macro, and the global economy.
+                Views are my own.
+              </p>
+            </div>
+          </div>
+
+          <!-- Comments via Giscus (GitHub Discussions) -->
+          <div class="comments-section" id="comments">
+            <h2 class="comments-heading">Discussion</h2>
+            <p class="comments-note">
+              Comments are powered by <a href="https://giscus.app" target="_blank" rel="noopener">Giscus</a> via GitHub Discussions.
+              Configure your <code>repo</code> and <code>repo-id</code> in the script below to enable comments.
+            </p>
+            <!-- 
+              To enable comments:
+              1. Go to https://giscus.app
+              2. Enter your GitHub repo name
+              3. Copy the generated script and replace this comment
+            -->
+            <div class="giscus-placeholder">
+              <p class="label">Comments enabled after Giscus setup</p>
+              <p>Visit <a href="https://giscus.app" target="_blank" rel="noopener">giscus.app</a> to configure.</p>
+            </div>
+            <!-- Example (replace with your values):
+            <script src="https://giscus.app/client.js"
+              data-repo="YOUR_GITHUB_USER/YOUR_REPO"
+              data-repo-id="YOUR_REPO_ID"
+              data-category="Announcements"
+              data-category-id="YOUR_CATEGORY_ID"
+              data-mapping="pathname"
+              data-strict="0"
+              data-reactions-enabled="1"
+              data-emit-metadata="0"
+              data-input-position="top"
+              data-theme="dark"
+              data-lang="en"
+              crossorigin="anonymous"
+              async>
+            </script>
+            -->
+          </div>
+
+          <!-- Back link -->
+          <div class="back-link">
+            <a href="/blog" class="btn btn-outline">
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+              All analysis
+            </a>
+          </div>
+        </footer>
+      </article>
+    </main>
+    <Footer />
+  </body>
 </html>
+
+<style>
+  article {
+    max-width: 800px;
+    margin-inline: auto;
+    padding-top: var(--sp-xl);
+  }
+
+  /* Header */
+  .art-header { margin-bottom: var(--sp-xl); }
+
+  .art-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: var(--sp-md); }
+
+  .art-title {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 6vw, 6rem);
+    line-height: 0.92;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--fg);
+    margin-bottom: var(--sp-md);
+  }
+
+  .art-desc {
+    font-family: var(--font-serif);
+    font-size: var(--s-lg);
+    font-style: italic;
+    color: var(--fg-muted);
+    line-height: 1.6;
+    margin-bottom: var(--sp-md);
+    padding-bottom: var(--sp-md);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .art-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: var(--s-2xs);
+    color: var(--fg-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: var(--sp-lg);
+  }
+
+  .meta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+  }
+
+  .meta-sep { color: var(--gold-dim); }
+
+  .art-hero {
+    border-radius: var(--r);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    margin-top: var(--sp-lg);
+  }
+
+  .art-hero img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 0;
+  }
+
+  /* Body */
+  .art-body { margin-bottom: var(--sp-xl); }
+
+  /* Footer */
+  .art-footer { margin-top: var(--sp-xl); }
+
+  .art-footer-divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: var(--sp-lg);
+  }
+
+  .art-footer-divider::before,
+  .art-footer-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .divider-text { white-space: nowrap; }
+
+  /* Author card */
+  .author-card {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--sp-md);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: var(--sp-md);
+    margin-block: var(--sp-xl);
+  }
+
+  .author-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: var(--r-sm);
+    background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    color: #0c0c0c;
+    flex-shrink: 0;
+  }
+
+  .author-name { margin-bottom: 0.35rem; display: block; }
+
+  .author-bio {
+    font-family: var(--font-sans);
+    font-size: var(--s-sm);
+    font-weight: 300;
+    color: var(--fg-muted);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Comments */
+  .comments-section {
+    margin-block: var(--sp-xl);
+    padding-top: var(--sp-lg);
+    border-top: 1px solid var(--border);
+  }
+
+  .comments-heading {
+    font-size: var(--s-3xl);
+    margin-bottom: var(--sp-sm);
+  }
+
+  .comments-note {
+    font-family: var(--font-sans);
+    font-size: var(--s-sm);
+    color: var(--fg-muted);
+    margin-bottom: var(--sp-md);
+  }
+
+  .giscus-placeholder {
+    background: var(--bg-raised);
+    border: 1px dashed var(--border-hi);
+    border-radius: var(--r);
+    padding: var(--sp-lg);
+    text-align: center;
+  }
+
+  .giscus-placeholder p {
+    font-family: var(--font-mono);
+    font-size: var(--s-xs);
+    color: var(--fg-subtle);
+    margin-bottom: 0.5em;
+  }
+
+  .giscus-placeholder p:last-child { margin: 0; }
+
+  .back-link {
+    margin-top: var(--sp-xl);
+    padding-top: var(--sp-lg);
+    border-top: 1px solid var(--border);
+  }
+</style>

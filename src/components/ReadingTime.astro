@@ -1,0 +1,22 @@
+---
+interface Props { content: string; }
+const { content } = Astro.props;
+const words = content.trim().split(/\s+/).length;
+const mins = Math.ceil(words / 220);
+---
+<span class="reading-time" aria-label={`${mins} minute read`}>
+  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+  {mins} min read
+</span>
+<style>
+  .reading-time {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+    font-family: var(--font-mono);
+    font-size: var(--s-2xs);
+    color: var(--fg-subtle);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+</style>

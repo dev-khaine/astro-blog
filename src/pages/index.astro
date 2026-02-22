@@ -2,49 +2,438 @@
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import FormattedDate from '../components/FormattedDate.astro';
+import { SITE_TITLE, SITE_DESCRIPTION, AUTHOR_NAME } from '../consts';
+import { getCollection } from 'astro:content';
+
+const allPosts = (await getCollection('blog', p => !p.data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const [hero, ...rest] = allPosts;
+const secondary = rest.slice(0, 2);
+const latest = rest.slice(2, 7);
 ---
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This
-				template serves as a lightweight, minimally-styled starting point for anyone looking to build
-				a personal website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to <a href="https://docs.astro.build/"
-					>read the docs
-				</a> or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out <a
-					href="https://github.com/Charca/astro-blog-template"
-					>astro-blog-template
-				</a> by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
-		</main>
-		<Footer />
-	</body>
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <body>
+    <Header />
+    <main id="main-content">
+
+      <!-- Hero section -->
+      <section class="hero-section" aria-labelledby="hero-heading">
+        <!-- Masthead -->
+        <div class="masthead anim-up">
+          <div class="masthead-left">
+            <span class="label">Est. {new Date().getFullYear()}</span>
+          </div>
+          <h1 id="hero-heading" class="masthead-title">{SITE_TITLE}</h1>
+          <div class="masthead-right">
+            <span class="label">{new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</span>
+          </div>
+        </div>
+
+        <p class="hero-tagline anim-up anim-up-1">{SITE_DESCRIPTION}</p>
+
+        <!-- Hero post -->
+        {hero && (
+          <div class="hero-grid anim-up anim-up-2">
+            <a href={`/blog/${hero.id}/`} class="hero-feature" aria-label={`Read: ${hero.data.title}`}>
+              {hero.data.heroImage && (
+                <div class="hero-img">
+                  <img src={hero.data.heroImage} alt="" width={900} height={500} loading="eager" decoding="async" />
+                  <div class="hero-img-overlay" aria-hidden="true"></div>
+                </div>
+              )}
+              <div class="hero-content">
+                {hero.data.tags && hero.data.tags.length > 0 && (
+                  <div class="hero-tags" aria-hidden="true">
+                    {hero.data.tags.slice(0, 2).map((t: string) => <span class="tag">{t}</span>)}
+                  </div>
+                )}
+                <h2 class="hero-post-title">{hero.data.title}</h2>
+                <p class="hero-post-desc">{hero.data.description}</p>
+                <p class="hero-meta">
+                  <span class="label">{AUTHOR_NAME}</span>
+                  <span class="meta-sep">—</span>
+                  <time datetime={hero.data.pubDate.toISOString()}>
+                    <FormattedDate date={hero.data.pubDate} />
+                  </time>
+                </p>
+              </div>
+            </a>
+
+            <!-- Secondary -->
+            {secondary.length > 0 && (
+              <div class="hero-secondary">
+                {secondary.map(post => (
+                  <a href={`/blog/${post.id}/`} class="secondary-post" aria-label={`Read: ${post.data.title}`}>
+                    {post.data.heroImage && (
+                      <div class="sec-img">
+                        <img src={post.data.heroImage} alt="" width={400} height={230} loading="lazy" decoding="async" />
+                      </div>
+                    )}
+                    <div class="sec-body">
+                      {post.data.tags && <span class="tag">{post.data.tags[0]}</span>}
+                      <h3 class="sec-title">{post.data.title}</h3>
+                      <p class="sec-meta">
+                        <time datetime={post.data.pubDate.toISOString()}>
+                          <FormattedDate date={post.data.pubDate} />
+                        </time>
+                      </p>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+      </section>
+
+      <!-- Latest articles -->
+      {latest.length > 0 && (
+        <section class="latest-section" aria-labelledby="latest-heading">
+          <div class="section-head">
+            <h2 class="section-title" id="latest-heading">Latest Analysis</h2>
+            <a href="/blog" class="btn btn-outline">View archive</a>
+          </div>
+
+          <div class="latest-list" role="feed" aria-label="Latest posts">
+            {latest.map((post, i) => (
+              <article class="latest-row" role="article">
+                <a href={`/blog/${post.id}/`} class="latest-row-link" aria-label={`Read: ${post.data.title}`}>
+                  <span class="latest-num label">0{i + 1}</span>
+                  <div class="latest-body">
+                    <div class="latest-meta">
+                      {post.data.tags && post.data.tags.slice(0,1).map((t: string) => (
+                        <span class="tag">{t}</span>
+                      ))}
+                      <time class="latest-date" datetime={post.data.pubDate.toISOString()}>
+                        <FormattedDate date={post.data.pubDate} />
+                      </time>
+                    </div>
+                    <h3 class="latest-title">{post.data.title}</h3>
+                    <p class="latest-desc">{post.data.description}</p>
+                  </div>
+                  {post.data.heroImage && (
+                    <div class="latest-thumb">
+                      <img src={post.data.heroImage} alt="" width={180} height={110} loading="lazy" decoding="async" />
+                    </div>
+                  )}
+                  <span class="latest-arrow" aria-hidden="true">→</span>
+                </a>
+              </article>
+            ))}
+          </div>
+
+          <div class="view-all">
+            <a href="/blog" class="btn btn-outline">Read all {allPosts.length} articles</a>
+          </div>
+        </section>
+      )}
+    </main>
+    <Footer />
+  </body>
 </html>
+
+<style>
+  /* ── HERO ── */
+  .hero-section {
+    padding-bottom: var(--sp-xl);
+    border-bottom: 1px solid var(--border);
+    margin-bottom: var(--sp-xl);
+  }
+
+  /* Masthead */
+  .masthead {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 1rem;
+    padding-block: var(--sp-lg);
+    border-bottom: 3px double var(--border);
+    border-top: 1px solid var(--border);
+    margin-bottom: var(--sp-md);
+    text-align: center;
+  }
+
+  .masthead-left { text-align: left; }
+  .masthead-right { text-align: right; }
+
+  .masthead-title {
+    font-family: var(--font-display);
+    font-size: clamp(5rem, 12vw, 10rem);
+    line-height: 0.9;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--fg);
+  }
+
+  .hero-tagline {
+    font-family: var(--font-serif);
+    font-size: var(--s-md);
+    font-style: italic;
+    color: var(--fg-muted);
+    text-align: center;
+    margin-bottom: var(--sp-xl);
+    line-height: 1.5;
+  }
+
+  /* Hero grid */
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    overflow: hidden;
+  }
+
+  .hero-feature {
+    display: block;
+    text-decoration: none;
+    position: relative;
+    background: var(--bg-card);
+    transition: background var(--t2);
+  }
+  .hero-feature:hover { background: var(--bg-hover); }
+
+  .hero-img {
+    width: 100%;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    position: relative;
+  }
+  .hero-img img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 0;
+    transition: transform var(--t3) var(--ease);
+  }
+  .hero-feature:hover .hero-img img { transform: scale(1.03); }
+
+  .hero-img-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 50%, rgba(12,12,12,0.8) 100%);
+  }
+
+  .hero-content {
+    padding: var(--sp-md) var(--sp-lg) var(--sp-lg);
+  }
+
+  .hero-tags { display: flex; gap: 0.4rem; margin-bottom: 0.75rem; }
+
+  .hero-post-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 3.5vw, 3.2rem);
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--fg);
+    margin-bottom: 0.75rem;
+    transition: color var(--t1);
+  }
+  .hero-feature:hover .hero-post-title { color: var(--gold); }
+
+  .hero-post-desc {
+    font-family: var(--font-serif);
+    font-size: var(--s-sm);
+    color: var(--fg-muted);
+    line-height: 1.65;
+    margin-bottom: var(--sp-sm);
+    font-style: italic;
+  }
+
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: var(--s-2xs);
+    color: var(--fg-subtle);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+  .meta-sep { color: var(--gold-dim); }
+
+  /* Secondary */
+  .hero-secondary {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--border);
+  }
+
+  .secondary-post {
+    display: grid;
+    grid-template-columns: 1fr;
+    text-decoration: none;
+    background: var(--bg-card);
+    flex: 1;
+    transition: background var(--t2);
+    overflow: hidden;
+  }
+  .secondary-post:hover { background: var(--bg-hover); }
+
+  .sec-img { width: 100%; aspect-ratio: 16/8; overflow: hidden; }
+  .sec-img img { width: 100%; height: 100%; object-fit: cover; border-radius: 0; transition: transform var(--t3) var(--ease); }
+  .secondary-post:hover .sec-img img { transform: scale(1.04); }
+
+  .sec-body { padding: var(--sp-sm) var(--sp-md); }
+
+  .sec-title {
+    font-family: var(--font-display);
+    font-size: var(--s-2xl);
+    line-height: 0.95;
+    text-transform: uppercase;
+    color: var(--fg);
+    margin-block: 0.4rem;
+    transition: color var(--t1);
+  }
+  .secondary-post:hover .sec-title { color: var(--gold); }
+
+  .sec-meta {
+    font-family: var(--font-mono);
+    font-size: var(--s-2xs);
+    color: var(--fg-subtle);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  /* ── LATEST ── */
+  .latest-section {
+    padding-bottom: var(--sp-xl);
+  }
+
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: var(--sp-lg);
+    padding-bottom: var(--sp-sm);
+    border-bottom: 2px solid var(--border);
+  }
+
+  .section-title {
+    font-size: var(--s-4xl);
+  }
+
+  .latest-list {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--border);
+    margin-bottom: var(--sp-lg);
+  }
+
+  .latest-row { border-bottom: 1px solid var(--border); }
+
+  .latest-row-link {
+    display: grid;
+    grid-template-columns: 60px 1fr auto 24px;
+    gap: var(--sp-md);
+    align-items: center;
+    padding: var(--sp-md) 0;
+    text-decoration: none;
+    color: inherit;
+    transition: background var(--t1);
+    border-radius: var(--r-sm);
+  }
+
+  .latest-row-link:hover { background: var(--bg-raised); padding-inline: var(--sp-sm); margin-inline: calc(-1 * var(--sp-sm)); }
+
+  .latest-num {
+    font-size: var(--s-3xl);
+    color: var(--border-hi);
+    line-height: 1;
+    font-family: var(--font-display);
+    letter-spacing: 0.05em;
+    text-align: center;
+    transition: color var(--t1);
+  }
+  .latest-row-link:hover .latest-num { color: var(--gold-dim); }
+
+  .latest-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .latest-date {
+    font-family: var(--font-mono);
+    font-size: var(--s-2xs);
+    color: var(--fg-subtle);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .latest-title {
+    font-family: var(--font-display);
+    font-size: var(--s-2xl);
+    line-height: 0.95;
+    text-transform: uppercase;
+    color: var(--fg);
+    margin-bottom: 0.3rem;
+    transition: color var(--t1);
+  }
+  .latest-row-link:hover .latest-title { color: var(--gold); }
+
+  .latest-desc {
+    font-family: var(--font-sans);
+    font-size: var(--s-sm);
+    font-weight: 300;
+    color: var(--fg-muted);
+    line-height: 1.55;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .latest-thumb {
+    width: 120px;
+    aspect-ratio: 16/10;
+    border-radius: var(--r-sm);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .latest-thumb img { width: 100%; height: 100%; object-fit: cover; border-radius: 0; display: block; }
+
+  .latest-arrow {
+    font-family: var(--font-mono);
+    color: var(--fg-subtle);
+    transition: color var(--t1), transform var(--t1);
+    font-size: 1.1rem;
+  }
+  .latest-row-link:hover .latest-arrow { color: var(--gold); transform: translateX(3px); }
+
+  .view-all { text-align: center; padding-top: var(--sp-md); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-secondary { flex-direction: row; }
+    .secondary-post { flex: 1; }
+    .masthead { grid-template-columns: 1fr; text-align: center; }
+    .masthead-left, .masthead-right { display: none; }
+  }
+
+  @media (max-width: 640px) {
+    .hero-secondary { flex-direction: column; }
+    .masthead-title { font-size: clamp(4rem, 20vw, 8rem); }
+    .latest-row-link { grid-template-columns: 40px 1fr 20px; gap: var(--sp-sm); }
+    .latest-thumb { display: none; }
+    .latest-num { font-size: var(--s-2xl); }
+  }
+</style>
