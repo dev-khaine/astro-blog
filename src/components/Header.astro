@@ -4,100 +4,171 @@ import { SITE_TITLE } from '../consts';
 ---
 
 <a href="#main-content" class="skip-link">Skip to content</a>
-<div id="scroll-progress" role="progressbar" aria-label="Reading progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+<div id="scroll-progress" aria-hidden="true"></div>
 
-<!-- Market ticker strip -->
-<div class="ticker-strip" aria-label="Market data" role="marquee">
-  <div class="ticker-track" aria-hidden="true">
-    <span class="ticker-item"><span class="t-sym">SPX</span> <span class="t-val">5,234.18</span> <span class="t-chg up">+0.82%</span></span>
-    <span class="ticker-sep">|</span>
-    <span class="ticker-item"><span class="t-sym">NDX</span> <span class="t-val">18,290.40</span> <span class="t-chg up">+1.12%</span></span>
-    <span class="ticker-sep">|</span>
-    <span class="ticker-item"><span class="t-sym">DJI</span> <span class="t-val">39,112.77</span> <span class="t-chg down">−0.21%</span></span>
-    <span class="ticker-sep">|</span>
-    <span class="ticker-item"><span class="t-sym">BTC</span> <span class="t-val">67,840</span> <span class="t-chg up">+2.4%</span></span>
-    <span class="ticker-sep">|</span>
-    <span class="ticker-item"><span class="t-sym">10Y</span> <span class="t-val">4.31%</span> <span class="t-chg down">−3bps</span></span>
-    <span class="ticker-sep">|</span>
-    <span class="ticker-item"><span class="t-sym">EUR/USD</span> <span class="t-val">1.0842</span> <span class="t-chg up">+0.14%</span></span>
-    <span class="ticker-sep">|</span>
-    <span class="ticker-item"><span class="t-sym">GOLD</span> <span class="t-val">2,341.20</span> <span class="t-chg up">+0.6%</span></span>
-    <span class="ticker-sep">|</span>
-    <span class="ticker-item"><span class="t-sym">OIL</span> <span class="t-val">81.44</span> <span class="t-chg down">−0.38%</span></span>
-    <!-- duplicate for seamless loop -->
-    <span class="ticker-sep">|</span>
-    <span class="ticker-item"><span class="t-sym">SPX</span> <span class="t-val">5,234.18</span> <span class="t-chg up">+0.82%</span></span>
-    <span class="ticker-sep">|</span>
-    <span class="ticker-item"><span class="t-sym">NDX</span> <span class="t-val">18,290.40</span> <span class="t-chg up">+1.12%</span></span>
-    <span class="ticker-sep">|</span>
-    <span class="ticker-item"><span class="t-sym">DJI</span> <span class="t-val">39,112.77</span> <span class="t-chg down">−0.21%</span></span>
-    <span class="ticker-sep">|</span>
-    <span class="ticker-item"><span class="t-sym">BTC</span> <span class="t-val">67,840</span> <span class="t-chg up">+2.4%</span></span>
-    <span class="ticker-sep">|</span>
-    <span class="ticker-item"><span class="t-sym">10Y</span> <span class="t-val">4.31%</span> <span class="t-chg down">−3bps</span></span>
-    <span class="ticker-sep">|</span>
-    <span class="ticker-item"><span class="t-sym">EUR/USD</span> <span class="t-val">1.0842</span> <span class="t-chg up">+0.14%</span></span>
-    <span class="ticker-sep">|</span>
-    <span class="ticker-item"><span class="t-sym">GOLD</span> <span class="t-val">2,341.20</span> <span class="t-chg up">+0.6%</span></span>
-    <span class="ticker-sep">|</span>
-    <span class="ticker-item"><span class="t-sym">OIL</span> <span class="t-val">81.44</span> <span class="t-chg down">−0.38%</span></span>
-  </div>
-</div>
+<!-- Single sticky wrapper holds ticker + nav bar together -->
+<div id="site-header">
 
-<header id="site-header">
-  <div class="header-inner">
-    <!-- Logo -->
-    <a href="/" class="logo" aria-label="{SITE_TITLE} — Home">
-      <span class="logo-wordmark">{SITE_TITLE}</span>
-      <span class="logo-rule" aria-hidden="true"></span>
-    </a>
-
-    <!-- Desktop nav -->
-    <nav class="desktop-nav" aria-label="Primary">
-      <HeaderLink href="/">Home</HeaderLink>
-      <HeaderLink href="/blog">Analysis</HeaderLink>
-      <HeaderLink href="/about">About</HeaderLink>
-    </nav>
-
-    <!-- Actions -->
-    <div class="header-actions">
-      <a href="/search" class="icon-btn" aria-label="Search" title="Search">
-        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      </a>
-
-      <a href="/rss.xml" class="icon-btn" aria-label="RSS Feed" title="RSS" target="_blank" rel="noopener">
-        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
-      </a>
-
-      <button id="theme-toggle" class="icon-btn" aria-label="Toggle light/dark mode" title="Toggle theme">
-        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
-        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
-      </button>
-
-      <button id="mobile-toggle" class="icon-btn mobile-only" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
-        <svg class="icon-menu" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" x2="20" y1="8" y2="8"/><line x1="4" x2="20" y1="16" y2="16"/></svg>
-        <svg class="icon-close" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-      </button>
+  <!-- ── TICKER STRIP ── -->
+  <div class="ticker-strip" aria-label="Market data">
+    <div class="ticker-track" aria-hidden="true">
+      <span class="t-item"><span class="t-sym">SPX</span>&nbsp;<span class="t-val">5,234.18</span>&nbsp;<span class="t-up">+0.82%</span></span>
+      <span class="t-sep">|</span>
+      <span class="t-item"><span class="t-sym">NDX</span>&nbsp;<span class="t-val">18,290.40</span>&nbsp;<span class="t-up">+1.12%</span></span>
+      <span class="t-sep">|</span>
+      <span class="t-item"><span class="t-sym">DJI</span>&nbsp;<span class="t-val">39,112.77</span>&nbsp;<span class="t-dn">−0.21%</span></span>
+      <span class="t-sep">|</span>
+      <span class="t-item"><span class="t-sym">BTC</span>&nbsp;<span class="t-val">67,840</span>&nbsp;<span class="t-up">+2.4%</span></span>
+      <span class="t-sep">|</span>
+      <span class="t-item"><span class="t-sym">10Y</span>&nbsp;<span class="t-val">4.31%</span>&nbsp;<span class="t-dn">−3bps</span></span>
+      <span class="t-sep">|</span>
+      <span class="t-item"><span class="t-sym">EUR/USD</span>&nbsp;<span class="t-val">1.0842</span>&nbsp;<span class="t-up">+0.14%</span></span>
+      <span class="t-sep">|</span>
+      <span class="t-item"><span class="t-sym">GOLD</span>&nbsp;<span class="t-val">2,341.20</span>&nbsp;<span class="t-up">+0.6%</span></span>
+      <span class="t-sep">|</span>
+      <span class="t-item"><span class="t-sym">OIL</span>&nbsp;<span class="t-val">81.44</span>&nbsp;<span class="t-dn">−0.38%</span></span>
+      <!-- duplicate for seamless loop -->
+      <span class="t-sep">|</span>
+      <span class="t-item"><span class="t-sym">SPX</span>&nbsp;<span class="t-val">5,234.18</span>&nbsp;<span class="t-up">+0.82%</span></span>
+      <span class="t-sep">|</span>
+      <span class="t-item"><span class="t-sym">NDX</span>&nbsp;<span class="t-val">18,290.40</span>&nbsp;<span class="t-up">+1.12%</span></span>
+      <span class="t-sep">|</span>
+      <span class="t-item"><span class="t-sym">DJI</span>&nbsp;<span class="t-val">39,112.77</span>&nbsp;<span class="t-dn">−0.21%</span></span>
+      <span class="t-sep">|</span>
+      <span class="t-item"><span class="t-sym">BTC</span>&nbsp;<span class="t-val">67,840</span>&nbsp;<span class="t-up">+2.4%</span></span>
+      <span class="t-sep">|</span>
+      <span class="t-item"><span class="t-sym">10Y</span>&nbsp;<span class="t-val">4.31%</span>&nbsp;<span class="t-dn">−3bps</span></span>
+      <span class="t-sep">|</span>
+      <span class="t-item"><span class="t-sym">EUR/USD</span>&nbsp;<span class="t-val">1.0842</span>&nbsp;<span class="t-up">+0.14%</span></span>
+      <span class="t-sep">|</span>
+      <span class="t-item"><span class="t-sym">GOLD</span>&nbsp;<span class="t-val">2,341.20</span>&nbsp;<span class="t-up">+0.6%</span></span>
+      <span class="t-sep">|</span>
+      <span class="t-item"><span class="t-sym">OIL</span>&nbsp;<span class="t-val">81.44</span>&nbsp;<span class="t-dn">−0.38%</span></span>
     </div>
   </div>
 
-  <!-- Mobile nav -->
-  <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile navigation" hidden>
-    <HeaderLink href="/">Home</HeaderLink>
-    <HeaderLink href="/blog">Analysis</HeaderLink>
-    <HeaderLink href="/about">About</HeaderLink>
-    <a href="/search" class="mob-link">Search</a>
-    <a href="/rss.xml" class="mob-link" target="_blank">RSS Feed ↗</a>
-  </nav>
-</header>
+  <!-- ── MAIN NAV BAR ── -->
+  <header class="nav-bar">
+    <div class="nav-inner">
+
+      <!-- Logo -->
+      <a href="/" class="logo" aria-label={`${SITE_TITLE} — Home`}>
+        <span class="logo-text">{SITE_TITLE}</span>
+        <span class="logo-rule" aria-hidden="true"></span>
+      </a>
+
+      <!-- Desktop navigation — hidden on mobile via CSS -->
+      <nav class="desktop-nav" aria-label="Primary navigation">
+        <HeaderLink href="/">Home</HeaderLink>
+        <HeaderLink href="/blog">Analysis</HeaderLink>
+        <HeaderLink href="/about">About</HeaderLink>
+      </nav>
+
+      <!-- Icon actions -->
+      <div class="nav-actions">
+        <a href="/search" class="icon-btn" aria-label="Search" title="Search">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </a>
+
+        <a href="/rss.xml" class="icon-btn" aria-label="RSS Feed" title="RSS Feed" target="_blank" rel="noopener noreferrer">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
+        </a>
+
+        <button id="theme-toggle" class="icon-btn" aria-label="Toggle light/dark mode">
+          <!-- Sun: shown in dark mode (click to go light) -->
+          <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+          <!-- Moon: shown in light mode (click to go dark) -->
+          <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+        </button>
+
+        <!-- Hamburger — only visible on mobile -->
+        <button id="mobile-toggle" class="icon-btn hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-nav">
+          <svg class="icon-bars" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" x2="20" y1="7" y2="7"/><line x1="4" x2="20" y1="17" y2="17"/></svg>
+          <svg class="icon-x" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile nav — toggled by JS via .is-open class, NOT hidden attr -->
+    <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile navigation">
+      <HeaderLink href="/">Home</HeaderLink>
+      <HeaderLink href="/blog">Analysis</HeaderLink>
+      <HeaderLink href="/about">About</HeaderLink>
+      <a href="/search" class="mob-link">Search</a>
+      <a href="/rss.xml" class="mob-link" target="_blank" rel="noopener">RSS Feed ↗</a>
+    </nav>
+  </header>
+
+</div><!-- /#site-header -->
 
 <style>
-  /* ── TICKER ── */
+  /* ─────────────────────────────────────
+     SKIP LINK
+  ───────────────────────────────────── */
+  .skip-link {
+    position: absolute;
+    top: -100%;
+    left: 1rem;
+    background: var(--gold);
+    color: #000;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-weight: 700;
+    z-index: 9999;
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .skip-link:focus { top: 0.75rem; }
+
+  /* ─────────────────────────────────────
+     SCROLL PROGRESS
+  ───────────────────────────────────── */
+  #scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold-dim), var(--gold), var(--gold-bright));
+    transform-origin: left center;
+    transform: scaleX(0);
+    z-index: 9999;
+    pointer-events: none;
+  }
+
+  /* ─────────────────────────────────────
+     STICKY WRAPPER
+  ───────────────────────────────────── */
+  #site-header {
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    /* ensure background covers scrolled content */
+    will-change: transform;
+    transition:
+      background   0.36s ease,
+      box-shadow   0.22s ease,
+      border-color 0.22s ease;
+  }
+
+  #site-header.scrolled {
+    box-shadow: 0 4px 32px rgba(0, 0, 0, 0.55);
+    border-bottom-color: var(--gold-dim);
+  }
+
+  /* ─────────────────────────────────────
+     TICKER STRIP
+  ───────────────────────────────────── */
   .ticker-strip {
+    height: 26px;
     background: var(--bg-raised);
     border-bottom: 1px solid var(--border);
     overflow: hidden;
-    height: 28px;
     display: flex;
     align-items: center;
   }
@@ -105,154 +176,203 @@ import { SITE_TITLE } from '../consts';
   .ticker-track {
     display: flex;
     align-items: center;
-    gap: 0;
     white-space: nowrap;
-    animation: ticker 40s linear infinite;
+    animation: run-ticker 45s linear infinite;
     will-change: transform;
   }
 
-  .ticker-item {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4em;
-    padding-inline: 1.25em;
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.06em;
-  }
-
-  .t-sym { color: var(--fg-subtle); text-transform: uppercase; }
-  .t-val { color: var(--fg); font-weight: 500; }
-  .t-chg { font-weight: 600; }
-  .t-chg.up   { color: var(--positive); }
-  .t-chg.down { color: var(--negative); }
-
-  .ticker-sep { color: var(--border-hi); font-size: 10px; }
-
-  @keyframes ticker {
+  @keyframes run-ticker {
     from { transform: translateX(0); }
     to   { transform: translateX(-50%); }
   }
 
-  /* ── HEADER ── */
-  #site-header {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: var(--bg);
-    border-bottom: 1px solid var(--border);
-    transition: background var(--t3) var(--ease), box-shadow var(--t2) var(--ease);
+  .t-item {
+    display: inline-flex;
+    align-items: center;
+    padding-inline: 1.4em;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
   }
 
-  #site-header.scrolled {
-    box-shadow: 0 4px 32px rgba(0,0,0,0.5);
-    border-bottom-color: var(--gold-dim);
+  .t-sep  { color: var(--border-hi); font-size: 10px; font-family: var(--font-mono); padding-inline: 0.1em; }
+  .t-sym  { color: var(--fg-subtle); }
+  .t-val  { color: var(--fg); font-weight: 500; }
+  .t-up   { color: var(--positive); font-weight: 600; }
+  .t-dn   { color: var(--negative); font-weight: 600; }
+
+  /* ─────────────────────────────────────
+     NAV BAR
+  ───────────────────────────────────── */
+  .nav-bar {
+    display: block;
+    background: transparent;
   }
 
-  .header-inner {
+  .nav-inner {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 2rem;
-    width: min(var(--wide-w), 100% - 2rem);
+    /* Comfortable gap between logo / nav / actions */
+    gap: 1rem;
+    height: 62px;
+    /* Use 100% - padding so it never overflows on small screens */
+    width: min(1140px, 100% - 2.5rem);
     margin-inline: auto;
-    height: 60px;
   }
 
-  /* Logo */
+  /* ─── LOGO ─── */
   .logo {
-    text-decoration: none;
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    align-items: flex-start;
+    gap: 3px;
+    text-decoration: none;
     flex-shrink: 0;
   }
 
-  .logo-wordmark {
-    font-family: var(--font-display);
-    font-size: 2rem;
+  .logo-text {
+    font-family: var(--font-display, 'Bebas Neue', sans-serif);
+    font-size: 1.85rem;
     line-height: 1;
-    letter-spacing: 0.1em;
-    color: var(--fg);
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    transition: color var(--t1);
+    color: var(--fg);
+    transition: color 0.11s ease;
   }
-
-  .logo:hover .logo-wordmark { color: var(--gold); }
+  .logo:hover .logo-text { color: var(--gold); }
 
   .logo-rule {
-    display: block;
     height: 2px;
-    background: var(--gold);
     width: 0;
-    transition: width var(--t2) var(--ease);
+    background: var(--gold);
+    border-radius: 99px;
+    transition: width 0.25s ease;
   }
   .logo:hover .logo-rule { width: 100%; }
 
-  /* Nav */
-  .desktop-nav { display: flex; align-items: center; gap: 0; }
+  /* ─── DESKTOP NAV ─── */
+  .desktop-nav {
+    display: flex;
+    align-items: center;
+    /* Space between links — this was the main bug (was gap:0) */
+    gap: 0.5rem;
+    flex: 1;
+    justify-content: center;
+  }
 
-  /* Actions */
-  .header-actions { display: flex; align-items: center; gap: 0.15rem; flex-shrink: 0; }
+  /* ─── ICON ACTIONS ─── */
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    flex-shrink: 0;
+  }
 
   .icon-btn {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 36px;
-    border-radius: var(--r);
+    width: 38px;
+    height: 38px;
+    padding: 0;
     border: none;
+    border-radius: 5px;
     background: transparent;
     color: var(--fg-muted);
     cursor: pointer;
     text-decoration: none;
-    transition: background var(--t1), color var(--t1);
+    transition: background 0.11s ease, color 0.11s ease;
+    flex-shrink: 0;
   }
-  .icon-btn:hover { background: var(--bg-raised); color: var(--gold); }
+  .icon-btn:hover {
+    background: var(--bg-raised);
+    color: var(--gold);
+  }
 
-  /* Dark mode icon switching */
-  [data-theme="light"] .icon-moon { display: none; }
-  [data-theme="dark"]  .icon-sun  { display: none; }
-  :root:not([data-theme]) .icon-moon { display: none; }
+  /* ─── THEME ICONS ───
+     Default (dark mode): show sun so user can switch to light
+     Light mode:          show moon so user can switch to dark    */
+  .icon-sun  { display: block; }
+  .icon-moon { display: none;  }
 
-  .mobile-only { display: none; }
+  [data-theme="light"] .icon-sun  { display: none;  }
+  [data-theme="light"] .icon-moon { display: block; }
 
-  /* Mobile nav */
+  /* ─── HAMBURGER ─── */
+  /* Always hidden on desktop */
+  .hamburger { display: none; }
+
+  /* Icon state: default shows bars; when open, shows X */
+  .icon-bars { display: block; }
+  .icon-x    { display: none;  }
+
+  .hamburger[aria-expanded="true"] .icon-bars { display: none;  }
+  .hamburger[aria-expanded="true"] .icon-x    { display: block; }
+
+  /* ─────────────────────────────────────
+     MOBILE NAV
+     Uses .is-open class, NOT hidden attr,
+     so the CSS display:flex below works.
+  ───────────────────────────────────── */
   .mobile-nav {
-    border-top: 1px solid var(--border);
-    padding: var(--sp-sm);
-    display: flex;
+    /* Hidden by default */
+    display: none;
     flex-direction: column;
     gap: 0.2rem;
+    padding: 0.6rem 0.75rem 1rem;
+    border-top: 1px solid var(--border);
     background: var(--bg);
-    animation: fadeUp 0.18s var(--ease) both;
+  }
+
+  .mobile-nav.is-open {
+    display: flex;
+    animation: nav-slide-down 0.18s ease both;
+  }
+
+  @keyframes nav-slide-down {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0);    }
   }
 
   .mob-link {
     display: block;
-    padding: 0.6em 0.75em;
+    padding: 0.55em 0.85em;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     color: var(--fg-muted);
     text-decoration: none;
-    font-family: var(--font-mono);
-    font-size: var(--s-xs);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    border-radius: var(--r);
-    transition: background var(--t1), color var(--t1);
+    border-radius: 4px;
+    transition: background 0.11s ease, color 0.11s ease;
   }
-  .mob-link:hover { background: var(--bg-raised); color: var(--gold); }
+  .mob-link:hover {
+    background: var(--bg-raised);
+    color: var(--gold);
+  }
 
+  /* ─────────────────────────────────────
+     RESPONSIVE BREAKPOINT
+  ───────────────────────────────────── */
   @media (max-width: 720px) {
-    .desktop-nav { display: none; }
-    .mobile-only { display: flex; }
-    .ticker-strip { display: none; }
+    .desktop-nav  { display: none; }   /* hide desktop links */
+    .ticker-strip { display: none; }   /* hide ticker on small screens */
+    .hamburger    { display: flex; }   /* show hamburger */
+    .logo-text    { font-size: 1.5rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ticker-track      { animation: none; }
+    .mobile-nav.is-open { animation: none; }
   }
 </style>
 
 <script>
-  // Theme
-  const getTheme = () => localStorage.getItem('theme') ||
+  // ── THEME ──────────────────────────────────────────────────────────
+  const getTheme = (): string =>
+    localStorage.getItem('theme') ??
     (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
 
   const applyTheme = (t: string) => {
@@ -266,42 +386,44 @@ import { SITE_TITLE } from '../consts';
     applyTheme(getTheme() === 'dark' ? 'light' : 'dark');
   });
 
-  // Mobile menu
-  const toggle = document.getElementById('mobile-toggle');
-  const mobileNav = document.getElementById('mobile-nav');
-  const iconMenu = toggle?.querySelector('.icon-menu') as HTMLElement | null;
-  const iconClose = toggle?.querySelector('.icon-close') as HTMLElement | null;
+  // ── MOBILE MENU ────────────────────────────────────────────────────
+  const toggleBtn = document.getElementById('mobile-toggle') as HTMLButtonElement | null;
+  const mobileNav = document.getElementById('mobile-nav') as HTMLElement | null;
 
-  toggle?.addEventListener('click', () => {
-    const isOpen = !mobileNav?.hidden;
-    if (mobileNav) mobileNav.hidden = isOpen;
-    toggle.setAttribute('aria-expanded', String(!isOpen));
-    if (iconMenu) iconMenu.style.display = isOpen ? '' : 'none';
-    if (iconClose) iconClose.style.display = isOpen ? 'none' : '';
+  const openMenu = () => {
+    mobileNav?.classList.add('is-open');
+    toggleBtn?.setAttribute('aria-expanded', 'true');
+    toggleBtn?.setAttribute('aria-label', 'Close navigation menu');
+  };
+
+  const closeMenu = () => {
+    mobileNav?.classList.remove('is-open');
+    toggleBtn?.setAttribute('aria-expanded', 'false');
+    toggleBtn?.setAttribute('aria-label', 'Open navigation menu');
+  };
+
+  toggleBtn?.addEventListener('click', () => {
+    mobileNav?.classList.contains('is-open') ? closeMenu() : openMenu();
   });
 
-  window.addEventListener('resize', () => {
-    if (window.innerWidth > 720 && mobileNav && !mobileNav.hidden) {
-      mobileNav.hidden = true;
-      toggle?.setAttribute('aria-expanded', 'false');
-      if (iconMenu) iconMenu.style.display = '';
-      if (iconClose) iconClose.style.display = 'none';
-    }
+  // Close when viewport widens past mobile breakpoint
+  window.matchMedia('(min-width: 721px)').addEventListener('change', (e) => {
+    if (e.matches) closeMenu();
   });
 
-  // Scroll shadow
-  const header = document.getElementById('site-header');
+  // ── SCROLL SHADOW ──────────────────────────────────────────────────
+  const siteHeader = document.getElementById('site-header');
   window.addEventListener('scroll', () => {
-    header?.classList.toggle('scrolled', window.scrollY > 8);
+    siteHeader?.classList.toggle('scrolled', window.scrollY > 10);
   }, { passive: true });
 
-  // Scroll progress
-  const progress = document.getElementById('scroll-progress');
-  if (progress) {
+  // ── SCROLL PROGRESS ────────────────────────────────────────────────
+  const bar = document.getElementById('scroll-progress');
+  if (bar) {
     const update = () => {
-      const st = document.documentElement.scrollTop;
-      const dh = document.documentElement.scrollHeight - window.innerHeight;
-      progress.style.transform = `scaleX(${dh > 0 ? st / dh : 0})`;
+      const scrolled = document.documentElement.scrollTop;
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.transform = `scaleX(${total > 0 ? scrolled / total : 0})`;
     };
     window.addEventListener('scroll', update, { passive: true });
     update();
