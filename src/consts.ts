@@ -1,4 +1,4 @@
-export const SITE_TITLE = 'P||O';
+export const SITE_TITLE = 'POrbit';
 export const SITE_DESCRIPTION = 'Sharp analysis on markets, money, and the forces shaping the global economy.';
 export const SITE_URL = 'https://perkorbit.co';
 export const TWITTER_HANDLE = '@perkorbit';
