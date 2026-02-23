@@ -1,12 +1,10 @@
 ---
-import HeaderLink from './HeaderLink.astro';
 import { SITE_TITLE } from '../consts';
 ---
 
 <a href="#main-content" class="skip-link">Skip to content</a>
 <div id="scroll-progress" aria-hidden="true"></div>
 
-<!-- Single sticky wrapper holds ticker + nav bar together -->
 <div id="site-header">
 
   <!-- ── TICKER STRIP ── -->
@@ -27,7 +25,6 @@ import { SITE_TITLE } from '../consts';
       <span class="t-item"><span class="t-sym">GOLD</span>&nbsp;<span class="t-val">2,341.20</span>&nbsp;<span class="t-up">+0.6%</span></span>
       <span class="t-sep">|</span>
       <span class="t-item"><span class="t-sym">OIL</span>&nbsp;<span class="t-val">81.44</span>&nbsp;<span class="t-dn">−0.38%</span></span>
-      <!-- duplicate for seamless loop -->
       <span class="t-sep">|</span>
       <span class="t-item"><span class="t-sym">SPX</span>&nbsp;<span class="t-val">5,234.18</span>&nbsp;<span class="t-up">+0.82%</span></span>
       <span class="t-sep">|</span>
@@ -47,89 +44,159 @@ import { SITE_TITLE } from '../consts';
     </div>
   </div>
 
-  <!-- ── MAIN NAV BAR ── -->
+  <!-- ── NAV BAR ── -->
   <header class="nav-bar">
     <div class="nav-inner">
 
-      <!-- Logo -->
+      <!-- Logo — far left -->
       <a href="/" class="logo" aria-label={`${SITE_TITLE} — Home`}>
         <span class="logo-text">{SITE_TITLE}</span>
         <span class="logo-rule" aria-hidden="true"></span>
       </a>
 
-      <!-- Desktop navigation — hidden on mobile via CSS -->
-      <nav class="desktop-nav" aria-label="Primary navigation">
-        <HeaderLink href="/">Home</HeaderLink>
-        <HeaderLink href="/blog">Analysis</HeaderLink>
-        <HeaderLink href="/about">About</HeaderLink>
-      </nav>
+      <!-- Right side: utility icons + single menu toggle -->
+      <div class="nav-right">
 
-      <!-- Icon actions -->
-      <div class="nav-actions">
+        <!-- Search icon -->
         <a href="/search" class="icon-btn" aria-label="Search" title="Search">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="1.75"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+          </svg>
         </a>
 
-        <a href="/rss.xml" class="icon-btn" aria-label="RSS Feed" title="RSS Feed" target="_blank" rel="noopener noreferrer">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
-        </a>
-
+        <!-- Theme toggle -->
         <button id="theme-toggle" class="icon-btn" aria-label="Toggle light/dark mode">
-          <!-- Sun: shown in dark mode (click to go light) -->
-          <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
-          <!-- Moon: shown in light mode (click to go dark) -->
-          <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+          <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="1.75"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+          </svg>
+          <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="1.75"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+          </svg>
         </button>
 
-        <!-- Hamburger — only visible on mobile -->
-        <button id="mobile-toggle" class="icon-btn hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-nav">
-          <svg class="icon-bars" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" x2="20" y1="7" y2="7"/><line x1="4" x2="20" y1="17" y2="17"/></svg>
-          <svg class="icon-x" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-        </button>
+        <!-- Divider -->
+        <span class="nav-divider" aria-hidden="true"></span>
+
+        <!-- ── MENU BUTTON + DROPDOWN (always far-right, all screen sizes) ── -->
+        <div class="menu-wrap" id="menu-wrap">
+          <button
+            id="menu-toggle"
+            class="icon-btn menu-btn"
+            aria-label="Open navigation menu"
+            aria-expanded="false"
+            aria-controls="nav-dropdown"
+            aria-haspopup="true"
+          >
+            <!-- Grid / apps icon — signals "navigation menu" -->
+            <svg class="icon-grid" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="1.75"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3"  y="3"  width="7" height="7" rx="1"/>
+              <rect x="14" y="3"  width="7" height="7" rx="1"/>
+              <rect x="3"  y="14" width="7" height="7" rx="1"/>
+              <rect x="14" y="14" width="7" height="7" rx="1"/>
+            </svg>
+            <!-- X icon when open -->
+            <svg class="icon-x" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="1.75"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+            </svg>
+          </button>
+
+          <!-- Dropdown panel -->
+          <nav
+            id="nav-dropdown"
+            class="nav-dropdown"
+            aria-label="Site navigation"
+            role="menu"
+          >
+            <div class="dropdown-inner">
+              <p class="dropdown-label">Navigate</p>
+
+              <a href="/" class="dropdown-link" role="menuitem">
+                <span class="dl-icon" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                </span>
+                Home
+              </a>
+
+              <a href="/blog" class="dropdown-link" role="menuitem">
+                <span class="dl-icon" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                </span>
+                Analysis
+              </a>
+
+              <a href="/about" class="dropdown-link" role="menuitem">
+                <span class="dl-icon" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
+                </span>
+                About
+              </a>
+
+              <a href="/search" class="dropdown-link" role="menuitem">
+                <span class="dl-icon" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                </span>
+                Search
+              </a>
+
+              <div class="dropdown-divider" aria-hidden="true"></div>
+
+              <a href="/rss.xml" class="dropdown-link" role="menuitem" target="_blank" rel="noopener noreferrer">
+                <span class="dl-icon" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
+                </span>
+                RSS Feed
+                <svg class="dl-ext" xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+              </a>
+            </div>
+          </nav>
+        </div>
+        <!-- /.menu-wrap -->
+
       </div>
+      <!-- /.nav-right -->
     </div>
-
-    <!-- Mobile nav — toggled by JS via .is-open class, NOT hidden attr -->
-    <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile navigation">
-      <HeaderLink href="/">Home</HeaderLink>
-      <HeaderLink href="/blog">Analysis</HeaderLink>
-      <HeaderLink href="/about">About</HeaderLink>
-      <a href="/search" class="mob-link">Search</a>
-      <a href="/rss.xml" class="mob-link" target="_blank" rel="noopener">RSS Feed ↗</a>
-    </nav>
   </header>
 
 </div><!-- /#site-header -->
 
+<!-- Click-outside backdrop -->
+<div id="menu-backdrop" class="menu-backdrop" aria-hidden="true"></div>
+
 <style>
-  /* ─────────────────────────────────────
-     SKIP LINK
-  ───────────────────────────────────── */
+  /* ── SKIP LINK ── */
   .skip-link {
     position: absolute;
     top: -100%;
     left: 1rem;
     background: var(--gold);
     color: #000;
-    padding: 0.5rem 1rem;
+    padding: 0.45rem 1rem;
     border-radius: 4px;
-    font-weight: 700;
-    z-index: 9999;
-    text-decoration: none;
     font-family: var(--font-mono);
-    font-size: 0.8rem;
+    font-size: 0.78rem;
+    font-weight: 700;
     letter-spacing: 0.06em;
     text-transform: uppercase;
+    text-decoration: none;
+    z-index: 9999;
   }
   .skip-link:focus { top: 0.75rem; }
 
-  /* ─────────────────────────────────────
-     SCROLL PROGRESS
-  ───────────────────────────────────── */
+  /* ── SCROLL PROGRESS ── */
   #scroll-progress {
     position: fixed;
-    top: 0;
-    left: 0;
+    top: 0; left: 0;
     width: 100%;
     height: 2px;
     background: linear-gradient(90deg, var(--gold-dim), var(--gold), var(--gold-bright));
@@ -139,31 +206,22 @@ import { SITE_TITLE } from '../consts';
     pointer-events: none;
   }
 
-  /* ─────────────────────────────────────
-     STICKY WRAPPER
-  ───────────────────────────────────── */
+  /* ── STICKY WRAPPER ── */
   #site-header {
     position: sticky;
     top: 0;
     z-index: 200;
     background: var(--bg);
     border-bottom: 1px solid var(--border);
-    /* ensure background covers scrolled content */
     will-change: transform;
-    transition:
-      background   0.36s ease,
-      box-shadow   0.22s ease,
-      border-color 0.22s ease;
+    transition: background 0.36s ease, box-shadow 0.22s ease, border-color 0.22s ease;
   }
-
   #site-header.scrolled {
-    box-shadow: 0 4px 32px rgba(0, 0, 0, 0.55);
+    box-shadow: 0 4px 32px rgba(0,0,0,0.55);
     border-bottom-color: var(--gold-dim);
   }
 
-  /* ─────────────────────────────────────
-     TICKER STRIP
-  ───────────────────────────────────── */
+  /* ── TICKER ── */
   .ticker-strip {
     height: 26px;
     background: var(--bg-raised);
@@ -172,7 +230,6 @@ import { SITE_TITLE } from '../consts';
     display: flex;
     align-items: center;
   }
-
   .ticker-track {
     display: flex;
     align-items: center;
@@ -180,12 +237,10 @@ import { SITE_TITLE } from '../consts';
     animation: run-ticker 45s linear infinite;
     will-change: transform;
   }
-
   @keyframes run-ticker {
     from { transform: translateX(0); }
     to   { transform: translateX(-50%); }
   }
-
   .t-item {
     display: inline-flex;
     align-items: center;
@@ -195,34 +250,25 @@ import { SITE_TITLE } from '../consts';
     letter-spacing: 0.05em;
     text-transform: uppercase;
   }
-
   .t-sep  { color: var(--border-hi); font-size: 10px; font-family: var(--font-mono); padding-inline: 0.1em; }
   .t-sym  { color: var(--fg-subtle); }
   .t-val  { color: var(--fg); font-weight: 500; }
   .t-up   { color: var(--positive); font-weight: 600; }
   .t-dn   { color: var(--negative); font-weight: 600; }
 
-  /* ─────────────────────────────────────
-     NAV BAR
-  ───────────────────────────────────── */
-  .nav-bar {
-    display: block;
-    background: transparent;
-  }
+  /* ── NAV BAR ── */
+  .nav-bar { display: block; background: transparent; }
 
   .nav-inner {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    /* Comfortable gap between logo / nav / actions */
-    gap: 1rem;
     height: 62px;
-    /* Use 100% - padding so it never overflows on small screens */
     width: min(1140px, 100% - 2.5rem);
     margin-inline: auto;
   }
 
-  /* ─── LOGO ─── */
+  /* ── LOGO ── */
   .logo {
     display: flex;
     flex-direction: column;
@@ -231,7 +277,6 @@ import { SITE_TITLE } from '../consts';
     text-decoration: none;
     flex-shrink: 0;
   }
-
   .logo-text {
     font-family: var(--font-display, 'Bebas Neue', sans-serif);
     font-size: 1.85rem;
@@ -242,7 +287,6 @@ import { SITE_TITLE } from '../consts';
     transition: color 0.11s ease;
   }
   .logo:hover .logo-text { color: var(--gold); }
-
   .logo-rule {
     height: 2px;
     width: 0;
@@ -252,24 +296,16 @@ import { SITE_TITLE } from '../consts';
   }
   .logo:hover .logo-rule { width: 100%; }
 
-  /* ─── DESKTOP NAV ─── */
-  .desktop-nav {
+  /* ── RIGHT CLUSTER ── */
+  .nav-right {
     display: flex;
     align-items: center;
-    /* Space between links — this was the main bug (was gap:0) */
-    gap: 0.5rem;
-    flex: 1;
-    justify-content: center;
+    gap: 0.2rem;
+    /* Push everything to the far right */
+    margin-left: auto;
   }
 
-  /* ─── ICON ACTIONS ─── */
-  .nav-actions {
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-    flex-shrink: 0;
-  }
-
+  /* ── ICON BUTTONS ── */
   .icon-btn {
     display: flex;
     align-items: center;
@@ -285,92 +321,169 @@ import { SITE_TITLE } from '../consts';
     text-decoration: none;
     transition: background 0.11s ease, color 0.11s ease;
     flex-shrink: 0;
+    position: relative;
   }
-  .icon-btn:hover {
+  .icon-btn:hover { background: var(--bg-raised); color: var(--gold); }
+
+  /* Theme icon swap */
+  .icon-sun  { display: block; }
+  .icon-moon { display: none; }
+  [data-theme="light"] .icon-sun  { display: none; }
+  [data-theme="light"] .icon-moon { display: block; }
+
+  /* Divider between utility icons and menu icon */
+  .nav-divider {
+    display: block;
+    width: 1px;
+    height: 20px;
+    background: var(--border-hi);
+    margin-inline: 0.35rem;
+    flex-shrink: 0;
+  }
+
+  /* ── MENU ICON STATE ── */
+  /* Default: show grid icon */
+  .icon-grid { display: block; }
+  .icon-x    { display: none; }
+
+  /* When open: swap to X */
+  #menu-toggle[aria-expanded="true"] .icon-grid { display: none; }
+  #menu-toggle[aria-expanded="true"] .icon-x    { display: block; }
+  #menu-toggle[aria-expanded="true"] {
     background: var(--bg-raised);
     color: var(--gold);
   }
 
-  /* ─── THEME ICONS ───
-     Default (dark mode): show sun so user can switch to light
-     Light mode:          show moon so user can switch to dark    */
-  .icon-sun  { display: block; }
-  .icon-moon { display: none;  }
+  /* ── MENU WRAP (relative anchor for dropdown) ── */
+  .menu-wrap {
+    position: relative;
+    flex-shrink: 0;
+  }
 
-  [data-theme="light"] .icon-sun  { display: none;  }
-  [data-theme="light"] .icon-moon { display: block; }
-
-  /* ─── HAMBURGER ─── */
-  /* Always hidden on desktop */
-  .hamburger { display: none; }
-
-  /* Icon state: default shows bars; when open, shows X */
-  .icon-bars { display: block; }
-  .icon-x    { display: none;  }
-
-  .hamburger[aria-expanded="true"] .icon-bars { display: none;  }
-  .hamburger[aria-expanded="true"] .icon-x    { display: block; }
-
-  /* ─────────────────────────────────────
-     MOBILE NAV
-     Uses .is-open class, NOT hidden attr,
-     so the CSS display:flex below works.
-  ───────────────────────────────────── */
-  .mobile-nav {
+  /* ── DROPDOWN PANEL ── */
+  .nav-dropdown {
     /* Hidden by default */
     display: none;
-    flex-direction: column;
-    gap: 0.2rem;
-    padding: 0.6rem 0.75rem 1rem;
-    border-top: 1px solid var(--border);
-    background: var(--bg);
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    width: 220px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-hi);
+    border-radius: 8px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.55), 0 2px 10px rgba(0,0,0,0.35);
+    z-index: 500;
+    overflow: hidden;
+    /* Subtle gold top accent */
+    border-top: 2px solid var(--gold-dim);
   }
 
-  .mobile-nav.is-open {
-    display: flex;
-    animation: nav-slide-down 0.18s ease both;
-  }
-
-  @keyframes nav-slide-down {
-    from { opacity: 0; transform: translateY(-8px); }
-    to   { opacity: 1; transform: translateY(0);    }
-  }
-
-  .mob-link {
+  .nav-dropdown.is-open {
     display: block;
-    padding: 0.55em 0.85em;
+    animation: dropdown-in 0.18s ease both;
+  }
+
+  @keyframes dropdown-in {
+    from { opacity: 0; transform: translateY(-8px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0)    scale(1);    }
+  }
+
+  .dropdown-inner {
+    padding: 0.6rem 0.4rem;
+  }
+
+  .dropdown-label {
     font-family: var(--font-mono);
-    font-size: 0.78rem;
-    letter-spacing: 0.08em;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    padding: 0.3rem 0.75rem 0.5rem;
+    margin: 0;
+  }
+
+  .dropdown-link {
+    display: flex;
+    align-items: center;
+    gap: 0.65em;
+    padding: 0.6em 0.75em;
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--fg-muted);
     text-decoration: none;
-    border-radius: 4px;
-    transition: background 0.11s ease, color 0.11s ease;
-  }
-  .mob-link:hover {
-    background: var(--bg-raised);
-    color: var(--gold);
+    border-radius: 5px;
+    transition: background 0.1s ease, color 0.1s ease;
+    /* For the external icon pushed to end */
+    justify-content: flex-start;
   }
 
-  /* ─────────────────────────────────────
-     RESPONSIVE BREAKPOINT
-  ───────────────────────────────────── */
+  .dropdown-link:hover,
+  .dropdown-link:focus {
+    background: var(--bg-raised);
+    color: var(--gold);
+    outline: none;
+  }
+
+  /* Active page highlight */
+  .dropdown-link[data-active="true"] {
+    color: var(--gold);
+    background: var(--gold-glow);
+  }
+
+  .dl-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    color: var(--fg-subtle);
+    flex-shrink: 0;
+    transition: color 0.1s;
+  }
+  .dropdown-link:hover .dl-icon,
+  .dropdown-link:focus .dl-icon { color: var(--gold-dim); }
+
+  .dl-ext {
+    margin-left: auto;
+    color: var(--fg-subtle);
+    flex-shrink: 0;
+  }
+
+  .dropdown-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 0.4rem 0.75rem;
+  }
+
+  /* ── BACKDROP (closes menu on outside click) ── */
+  .menu-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 199; /* below dropdown (500) but above page */
+    background: transparent;
+    cursor: default;
+  }
+  .menu-backdrop.is-active { display: block; }
+
+  /* ── RESPONSIVE ── */
   @media (max-width: 720px) {
-    .desktop-nav  { display: none; }   /* hide desktop links */
-    .ticker-strip { display: none; }   /* hide ticker on small screens */
-    .hamburger    { display: flex; }   /* show hamburger */
-    .logo-text    { font-size: 1.5rem; }
+    .ticker-strip { display: none; }
+    .logo-text { font-size: 1.5rem; }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .ticker-track      { animation: none; }
-    .mobile-nav.is-open { animation: none; }
+    .ticker-track { animation: none; }
+    .nav-dropdown.is-open { animation: none; }
   }
 </style>
 
 <script>
-  // ── THEME ──────────────────────────────────────────────────────────
+  // ── THEME ─────────────────────────────────────────────────────────
   const getTheme = (): string =>
     localStorage.getItem('theme') ??
     (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
@@ -386,43 +499,88 @@ import { SITE_TITLE } from '../consts';
     applyTheme(getTheme() === 'dark' ? 'light' : 'dark');
   });
 
-  // ── MOBILE MENU ────────────────────────────────────────────────────
-  const toggleBtn = document.getElementById('mobile-toggle') as HTMLButtonElement | null;
-  const mobileNav = document.getElementById('mobile-nav') as HTMLElement | null;
+  // ── MENU DROPDOWN ─────────────────────────────────────────────────
+  const menuToggle  = document.getElementById('menu-toggle')  as HTMLButtonElement | null;
+  const navDropdown = document.getElementById('nav-dropdown') as HTMLElement | null;
+  const backdrop    = document.getElementById('menu-backdrop') as HTMLElement | null;
 
   const openMenu = () => {
-    mobileNav?.classList.add('is-open');
-    toggleBtn?.setAttribute('aria-expanded', 'true');
-    toggleBtn?.setAttribute('aria-label', 'Close navigation menu');
+    navDropdown?.classList.add('is-open');
+    backdrop?.classList.add('is-active');
+    menuToggle?.setAttribute('aria-expanded', 'true');
+    menuToggle?.setAttribute('aria-label', 'Close navigation menu');
+    // Focus first link for keyboard users
+    (navDropdown?.querySelector('.dropdown-link') as HTMLElement | null)?.focus();
   };
 
   const closeMenu = () => {
-    mobileNav?.classList.remove('is-open');
-    toggleBtn?.setAttribute('aria-expanded', 'false');
-    toggleBtn?.setAttribute('aria-label', 'Open navigation menu');
+    navDropdown?.classList.remove('is-open');
+    backdrop?.classList.remove('is-active');
+    menuToggle?.setAttribute('aria-expanded', 'false');
+    menuToggle?.setAttribute('aria-label', 'Open navigation menu');
   };
 
-  toggleBtn?.addEventListener('click', () => {
-    mobileNav?.classList.contains('is-open') ? closeMenu() : openMenu();
+  menuToggle?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    navDropdown?.classList.contains('is-open') ? closeMenu() : openMenu();
   });
 
-  // Close when viewport widens past mobile breakpoint
-  window.matchMedia('(min-width: 721px)').addEventListener('change', (e) => {
-    if (e.matches) closeMenu();
+  // Close on backdrop click
+  backdrop?.addEventListener('click', closeMenu);
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && navDropdown?.classList.contains('is-open')) {
+      closeMenu();
+      menuToggle?.focus();
+    }
   });
 
-  // ── SCROLL SHADOW ──────────────────────────────────────────────────
+  // Trap focus inside dropdown & allow arrow key nav
+  navDropdown?.addEventListener('keydown', (e) => {
+    const links = [...(navDropdown?.querySelectorAll('.dropdown-link') ?? [])] as HTMLElement[];
+    const idx   = links.indexOf(document.activeElement as HTMLElement);
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      links[(idx + 1) % links.length]?.focus();
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      links[(idx - 1 + links.length) % links.length]?.focus();
+    } else if (e.key === 'Tab') {
+      // Close when tabbing out of last item
+      if (!e.shiftKey && idx === links.length - 1) {
+        e.preventDefault();
+        closeMenu();
+        menuToggle?.focus();
+      }
+    }
+  });
+
+  // Mark active link
+  const currentPath = window.location.pathname.replace(/\/$/, '') || '/';
+  navDropdown?.querySelectorAll<HTMLAnchorElement>('.dropdown-link').forEach(link => {
+    const href = link.getAttribute('href') ?? '';
+    const isHome = href === '/' && (currentPath === '' || currentPath === '/');
+    const isOther = href !== '/' && currentPath.startsWith(href);
+    if (isHome || isOther) {
+      link.setAttribute('data-active', 'true');
+      link.setAttribute('aria-current', 'page');
+    }
+  });
+
+  // ── SCROLL SHADOW ─────────────────────────────────────────────────
   const siteHeader = document.getElementById('site-header');
   window.addEventListener('scroll', () => {
     siteHeader?.classList.toggle('scrolled', window.scrollY > 10);
   }, { passive: true });
 
-  // ── SCROLL PROGRESS ────────────────────────────────────────────────
+  // ── SCROLL PROGRESS ───────────────────────────────────────────────
   const bar = document.getElementById('scroll-progress');
   if (bar) {
     const update = () => {
       const scrolled = document.documentElement.scrollTop;
-      const total = document.documentElement.scrollHeight - window.innerHeight;
+      const total    = document.documentElement.scrollHeight - window.innerHeight;
       bar.style.transform = `scaleX(${total > 0 ? scrolled / total : 0})`;
     };
     window.addEventListener('scroll', update, { passive: true });
