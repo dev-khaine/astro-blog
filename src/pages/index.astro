@@ -15,7 +15,7 @@ const latest = rest.slice(2, 7);
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="ltr" data-lang="en">
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
   </head>
@@ -27,21 +27,32 @@ const latest = rest.slice(2, 7);
       <section class="hero-section" aria-labelledby="hero-heading">
         <!-- Masthead -->
         <div class="masthead anim-up">
-          <div class="masthead-left">
-            <span class="label">Est. {new Date().getFullYear()}</span>
+          <div class="masthead-side">
+            <span class="label">
+              <span class="en-text">Est. {new Date().getFullYear()}</span>
+              <span class="ar-text">تأسّس {new Date().getFullYear()}</span>
+            </span>
           </div>
-          <h1 id="hero-heading" class="masthead-title">{SITE_TITLE}</h1>
-          <div class="masthead-right">
-            <span class="label">{new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</span>
+          <h1 id="hero-heading" class="masthead-title">
+            <span class="en-text">{SITE_TITLE}</span>
+            <span class="ar-text">كابيتال</span>
+          </h1>
+          <div class="masthead-side masthead-side--right">
+            <span class="label masthead-date">
+              {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
+            </span>
           </div>
         </div>
 
-        <p class="hero-tagline anim-up anim-up-1">{SITE_DESCRIPTION}</p>
+        <p class="hero-tagline anim-up anim-up-1">
+          <span class="en-text">{SITE_DESCRIPTION}</span>
+          <span class="ar-text">تحليل دقيق للأسواق والمال والقوى التي تشكّل الاقتصاد العالمي.</span>
+        </p>
 
         <!-- Hero post -->
         {hero && (
           <div class="hero-grid anim-up anim-up-2">
-            <a href={`/blog/${hero.id}/`} class="hero-feature" aria-label={`Read: ${hero.data.title}`}>
+            <a href={`/blog/${hero.id}/`} class="hero-feature">
               {hero.data.heroImage && (
                 <div class="hero-img">
                   <img src={hero.data.heroImage} alt="" width={900} height={500} loading="eager" decoding="async" />
@@ -66,11 +77,10 @@ const latest = rest.slice(2, 7);
               </div>
             </a>
 
-            <!-- Secondary -->
             {secondary.length > 0 && (
               <div class="hero-secondary">
                 {secondary.map(post => (
-                  <a href={`/blog/${post.id}/`} class="secondary-post" aria-label={`Read: ${post.data.title}`}>
+                  <a href={`/blog/${post.id}/`} class="secondary-post">
                     {post.data.heroImage && (
                       <div class="sec-img">
                         <img src={post.data.heroImage} alt="" width={400} height={230} loading="lazy" decoding="async" />
@@ -97,14 +107,20 @@ const latest = rest.slice(2, 7);
       {latest.length > 0 && (
         <section class="latest-section" aria-labelledby="latest-heading">
           <div class="section-head">
-            <h2 class="section-title" id="latest-heading">Latest Analysis</h2>
-            <a href="/blog" class="btn btn-outline">View archive</a>
+            <h2 class="section-title" id="latest-heading">
+              <span class="en-text">Latest Analysis</span>
+              <span class="ar-text">أحدث التحليلات</span>
+            </h2>
+            <a href="/blog" class="btn btn-outline">
+              <span class="en-text">View archive</span>
+              <span class="ar-text">عرض الأرشيف</span>
+            </a>
           </div>
 
-          <div class="latest-list" role="feed" aria-label="Latest posts">
+          <div class="latest-list" role="feed">
             {latest.map((post, i) => (
               <article class="latest-row" role="article">
-                <a href={`/blog/${post.id}/`} class="latest-row-link" aria-label={`Read: ${post.data.title}`}>
+                <a href={`/blog/${post.id}/`} class="latest-row-link">
                   <span class="latest-num label">0{i + 1}</span>
                   <div class="latest-body">
                     <div class="latest-meta">
@@ -123,14 +139,20 @@ const latest = rest.slice(2, 7);
                       <img src={post.data.heroImage} alt="" width={180} height={110} loading="lazy" decoding="async" />
                     </div>
                   )}
-                  <span class="latest-arrow" aria-hidden="true">→</span>
+                  <span class="latest-arrow" aria-hidden="true">
+                    <span class="en-text">→</span>
+                    <span class="ar-text">←</span>
+                  </span>
                 </a>
               </article>
             ))}
           </div>
 
           <div class="view-all">
-            <a href="/blog" class="btn btn-outline">Read all {allPosts.length} articles</a>
+            <a href="/blog" class="btn btn-outline">
+              <span class="en-text">Read all {allPosts.length} articles</span>
+              <span class="ar-text">قراءة جميع {allPosts.length} مقالة</span>
+            </a>
           </div>
         </section>
       )}
@@ -140,300 +162,113 @@ const latest = rest.slice(2, 7);
 </html>
 
 <style>
-  /* ── HERO ── */
-  .hero-section {
-    padding-bottom: var(--sp-xl);
-    border-bottom: 1px solid var(--border);
-    margin-bottom: var(--sp-xl);
-  }
+  /* Hero */
+  .hero-section { padding-bottom: var(--sp-xl); border-bottom: 1px solid var(--border); margin-bottom: var(--sp-xl); }
 
-  /* Masthead */
   .masthead {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    align-items: center;
-    gap: 1rem;
+    display: grid; grid-template-columns: 1fr auto 1fr;
+    align-items: center; gap: 1rem;
     padding-block: var(--sp-lg);
     border-bottom: 3px double var(--border);
     border-top: 1px solid var(--border);
     margin-bottom: var(--sp-md);
     text-align: center;
   }
-
-  .masthead-left { text-align: left; }
-  .masthead-right { text-align: right; }
+  .masthead-side { text-align: start; }
+  .masthead-side--right { text-align: end; }
 
   .masthead-title {
     font-family: var(--font-display);
     font-size: clamp(5rem, 12vw, 10rem);
-    line-height: 0.9;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: var(--fg);
+    line-height: 0.9; letter-spacing: 0.05em; text-transform: uppercase; color: var(--fg);
+  }
+  [dir="rtl"] .masthead-title {
+    font-family: var(--font-arabic); font-weight: 700;
+    text-transform: none; letter-spacing: 0; line-height: 1.1;
   }
 
   .hero-tagline {
-    font-family: var(--font-serif);
-    font-size: var(--s-md);
-    font-style: italic;
-    color: var(--fg-muted);
-    text-align: center;
-    margin-bottom: var(--sp-xl);
-    line-height: 1.5;
+    font-family: var(--font-serif); font-size: var(--s-md); font-style: italic;
+    color: var(--fg-muted); text-align: center; margin-bottom: var(--sp-xl); line-height: 1.5;
   }
+  [dir="rtl"] .hero-tagline { font-family: var(--font-arabic); font-style: normal; font-weight: 400; line-height: 1.8; }
 
-  /* Hero grid */
-  .hero-grid {
-    display: grid;
-    grid-template-columns: 1.6fr 1fr;
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    border-radius: var(--r);
-    overflow: hidden;
-  }
-
-  .hero-feature {
-    display: block;
-    text-decoration: none;
-    position: relative;
-    background: var(--bg-card);
-    transition: background var(--t2);
-  }
+  .hero-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; }
+  .hero-feature { display: block; text-decoration: none; position: relative; background: var(--bg-card); transition: background var(--t2); }
   .hero-feature:hover { background: var(--bg-hover); }
-
-  .hero-img {
-    width: 100%;
-    aspect-ratio: 16/9;
-    overflow: hidden;
-    position: relative;
-  }
-  .hero-img img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    display: block;
-    border-radius: 0;
-    transition: transform var(--t3) var(--ease);
-  }
+  .hero-img { width: 100%; aspect-ratio: 16/9; overflow: hidden; position: relative; }
+  .hero-img img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 0; transition: transform var(--t3) var(--ease); }
   .hero-feature:hover .hero-img img { transform: scale(1.03); }
-
-  .hero-img-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to bottom, transparent 50%, rgba(12,12,12,0.8) 100%);
-  }
-
-  .hero-content {
-    padding: var(--sp-md) var(--sp-lg) var(--sp-lg);
-  }
-
-  .hero-tags { display: flex; gap: 0.4rem; margin-bottom: 0.75rem; }
-
+  .hero-img-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 50%, rgba(12,12,12,0.8) 100%); }
+  .hero-content { padding: var(--sp-md) var(--sp-lg) var(--sp-lg); }
+  .hero-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.75rem; }
   .hero-post-title {
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 3.5vw, 3.2rem);
-    line-height: 0.95;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    color: var(--fg);
-    margin-bottom: 0.75rem;
-    transition: color var(--t1);
+    font-family: var(--font-display); font-size: clamp(2rem, 3.5vw, 3.2rem);
+    line-height: 0.95; letter-spacing: 0.02em; text-transform: uppercase;
+    color: var(--fg); margin-bottom: 0.75rem; transition: color var(--t1);
   }
+  [dir="rtl"] .hero-post-title { font-family: var(--font-arabic); font-weight: 700; text-transform: none; letter-spacing: 0; line-height: 1.3; }
   .hero-feature:hover .hero-post-title { color: var(--gold); }
-
-  .hero-post-desc {
-    font-family: var(--font-serif);
-    font-size: var(--s-sm);
-    color: var(--fg-muted);
-    line-height: 1.65;
-    margin-bottom: var(--sp-sm);
-    font-style: italic;
-  }
-
-  .hero-meta {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-family: var(--font-mono);
-    font-size: var(--s-2xs);
-    color: var(--fg-subtle);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin: 0;
-  }
+  .hero-post-desc { font-family: var(--font-serif); font-size: var(--s-sm); color: var(--fg-muted); line-height: 1.65; margin-bottom: var(--sp-sm); font-style: italic; }
+  [dir="rtl"] .hero-post-desc { font-family: var(--font-arabic); font-style: normal; line-height: 1.8; }
+  .hero-meta { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: var(--s-2xs); color: var(--fg-subtle); letter-spacing: 0.08em; text-transform: uppercase; margin: 0; }
+  [dir="rtl"] .hero-meta { font-family: var(--font-arabic); letter-spacing: 0; }
   .meta-sep { color: var(--gold-dim); }
 
-  /* Secondary */
-  .hero-secondary {
-    display: flex;
-    flex-direction: column;
-    gap: 1px;
-    background: var(--border);
-  }
-
-  .secondary-post {
-    display: grid;
-    grid-template-columns: 1fr;
-    text-decoration: none;
-    background: var(--bg-card);
-    flex: 1;
-    transition: background var(--t2);
-    overflow: hidden;
-  }
+  .hero-secondary { display: flex; flex-direction: column; gap: 1px; background: var(--border); }
+  .secondary-post { display: block; text-decoration: none; background: var(--bg-card); flex: 1; transition: background var(--t2); overflow: hidden; }
   .secondary-post:hover { background: var(--bg-hover); }
-
   .sec-img { width: 100%; aspect-ratio: 16/8; overflow: hidden; }
   .sec-img img { width: 100%; height: 100%; object-fit: cover; border-radius: 0; transition: transform var(--t3) var(--ease); }
   .secondary-post:hover .sec-img img { transform: scale(1.04); }
-
   .sec-body { padding: var(--sp-sm) var(--sp-md); }
-
-  .sec-title {
-    font-family: var(--font-display);
-    font-size: var(--s-2xl);
-    line-height: 0.95;
-    text-transform: uppercase;
-    color: var(--fg);
-    margin-block: 0.4rem;
-    transition: color var(--t1);
-  }
+  .sec-title { font-family: var(--font-display); font-size: var(--s-2xl); line-height: 0.95; text-transform: uppercase; color: var(--fg); margin-block: 0.4rem; transition: color var(--t1); }
+  [dir="rtl"] .sec-title { font-family: var(--font-arabic); font-weight: 700; text-transform: none; letter-spacing: 0; line-height: 1.3; }
   .secondary-post:hover .sec-title { color: var(--gold); }
+  .sec-meta { font-family: var(--font-mono); font-size: var(--s-2xs); color: var(--fg-subtle); letter-spacing: 0.06em; text-transform: uppercase; margin: 0; }
+  [dir="rtl"] .sec-meta { font-family: var(--font-arabic); letter-spacing: 0; }
 
-  .sec-meta {
-    font-family: var(--font-mono);
-    font-size: var(--s-2xs);
-    color: var(--fg-subtle);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    margin: 0;
-  }
+  /* Latest */
+  .latest-section { padding-bottom: var(--sp-xl); }
+  .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: var(--sp-lg); padding-bottom: var(--sp-sm); border-bottom: 2px solid var(--border); }
+  .section-title { font-size: var(--s-4xl); }
+  [dir="rtl"] .section-title { font-family: var(--font-arabic); font-weight: 700; text-transform: none; letter-spacing: 0; }
 
-  /* ── LATEST ── */
-  .latest-section {
-    padding-bottom: var(--sp-xl);
-  }
-
-  .section-head {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 1rem;
-    margin-bottom: var(--sp-lg);
-    padding-bottom: var(--sp-sm);
-    border-bottom: 2px solid var(--border);
-  }
-
-  .section-title {
-    font-size: var(--s-4xl);
-  }
-
-  .latest-list {
-    display: flex;
-    flex-direction: column;
-    border-top: 1px solid var(--border);
-    margin-bottom: var(--sp-lg);
-  }
-
+  .latest-list { display: flex; flex-direction: column; border-top: 1px solid var(--border); margin-bottom: var(--sp-lg); }
   .latest-row { border-bottom: 1px solid var(--border); }
-
-  .latest-row-link {
-    display: grid;
-    grid-template-columns: 60px 1fr auto 24px;
-    gap: var(--sp-md);
-    align-items: center;
-    padding: var(--sp-md) 0;
-    text-decoration: none;
-    color: inherit;
-    transition: background var(--t1);
-    border-radius: var(--r-sm);
-  }
-
+  .latest-row-link { display: grid; grid-template-columns: 60px 1fr auto 24px; gap: var(--sp-md); align-items: center; padding: var(--sp-md) 0; text-decoration: none; color: inherit; border-radius: var(--r-sm); transition: background var(--t1); }
   .latest-row-link:hover { background: var(--bg-raised); padding-inline: var(--sp-sm); margin-inline: calc(-1 * var(--sp-sm)); }
-
-  .latest-num {
-    font-size: var(--s-3xl);
-    color: var(--border-hi);
-    line-height: 1;
-    font-family: var(--font-display);
-    letter-spacing: 0.05em;
-    text-align: center;
-    transition: color var(--t1);
-  }
+  .latest-num { font-family: var(--font-display); font-size: var(--s-3xl); color: var(--border-hi); line-height: 1; text-align: center; letter-spacing: 0.05em; transition: color var(--t1); }
+  [dir="rtl"] .latest-num { font-family: var(--font-arabic); font-weight: 700; font-size: var(--s-2xl); letter-spacing: 0; }
   .latest-row-link:hover .latest-num { color: var(--gold-dim); }
-
-  .latest-meta {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 0.3rem;
-  }
-
-  .latest-date {
-    font-family: var(--font-mono);
-    font-size: var(--s-2xs);
-    color: var(--fg-subtle);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-
-  .latest-title {
-    font-family: var(--font-display);
-    font-size: var(--s-2xl);
-    line-height: 0.95;
-    text-transform: uppercase;
-    color: var(--fg);
-    margin-bottom: 0.3rem;
-    transition: color var(--t1);
-  }
+  .latest-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.3rem; }
+  .latest-date { font-family: var(--font-mono); font-size: var(--s-2xs); color: var(--fg-subtle); letter-spacing: 0.06em; text-transform: uppercase; }
+  [dir="rtl"] .latest-date { font-family: var(--font-arabic); letter-spacing: 0; }
+  .latest-title { font-family: var(--font-display); font-size: var(--s-2xl); line-height: 0.95; text-transform: uppercase; color: var(--fg); margin-bottom: 0.3rem; transition: color var(--t1); }
+  [dir="rtl"] .latest-title { font-family: var(--font-arabic); font-weight: 700; text-transform: none; letter-spacing: 0; line-height: 1.3; }
   .latest-row-link:hover .latest-title { color: var(--gold); }
-
-  .latest-desc {
-    font-family: var(--font-sans);
-    font-size: var(--s-sm);
-    font-weight: 300;
-    color: var(--fg-muted);
-    line-height: 1.55;
-    margin: 0;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  .latest-thumb {
-    width: 120px;
-    aspect-ratio: 16/10;
-    border-radius: var(--r-sm);
-    overflow: hidden;
-    border: 1px solid var(--border);
-    flex-shrink: 0;
-  }
+  .latest-desc { font-family: var(--font-sans); font-size: var(--s-sm); font-weight: 300; color: var(--fg-muted); line-height: 1.55; margin: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  [dir="rtl"] .latest-desc { font-family: var(--font-arabic); font-weight: 400; line-height: 1.7; }
+  .latest-thumb { width: 120px; aspect-ratio: 16/10; border-radius: var(--r-sm); overflow: hidden; border: 1px solid var(--border); flex-shrink: 0; }
   .latest-thumb img { width: 100%; height: 100%; object-fit: cover; border-radius: 0; display: block; }
-
-  .latest-arrow {
-    font-family: var(--font-mono);
-    color: var(--fg-subtle);
-    transition: color var(--t1), transform var(--t1);
-    font-size: 1.1rem;
-  }
-  .latest-row-link:hover .latest-arrow { color: var(--gold); transform: translateX(3px); }
+  .latest-arrow { font-family: var(--font-mono); color: var(--fg-subtle); transition: color var(--t1), transform var(--t1); font-size: 1.1rem; }
+  .latest-row-link:hover .latest-arrow { color: var(--gold); }
+  [dir="ltr"] .latest-row-link:hover .latest-arrow { transform: translateX(3px); }
+  [dir="rtl"] .latest-row-link:hover .latest-arrow { transform: translateX(-3px); }
 
   .view-all { text-align: center; padding-top: var(--sp-md); }
 
-  /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
     .hero-grid { grid-template-columns: 1fr; }
     .hero-secondary { flex-direction: row; }
     .secondary-post { flex: 1; }
     .masthead { grid-template-columns: 1fr; text-align: center; }
-    .masthead-left, .masthead-right { display: none; }
+    .masthead-side { display: none; }
   }
-
   @media (max-width: 640px) {
     .hero-secondary { flex-direction: column; }
     .masthead-title { font-size: clamp(4rem, 20vw, 8rem); }
     .latest-row-link { grid-template-columns: 40px 1fr 20px; gap: var(--sp-sm); }
     .latest-thumb { display: none; }
-    .latest-num { font-size: var(--s-2xl); }
   }
 </style>

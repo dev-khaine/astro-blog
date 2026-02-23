@@ -1,5 +1,5 @@
 ---
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { SITE_TITLE } from '../consts';
 const year = new Date().getFullYear();
 ---
 
@@ -7,32 +7,41 @@ const year = new Date().getFullYear();
 <section class="newsletter-wrap" aria-labelledby="newsletter-heading">
   <div class="newsletter-inner">
     <div class="nl-left">
-      <p class="label nl-label">The Capital Brief</p>
+      <p class="label nl-label">
+        <span class="en-text">The Capital Brief</span>
+        <span class="ar-text">نشرة كابيتال</span>
+      </p>
       <h2 id="newsletter-heading" class="nl-heading">
-        Markets move fast.<br/>
-        <span class="nl-gold">Stay ahead.</span>
+        <span class="en-text">Markets move fast.<br/><span class="nl-gold">Stay ahead.</span></span>
+        <span class="ar-text">الأسواق تتحرك بسرعة.<br/><span class="nl-gold">كن في الطليعة.</span></span>
       </h2>
       <p class="nl-desc">
-        Weekly analysis on markets, macro, and money — written for investors who think.
-        No noise. No ads. Unsubscribe anytime.
+        <span class="en-text">Weekly analysis on markets, macro, and money — written for investors who think. No noise. No ads. Unsubscribe anytime.</span>
+        <span class="ar-text">تحليل أسبوعي للأسواق والاقتصاد الكلي والمال — مكتوب للمستثمرين المفكرين. بلا ضجيج. بلا إعلانات. إلغاء الاشتراك في أي وقت.</span>
       </p>
     </div>
-    <form class="nl-form" action="#" method="post" aria-label="Newsletter signup">
+    <form class="nl-form" action="#" method="post">
       <div class="nl-input-row">
-        <label for="nl-email" class="sr-only">Email address</label>
+        <label for="nl-email" class="sr-only">
+          <span class="en-text">Email address</span>
+          <span class="ar-text">البريد الإلكتروني</span>
+        </label>
         <input
           id="nl-email"
           type="email"
           name="email"
-          placeholder="your@email.com"
+          class="nl-email-input"
           required
           autocomplete="email"
         />
-        <button type="submit" class="btn btn-gold">Subscribe</button>
+        <button type="submit" class="btn btn-gold">
+          <span class="en-text">Subscribe</span>
+          <span class="ar-text">اشترك</span>
+        </button>
       </div>
       <p class="nl-note">
-        By subscribing you agree to our <a href="/privacy">Privacy Policy</a>.
-        Powered by your preferred email platform.
+        <span class="en-text">By subscribing you agree to our <a href="/privacy">Privacy Policy</a>.</span>
+        <span class="ar-text">بالاشتراك فإنك توافق على <a href="/privacy">سياسة الخصوصية</a>.</span>
       </p>
     </form>
   </div>
@@ -42,8 +51,14 @@ const year = new Date().getFullYear();
   <div class="footer-inner">
     <!-- Brand col -->
     <div class="footer-brand">
-      <a href="/" class="f-logo">{SITE_TITLE}</a>
-      <p class="f-desc">{SITE_DESCRIPTION}</p>
+      <a href="/" class="f-logo">
+        <span class="en-text">{SITE_TITLE}</span>
+        <span class="ar-text">كابيتال</span>
+      </a>
+      <p class="f-desc">
+        <span class="en-text">Sharp analysis on markets, money, and the forces shaping the global economy.</span>
+        <span class="ar-text">تحليل دقيق للأسواق والمال والقوى التي تشكّل الاقتصاد العالمي.</span>
+      </p>
       <div class="f-socials">
         <a href="https://twitter.com" target="_blank" rel="noopener" class="f-social" aria-label="Twitter/X">
           <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.741l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
@@ -60,30 +75,39 @@ const year = new Date().getFullYear();
     <!-- Nav cols -->
     <nav class="footer-nav" aria-label="Footer">
       <div class="fn-col">
-        <p class="fn-heading label">Explore</p>
+        <p class="fn-heading label">
+          <span class="en-text">Explore</span>
+          <span class="ar-text">استكشف</span>
+        </p>
         <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/blog">Analysis</a></li>
-          <li><a href="/about">About</a></li>
-          <li><a href="/search">Search</a></li>
+          <li><a href="/"><span class="en-text">Home</span><span class="ar-text">الرئيسية</span></a></li>
+          <li><a href="/blog"><span class="en-text">Analysis</span><span class="ar-text">التحليلات</span></a></li>
+          <li><a href="/about"><span class="en-text">About</span><span class="ar-text">عن الموقع</span></a></li>
+          <li><a href="/search"><span class="en-text">Search</span><span class="ar-text">بحث</span></a></li>
         </ul>
       </div>
       <div class="fn-col">
-        <p class="fn-heading label">Topics</p>
+        <p class="fn-heading label">
+          <span class="en-text">Topics</span>
+          <span class="ar-text">المواضيع</span>
+        </p>
         <ul>
-          <li><a href="/blog?tag=markets">Markets</a></li>
-          <li><a href="/blog?tag=macro">Macro</a></li>
-          <li><a href="/blog?tag=investing">Investing</a></li>
-          <li><a href="/blog?tag=crypto">Crypto</a></li>
+          <li><a href="/blog?tag=markets"><span class="en-text">Markets</span><span class="ar-text">الأسواق</span></a></li>
+          <li><a href="/blog?tag=macro"><span class="en-text">Macro</span><span class="ar-text">الاقتصاد الكلي</span></a></li>
+          <li><a href="/blog?tag=investing"><span class="en-text">Investing</span><span class="ar-text">الاستثمار</span></a></li>
+          <li><a href="/blog?tag=crypto"><span class="en-text">Crypto</span><span class="ar-text">العملات الرقمية</span></a></li>
         </ul>
       </div>
       <div class="fn-col">
-        <p class="fn-heading label">Meta</p>
+        <p class="fn-heading label">
+          <span class="en-text">Meta</span>
+          <span class="ar-text">روابط</span>
+        </p>
         <ul>
           <li><a href="/rss.xml" target="_blank">RSS</a></li>
-          <li><a href="/sitemap-index.xml">Sitemap</a></li>
-          <li><a href="/privacy">Privacy</a></li>
-          <li><a href="/disclaimer">Disclaimer</a></li>
+          <li><a href="/sitemap-index.xml"><span class="en-text">Sitemap</span><span class="ar-text">خريطة الموقع</span></a></li>
+          <li><a href="/privacy"><span class="en-text">Privacy</span><span class="ar-text">الخصوصية</span></a></li>
+          <li><a href="/disclaimer"><span class="en-text">Disclaimer</span><span class="ar-text">إخلاء المسؤولية</span></a></li>
         </ul>
       </div>
     </nav>
@@ -93,94 +117,89 @@ const year = new Date().getFullYear();
   <div class="footer-disclaimer">
     <div class="disclaimer-inner">
       <p>
-        <strong>Disclaimer:</strong> {SITE_TITLE} is for informational and educational purposes only.
-        Nothing on this site constitutes financial, investment, legal, or tax advice.
-        Past performance is not indicative of future results. Always do your own research.
+        <strong><span class="en-text">Disclaimer:</span><span class="ar-text">إخلاء المسؤولية:</span></strong>
+        <span class="en-text">{SITE_TITLE} is for informational and educational purposes only. Nothing on this site constitutes financial, investment, legal, or tax advice. Past performance is not indicative of future results. Always do your own research.</span>
+        <span class="ar-text">كابيتال للأغراض الإعلامية والتعليمية فقط. لا يُعدّ أي شيء في هذا الموقع نصيحة مالية أو استثمارية أو قانونية أو ضريبية. الأداء السابق لا يدل على النتائج المستقبلية. قم دائمًا بإجراء بحثك الخاص.</span>
       </p>
     </div>
   </div>
 
   <!-- Bottom bar -->
   <div class="footer-bottom">
-    
+    <div class="fb-inner">
+      <p>
+        &copy; {year}
+        <span class="en-text">{SITE_TITLE}. All rights reserved.</span>
+        <span class="ar-text">كابيتال. جميع الحقوق محفوظة.</span>
+      </p>
+      <p>
+        <span class="en-text">Built with</span>
+        <span class="ar-text">مبني بـ</span>
+        <a href="https://astro.build" target="_blank" rel="noopener">Astro</a>
+      </p>
+    </div>
   </div>
 </footer>
 
 <style>
-  /* ── NEWSLETTER ── */
+  /* Newsletter */
   .newsletter-wrap {
     background: var(--bg-raised);
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
     padding-block: var(--sp-xl);
-    position: relative;
-    overflow: hidden;
+    position: relative; overflow: hidden;
   }
-
   .newsletter-wrap::before {
     content: '';
-    position: absolute;
-    inset: 0;
+    position: absolute; inset: 0;
     background: radial-gradient(ellipse 600px 300px at 80% 50%, var(--gold-glow), transparent);
     pointer-events: none;
   }
-
+  [dir="rtl"] .newsletter-wrap::before {
+    background: radial-gradient(ellipse 600px 300px at 20% 50%, var(--gold-glow), transparent);
+  }
   .newsletter-inner {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--sp-xl);
     align-items: center;
     width: min(var(--wide-w), 100% - 2rem);
-    margin-inline: auto;
-    position: relative;
+    margin-inline: auto; position: relative;
   }
-
   .nl-label { margin-bottom: 0.75rem; display: block; }
-
   .nl-heading {
     font-size: clamp(2.5rem, 4vw, 4rem);
-    line-height: 0.95;
+    line-height: 1.1;
     margin-bottom: var(--sp-sm);
     color: var(--fg);
   }
-
+  [dir="rtl"] .nl-heading {
+    font-family: var(--font-arabic);
+    font-weight: 700;
+    text-transform: none;
+    letter-spacing: 0;
+    line-height: 1.4;
+  }
   .nl-gold { color: var(--gold); }
-
   .nl-desc {
-    font-family: var(--font-sans);
-    font-size: var(--s-sm);
-    color: var(--fg-muted);
-    line-height: 1.6;
-    font-weight: 300;
-    margin: 0;
+    font-family: var(--font-sans); font-size: var(--s-sm);
+    color: var(--fg-muted); line-height: 1.6; font-weight: 300; margin: 0;
   }
-
+  [dir="rtl"] .nl-desc { font-family: var(--font-arabic); font-weight: 400; line-height: 1.9; }
   .nl-form { display: flex; flex-direction: column; gap: 0.75rem; }
-
-  .nl-input-row {
-    display: flex;
-    gap: 0.5rem;
-  }
-
-  .nl-input-row input { flex: 1; }
-
+  .nl-input-row { display: flex; gap: 0.5rem; }
+  .nl-input-row .nl-email-input { flex: 1; }
   .nl-note {
-    font-family: var(--font-mono);
-    font-size: var(--s-2xs);
-    color: var(--fg-subtle);
-    letter-spacing: 0.04em;
-    margin: 0;
-    line-height: 1.5;
+    font-family: var(--font-mono); font-size: var(--s-2xs);
+    color: var(--fg-subtle); letter-spacing: 0.04em; margin: 0; line-height: 1.5;
   }
+  [dir="rtl"] .nl-note { font-family: var(--font-arabic); letter-spacing: 0; font-size: var(--s-xs); }
   .nl-note a { color: var(--fg-subtle); text-decoration: underline; }
   .nl-note a:hover { color: var(--gold); }
 
-  /* ── FOOTER MAIN ── */
-  footer {
-    background: var(--bg);
-    border-top: 1px solid var(--border);
-  }
-
+  /* Footer main */
+  footer { background: var(--bg); border-top: 1px solid var(--border); }
   .footer-inner {
     display: grid;
     grid-template-columns: 1.6fr 1fr;
@@ -189,113 +208,95 @@ const year = new Date().getFullYear();
     margin-inline: auto;
     padding-block: var(--sp-xl);
   }
-
   .f-logo {
-    font-family: var(--font-display);
-    font-size: 2.2rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--fg);
-    text-decoration: none;
-    display: block;
-    margin-bottom: 0.75rem;
-    transition: color var(--t1);
+    font-family: var(--font-display); font-size: 2.2rem;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--fg); text-decoration: none; display: block;
+    margin-bottom: 0.75rem; transition: color var(--t1);
+  }
+  [dir="rtl"] .f-logo {
+    font-family: var(--font-arabic); font-weight: 700;
+    letter-spacing: 0; text-transform: none; font-size: 1.8rem;
   }
   .f-logo:hover { color: var(--gold); }
-
   .f-desc {
-    font-family: var(--font-sans);
-    font-size: var(--s-xs);
-    font-weight: 300;
-    color: var(--fg-muted);
-    line-height: 1.65;
-    max-width: 340px;
-    margin-bottom: var(--sp-md);
+    font-family: var(--font-sans); font-size: var(--s-xs); font-weight: 300;
+    color: var(--fg-muted); line-height: 1.65; max-width: 340px; margin-bottom: var(--sp-md);
   }
-
+  [dir="rtl"] .f-desc { font-family: var(--font-arabic); font-weight: 400; line-height: 1.9; }
   .f-socials { display: flex; gap: 0.4rem; }
-
   .f-social {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    border: 1px solid var(--border);
-    border-radius: var(--r-sm);
-    color: var(--fg-muted);
-    text-decoration: none;
+    display: flex; align-items: center; justify-content: center;
+    width: 32px; height: 32px;
+    border: 1px solid var(--border); border-radius: var(--r-sm);
+    color: var(--fg-muted); text-decoration: none;
     transition: border-color var(--t1), color var(--t1), background var(--t1);
   }
   .f-social:hover { border-color: var(--gold-dim); color: var(--gold); background: var(--gold-glow); }
 
   /* Footer nav */
   .footer-nav { display: flex; gap: var(--sp-lg); }
-
   .fn-col ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.4rem; }
-
   .fn-heading { margin-bottom: 0.75rem; display: block; }
-
   .fn-col a {
-    font-family: var(--font-mono);
-    font-size: var(--s-xs);
-    color: var(--fg-muted);
-    text-decoration: none;
-    letter-spacing: 0.04em;
+    font-family: var(--font-mono); font-size: var(--s-xs);
+    color: var(--fg-muted); text-decoration: none; letter-spacing: 0.04em;
     transition: color var(--t1);
   }
+  [dir="rtl"] .fn-col a { font-family: var(--font-arabic); letter-spacing: 0; font-size: var(--s-sm); font-weight: 500; }
   .fn-col a:hover { color: var(--gold); }
 
   /* Disclaimer */
-  .footer-disclaimer {
-    border-top: 1px solid var(--border);
-    padding-block: var(--sp-md);
-  }
-  .disclaimer-inner {
-    width: min(var(--wide-w), 100% - 2rem);
-    margin-inline: auto;
-  }
+  .footer-disclaimer { border-top: 1px solid var(--border); padding-block: var(--sp-md); }
+  .disclaimer-inner { width: min(var(--wide-w), 100% - 2rem); margin-inline: auto; }
   .disclaimer-inner p {
-    font-family: var(--font-mono);
-    font-size: var(--s-2xs);
-    color: var(--fg-subtle);
-    line-height: 1.6;
-    letter-spacing: 0.03em;
-    margin: 0;
+    font-family: var(--font-mono); font-size: var(--s-2xs);
+    color: var(--fg-subtle); line-height: 1.6; letter-spacing: 0.03em; margin: 0;
   }
+  [dir="rtl"] .disclaimer-inner p { font-family: var(--font-arabic); letter-spacing: 0; font-size: var(--s-xs); line-height: 1.8; }
   .disclaimer-inner strong { font-weight: 600; color: var(--fg-muted); }
 
   /* Bottom bar */
-  .footer-bottom {
-    border-top: 1px solid var(--border);
-    padding-block: var(--sp-sm);
-  }
+  .footer-bottom { border-top: 1px solid var(--border); padding-block: var(--sp-sm); }
   .fb-inner {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: min(var(--wide-w), 100% - 2rem);
-    margin-inline: auto;
+    display: flex; justify-content: space-between; align-items: center;
+    width: min(var(--wide-w), 100% - 2rem); margin-inline: auto;
   }
   .fb-inner p {
-    font-family: var(--font-mono);
-    font-size: var(--s-2xs);
-    color: var(--fg-subtle);
-    letter-spacing: 0.06em;
-    margin: 0;
+    font-family: var(--font-mono); font-size: var(--s-2xs);
+    color: var(--fg-subtle); letter-spacing: 0.06em; margin: 0;
   }
+  [dir="rtl"] .fb-inner p { font-family: var(--font-arabic); letter-spacing: 0; font-size: var(--s-xs); }
   .fb-inner a { color: var(--fg-muted); }
   .fb-inner a:hover { color: var(--gold); }
 
-  /* ── RESPONSIVE ── */
+  /* Responsive */
   @media (max-width: 900px) {
     .newsletter-inner { grid-template-columns: 1fr; }
     .footer-inner { grid-template-columns: 1fr; }
     .footer-nav { flex-wrap: wrap; gap: var(--sp-md); }
   }
-
   @media (max-width: 600px) {
     .nl-input-row { flex-direction: column; }
     .fb-inner { flex-direction: column; gap: 0.5rem; text-align: center; }
   }
 </style>
+
+<script>
+  // Update email placeholder based on current lang
+  const updatePlaceholder = () => {
+    const lang = document.documentElement.getAttribute('data-lang') || 'en';
+    const input = document.querySelector('.nl-email-input') as HTMLInputElement | null;
+    if (input) {
+      input.placeholder = lang === 'ar' ? 'بريدك@الإلكتروني.com' : 'your@email.com';
+      input.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+    }
+  };
+
+  // Run on load
+  updatePlaceholder();
+
+  // Re-run when lang changes (observes html attribute)
+  const observer = new MutationObserver(updatePlaceholder);
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-lang'] });
+</script>

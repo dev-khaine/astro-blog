@@ -5,56 +5,41 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import ReadingTime from '../components/ReadingTime.astro';
-import ShareButtons from '../components/ShareButtons.astro';
 import { AUTHOR_NAME } from '../consts';
 
 type Props = CollectionEntry<'blog'>['data'] & { rawContent?: string };
 
 const {
-  title,
-  description,
-  pubDate,
-  updatedDate,
-  heroImage,
-  tags = [],
-  rawContent = '',
+  title, description, pubDate, updatedDate,
+  heroImage, tags = [], rawContent = '',
 } = Astro.props;
 ---
 
-<html lang="en">
+<html lang="en" dir="ltr" data-lang="en">
   <head>
     <BaseHead
-      title={title}
-      description={description}
-      image={heroImage}
-      type="article"
-      pubDate={pubDate}
-      updatedDate={updatedDate}
-      author={AUTHOR_NAME}
-      tags={tags}
+      title={title} description={description} image={heroImage}
+      type="article" pubDate={pubDate} updatedDate={updatedDate}
+      author={AUTHOR_NAME} tags={tags}
     />
   </head>
   <body>
     <Header />
     <main id="main-content">
       <article itemscope itemtype="https://schema.org/Article">
+
         <!-- Article header -->
         <header class="art-header">
-          <!-- Category / tags -->
           {tags.length > 0 && (
-            <div class="art-tags anim-up" aria-label="Categories">
+            <div class="art-tags anim-up">
               {tags.map(tag => <a href={`/blog?tag=${tag}`} class="tag">{tag}</a>)}
             </div>
           )}
 
-          <!-- Title -->
           <h1 class="art-title anim-up anim-up-1" itemprop="headline">{title}</h1>
-
-          <!-- Description -->
           <p class="art-desc anim-up anim-up-2">{description}</p>
 
-          <!-- Meta bar -->
-          <div class="art-meta anim-up anim-up-3" role="group" aria-label="Article details">
+          <div class="art-meta anim-up anim-up-3">
             <span class="meta-item" itemprop="author" itemscope itemtype="https://schema.org/Person">
               <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
               <span itemprop="name">{AUTHOR_NAME}</span>
@@ -69,7 +54,9 @@ const {
               <>
                 <span class="meta-sep" aria-hidden="true">—</span>
                 <span class="meta-item">
-                  Updated <time datetime={updatedDate.toISOString()} itemprop="dateModified">
+                  <span class="en-text">Updated</span>
+                  <span class="ar-text">تحديث</span>
+                  &nbsp;<time datetime={updatedDate.toISOString()} itemprop="dateModified">
                     <FormattedDate date={updatedDate} />
                   </time>
                 </span>
@@ -83,90 +70,92 @@ const {
             )}
           </div>
 
-          <!-- Hero image -->
           {heroImage && (
-            <div class="art-hero anim-up anim-up-4" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
-              <img
-                src={heroImage}
-                alt={`Cover image for: ${title}`}
-                width={1200}
-                height={630}
-                loading="eager"
-                decoding="async"
-                itemprop="url"
-              />
+            <div class="art-hero anim-up anim-up-4">
+              <img src={heroImage} alt={`Cover image for: ${title}`} width={1200} height={630} loading="eager" decoding="async" />
             </div>
           )}
         </header>
 
-        <!-- Article body -->
+        <!-- Body -->
         <div class="prose art-body" itemprop="articleBody">
           <slot />
         </div>
 
-        <!-- Article footer -->
+        <!-- Footer -->
         <footer class="art-footer">
           <div class="art-footer-divider">
-            <span class="divider-text label">End of analysis</span>
+            <span class="divider-text label">
+              <span class="en-text">End of analysis</span>
+              <span class="ar-text">نهاية التحليل</span>
+            </span>
           </div>
 
-          <ShareButtons title={title} />
+          <!-- Share -->
+          <div class="share-block">
+            <p class="label share-label">
+              <span class="en-text">Share this analysis</span>
+              <span class="ar-text">شارك هذا التحليل</span>
+            </p>
+            <div class="share-btns">
+              <a id="share-x" href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}`}
+                 target="_blank" rel="noopener noreferrer" class="share-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.741l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                <span class="en-text">Post on X</span>
+                <span class="ar-text">نشر على X</span>
+              </a>
+              <a id="share-li" href={`https://www.linkedin.com/sharing/share-offsite/?url=`}
+                 target="_blank" rel="noopener noreferrer" class="share-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452z"/></svg>
+                LinkedIn
+              </a>
+              <button id="share-copy" class="share-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                <span class="copy-label-en">Copy link</span>
+                <span class="copy-label-ar" style="display:none">نسخ الرابط</span>
+              </button>
+            </div>
+          </div>
 
           <!-- Author card -->
           <div class="author-card">
-            <div class="author-avatar" aria-hidden="true">
-              {AUTHOR_NAME.charAt(0)}
-            </div>
+            <div class="author-avatar">{AUTHOR_NAME.charAt(0)}</div>
             <div class="author-info">
               <p class="author-name label">{AUTHOR_NAME}</p>
               <p class="author-bio">
-                Financial analyst covering markets, macro, and the global economy.
-                Views are my own.
+                <span class="en-text">Financial analyst covering markets, macro, and the global economy. Views are my own.</span>
+                <span class="ar-text">محلل مالي يغطي الأسواق والاقتصاد الكلي والاقتصاد العالمي. الآراء خاصة به.</span>
               </p>
             </div>
           </div>
 
-          <!-- Comments via Giscus (GitHub Discussions) -->
+          <!-- Comments -->
           <div class="comments-section" id="comments">
-            <h2 class="comments-heading">Discussion</h2>
+            <h2 class="comments-heading">
+              <span class="en-text">Discussion</span>
+              <span class="ar-text">النقاش</span>
+            </h2>
             <p class="comments-note">
-              Comments are powered by <a href="https://giscus.app" target="_blank" rel="noopener">Giscus</a> via GitHub Discussions.
-              Configure your <code>repo</code> and <code>repo-id</code> in the script below to enable comments.
+              <span class="en-text">Comments are powered by <a href="https://giscus.app" target="_blank" rel="noopener">Giscus</a> via GitHub Discussions. Configure your repo and repo-id to enable.</span>
+              <span class="ar-text">التعليقات مدعومة من <a href="https://giscus.app" target="_blank" rel="noopener">Giscus</a> عبر GitHub Discussions. قم بإعداد repo و repo-id للتفعيل.</span>
             </p>
-            <!-- 
-              To enable comments:
-              1. Go to https://giscus.app
-              2. Enter your GitHub repo name
-              3. Copy the generated script and replace this comment
-            -->
             <div class="giscus-placeholder">
-              <p class="label">Comments enabled after Giscus setup</p>
-              <p>Visit <a href="https://giscus.app" target="_blank" rel="noopener">giscus.app</a> to configure.</p>
+              <p class="label">
+                <span class="en-text">Comments enabled after Giscus setup</span>
+                <span class="ar-text">ستُفعَّل التعليقات بعد إعداد Giscus</span>
+              </p>
+              <p>
+                <a href="https://giscus.app" target="_blank" rel="noopener">giscus.app</a>
+              </p>
             </div>
-            <!-- Example (replace with your values):
-            <script src="https://giscus.app/client.js"
-              data-repo="YOUR_GITHUB_USER/YOUR_REPO"
-              data-repo-id="YOUR_REPO_ID"
-              data-category="Announcements"
-              data-category-id="YOUR_CATEGORY_ID"
-              data-mapping="pathname"
-              data-strict="0"
-              data-reactions-enabled="1"
-              data-emit-metadata="0"
-              data-input-position="top"
-              data-theme="dark"
-              data-lang="en"
-              crossorigin="anonymous"
-              async>
-            </script>
-            -->
           </div>
 
-          <!-- Back link -->
+          <!-- Back -->
           <div class="back-link">
             <a href="/blog" class="btn btn-outline">
-              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
-              All analysis
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="arrow-icon"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+              <span class="en-text">All analysis</span>
+              <span class="ar-text">جميع التحليلات</span>
             </a>
           </div>
         </footer>
@@ -177,172 +166,110 @@ const {
 </html>
 
 <style>
-  article {
-    max-width: 800px;
-    margin-inline: auto;
-    padding-top: var(--sp-xl);
-  }
+  article { max-width: 800px; margin-inline: auto; padding-top: var(--sp-xl); }
 
-  /* Header */
   .art-header { margin-bottom: var(--sp-xl); }
-
   .art-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: var(--sp-md); }
 
   .art-title {
     font-family: var(--font-display);
     font-size: clamp(3rem, 6vw, 6rem);
-    line-height: 0.92;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    color: var(--fg);
-    margin-bottom: var(--sp-md);
+    line-height: 0.92; letter-spacing: 0.02em; text-transform: uppercase;
+    color: var(--fg); margin-bottom: var(--sp-md);
   }
+  [dir="rtl"] .art-title { font-family: var(--font-arabic); font-weight: 700; text-transform: none; letter-spacing: 0; line-height: 1.2; }
 
-  .art-desc {
-    font-family: var(--font-serif);
-    font-size: var(--s-lg);
-    font-style: italic;
-    color: var(--fg-muted);
-    line-height: 1.6;
-    margin-bottom: var(--sp-md);
-    padding-bottom: var(--sp-md);
-    border-bottom: 1px solid var(--border);
-  }
+  .art-desc { font-family: var(--font-serif); font-size: var(--s-lg); font-style: italic; color: var(--fg-muted); line-height: 1.6; margin-bottom: var(--sp-md); padding-bottom: var(--sp-md); border-bottom: 1px solid var(--border); }
+  [dir="rtl"] .art-desc { font-family: var(--font-arabic); font-style: normal; line-height: 1.8; }
 
-  .art-meta {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    font-family: var(--font-mono);
-    font-size: var(--s-2xs);
-    color: var(--fg-muted);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-bottom: var(--sp-lg);
-  }
-
-  .meta-item {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35em;
-  }
-
+  .art-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem; font-family: var(--font-mono); font-size: var(--s-2xs); color: var(--fg-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: var(--sp-lg); }
+  [dir="rtl"] .art-meta { font-family: var(--font-arabic); letter-spacing: 0; font-size: var(--s-xs); }
+  .meta-item { display: inline-flex; align-items: center; gap: 0.35em; }
   .meta-sep { color: var(--gold-dim); }
 
-  .art-hero {
-    border-radius: var(--r);
-    overflow: hidden;
-    border: 1px solid var(--border);
-    margin-top: var(--sp-lg);
-  }
+  .art-hero { border-radius: var(--r); overflow: hidden; border: 1px solid var(--border); margin-top: var(--sp-lg); }
+  .art-hero img { width: 100%; height: auto; display: block; }
 
-  .art-hero img {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 0;
-  }
+  /* RTL prose support */
+  [dir="rtl"] .prose p,
+  [dir="rtl"] .prose li { font-family: var(--font-arabic); line-height: 2; letter-spacing: 0; }
+  [dir="rtl"] .prose h2,
+  [dir="rtl"] .prose h3,
+  [dir="rtl"] .prose h4 { font-family: var(--font-arabic); font-weight: 700; text-transform: none; letter-spacing: 0; line-height: 1.3; }
+  [dir="rtl"] .prose > p:first-of-type::first-letter { font-size: inherit; font-family: inherit; line-height: inherit; float: none; margin: 0; color: inherit; }
 
-  /* Body */
-  .art-body { margin-bottom: var(--sp-xl); }
-
-  /* Footer */
   .art-footer { margin-top: var(--sp-xl); }
-
-  .art-footer-divider {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: var(--sp-lg);
-  }
-
-  .art-footer-divider::before,
-  .art-footer-divider::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
-
+  .art-footer-divider { display: flex; align-items: center; gap: 1rem; margin-bottom: var(--sp-lg); }
+  .art-footer-divider::before, .art-footer-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
   .divider-text { white-space: nowrap; }
 
-  /* Author card */
-  .author-card {
-    display: flex;
-    align-items: flex-start;
-    gap: var(--sp-md);
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--r);
-    padding: var(--sp-md);
-    margin-block: var(--sp-xl);
-  }
+  .share-block { margin-block: var(--sp-xl); }
+  .share-label { margin-bottom: var(--sp-sm); display: block; }
+  .share-btns { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .share-btn { display: inline-flex; align-items: center; gap: 0.45em; padding: 0.5em 1em; border: 1px solid var(--border-hi); border-radius: var(--r-sm); background: var(--bg-card); color: var(--fg-muted); font-family: var(--font-mono); font-size: var(--s-2xs); font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: all var(--t1); }
+  [dir="rtl"] .share-btn { font-family: var(--font-arabic); letter-spacing: 0; font-size: var(--s-xs); text-transform: none; }
+  .share-btn:hover { border-color: var(--gold-dim); color: var(--gold); background: var(--gold-glow); }
+  .share-btn.copied { border-color: var(--positive); color: var(--positive); background: rgba(76,175,130,0.1); }
 
-  .author-avatar {
-    width: 52px;
-    height: 52px;
-    border-radius: var(--r-sm);
-    background: linear-gradient(135deg, var(--gold-dim), var(--gold));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--font-display);
-    font-size: 1.8rem;
-    color: #0c0c0c;
-    flex-shrink: 0;
-  }
-
+  .author-card { display: flex; align-items: flex-start; gap: var(--sp-md); background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--r); padding: var(--sp-md); margin-block: var(--sp-xl); }
+  .author-avatar { width: 52px; height: 52px; border-radius: var(--r-sm); background: linear-gradient(135deg, var(--gold-dim), var(--gold)); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 1.8rem; color: #0c0c0c; flex-shrink: 0; }
   .author-name { margin-bottom: 0.35rem; display: block; }
+  .author-bio { font-family: var(--font-sans); font-size: var(--s-sm); font-weight: 300; color: var(--fg-muted); line-height: 1.6; margin: 0; }
+  [dir="rtl"] .author-bio { font-family: var(--font-arabic); font-weight: 400; line-height: 1.8; }
 
-  .author-bio {
-    font-family: var(--font-sans);
-    font-size: var(--s-sm);
-    font-weight: 300;
-    color: var(--fg-muted);
-    line-height: 1.6;
-    margin: 0;
-  }
-
-  /* Comments */
-  .comments-section {
-    margin-block: var(--sp-xl);
-    padding-top: var(--sp-lg);
-    border-top: 1px solid var(--border);
-  }
-
-  .comments-heading {
-    font-size: var(--s-3xl);
-    margin-bottom: var(--sp-sm);
-  }
-
-  .comments-note {
-    font-family: var(--font-sans);
-    font-size: var(--s-sm);
-    color: var(--fg-muted);
-    margin-bottom: var(--sp-md);
-  }
-
-  .giscus-placeholder {
-    background: var(--bg-raised);
-    border: 1px dashed var(--border-hi);
-    border-radius: var(--r);
-    padding: var(--sp-lg);
-    text-align: center;
-  }
-
-  .giscus-placeholder p {
-    font-family: var(--font-mono);
-    font-size: var(--s-xs);
-    color: var(--fg-subtle);
-    margin-bottom: 0.5em;
-  }
-
+  .comments-section { margin-block: var(--sp-xl); padding-top: var(--sp-lg); border-top: 1px solid var(--border); }
+  .comments-heading { font-size: var(--s-3xl); margin-bottom: var(--sp-sm); }
+  [dir="rtl"] .comments-heading { font-family: var(--font-arabic); font-weight: 700; text-transform: none; letter-spacing: 0; }
+  .comments-note { font-family: var(--font-sans); font-size: var(--s-sm); color: var(--fg-muted); margin-bottom: var(--sp-md); }
+  [dir="rtl"] .comments-note { font-family: var(--font-arabic); line-height: 1.8; }
+  .giscus-placeholder { background: var(--bg-raised); border: 1px dashed var(--border-hi); border-radius: var(--r); padding: var(--sp-lg); text-align: center; }
+  .giscus-placeholder p { font-family: var(--font-mono); font-size: var(--s-xs); color: var(--fg-subtle); margin-bottom: 0.5em; }
+  [dir="rtl"] .giscus-placeholder p { font-family: var(--font-arabic); letter-spacing: 0; }
   .giscus-placeholder p:last-child { margin: 0; }
 
-  .back-link {
-    margin-top: var(--sp-xl);
-    padding-top: var(--sp-lg);
-    border-top: 1px solid var(--border);
-  }
+  .back-link { margin-top: var(--sp-xl); padding-top: var(--sp-lg); border-top: 1px solid var(--border); }
+
+  /* Flip arrow in RTL */
+  [dir="rtl"] .arrow-icon { transform: scaleX(-1); }
 </style>
+
+<script>
+  const url = window.location.href;
+  const lang = document.documentElement.getAttribute('data-lang') || 'en';
+
+  // Fix share links with current URL
+  const xBtn = document.getElementById('share-x') as HTMLAnchorElement | null;
+  const liBtn = document.getElementById('share-li') as HTMLAnchorElement | null;
+  const copyBtn = document.getElementById('share-copy');
+  const copyLabelEn = document.querySelector('.copy-label-en') as HTMLElement | null;
+  const copyLabelAr = document.querySelector('.copy-label-ar') as HTMLElement | null;
+
+  if (xBtn) { const u = new URL(xBtn.href); u.searchParams.set('url', url); xBtn.href = u.toString(); }
+  if (liBtn) { liBtn.href = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`; }
+
+  // Show correct copy label based on lang
+  const updateCopyLabel = () => {
+    const currentLang = document.documentElement.getAttribute('data-lang') || 'en';
+    if (copyLabelEn) copyLabelEn.style.display = currentLang === 'ar' ? 'none' : '';
+    if (copyLabelAr) copyLabelAr.style.display = currentLang === 'ar' ? '' : 'none';
+  };
+  updateCopyLabel();
+
+  const observer = new MutationObserver(updateCopyLabel);
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-lang'] });
+
+  copyBtn?.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(url);
+      const currentLang = document.documentElement.getAttribute('data-lang') || 'en';
+      copyBtn.classList.add('copied');
+      if (copyLabelEn) copyLabelEn.textContent = currentLang === 'ar' ? '' : '✓ Copied';
+      if (copyLabelAr) copyLabelAr.textContent = currentLang === 'ar' ? '✓ تم النسخ' : '';
+      setTimeout(() => {
+        copyBtn.classList.remove('copied');
+        if (copyLabelEn) { copyLabelEn.textContent = 'Copy link'; updateCopyLabel(); }
+        if (copyLabelAr) { copyLabelAr.textContent = 'نسخ الرابط'; }
+      }, 2200);
+    } catch {}
+  });
+</script>
