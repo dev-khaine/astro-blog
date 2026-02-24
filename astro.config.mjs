@@ -8,7 +8,7 @@ export default defineConfig({
   // into server rendering with `export const prerender = false`.
   // This lets /api/revalidate be a live server route while everything else
   // is pre-rendered at build time from R2 content.
-  output: 'hybrid',
+  output: 'static',
 
   // ── CLOUDFLARE ADAPTER ─────────────────────────────────────────────────
   adapter: cloudflare({
