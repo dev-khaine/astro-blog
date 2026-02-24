@@ -18,7 +18,7 @@ export default defineConfig({
   }),
 
   // ── SITE URL ───────────────────────────────────────────────────────────
-  site: process.env.SITE_URL ?? 'https://yourcapitalblog.com',
+  site: process.env.SITE_URL ?? 'https://perkorbit.co',
 
   // ── VITE ───────────────────────────────────────────────────────────────
   vite: {
