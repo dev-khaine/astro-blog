@@ -8,6 +8,17 @@ import { SITE_TITLE } from '../consts';
 </a>
 <div id="scroll-progress" aria-hidden="true"></div>
 
+<!-- Blocking inline script: apply lang+dir BEFORE first paint to avoid layout flash -->
+<script>
+  (function() {
+    var lang = localStorage.getItem('lang') || 'en';
+    var html = document.documentElement;
+    html.setAttribute('lang', lang);
+    html.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+    html.setAttribute('data-lang', lang);
+  })();
+</script>
+
 <div id="site-header">
 
   <!-- ── TICKER STRIP ── -->
@@ -248,9 +259,8 @@ import { SITE_TITLE } from '../consts';
   .logo-rule { height: 2px; width: 0; background: var(--gold); border-radius: 99px; transition: width 0.25s ease; }
   .logo:hover .logo-rule { width: 100%; }
 
-  /* Right cluster */
-  .nav-right { display: flex; align-items: center; gap: 0.2rem; margin-left: auto; }
-  [dir="rtl"] .nav-right { margin-left: 0; margin-right: auto; }
+  /* Right cluster — use logical margin so it flips automatically in RTL */
+  .nav-right { display: flex; align-items: center; gap: 0.2rem; margin-inline-start: auto; }
 
   /* Icon buttons */
   .icon-btn {
@@ -286,7 +296,8 @@ import { SITE_TITLE } from '../consts';
     display: none;
     position: absolute;
     top: calc(100% + 10px);
-    right: 0;
+    /* logical property: inset-inline-start=0 means right:0 in LTR, left:0 in RTL */
+    inset-inline-end: 0;
     width: 220px;
     background: var(--bg-card);
     border: 1px solid var(--border-hi);
@@ -295,8 +306,6 @@ import { SITE_TITLE } from '../consts';
     box-shadow: 0 8px 40px rgba(0,0,0,0.55), 0 2px 10px rgba(0,0,0,0.35);
     z-index: 500; overflow: hidden;
   }
-  /* RTL: dropdown opens from left */
-  [dir="rtl"] .nav-dropdown { right: auto; left: 0; }
 
   .nav-dropdown.is-open {
     display: block;
@@ -336,8 +345,7 @@ import { SITE_TITLE } from '../consts';
 
   .dl-icon { display: flex; align-items: center; justify-content: center; width: 20px; height: 20px; color: var(--fg-subtle); flex-shrink: 0; transition: color 0.1s; }
   .dropdown-link:hover .dl-icon, .dropdown-link:focus .dl-icon { color: var(--gold-dim); }
-  .dl-ext { margin-left: auto; color: var(--fg-subtle); flex-shrink: 0; }
-  [dir="rtl"] .dl-ext { margin-left: 0; margin-right: auto; }
+  .dl-ext { margin-inline-start: auto; color: var(--fg-subtle); flex-shrink: 0; }
 
   .dropdown-divider { height: 1px; background: var(--border); margin: 0.4rem 0.75rem; }
 
