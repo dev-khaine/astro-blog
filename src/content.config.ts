@@ -1,16 +1,21 @@
-import { glob } from "astro/loaders";
 import { defineCollection, z } from "astro:content";
+import { r2Loader } from "./lib/r2Loader";
 
 const blog = defineCollection({
-  loader: glob({ base: "./src/content/blog", pattern: "**/*.{md,mdx}" }),
+  // r2Loader replaces the local `glob` loader.
+  // At build time it fetches all .md files from your R2 bucket
+  // via the Cloudflare Worker API and injects them into Astro's
+  // content layer exactly as if they were local files.
+  loader: r2Loader(),
+
   schema: z.object({
-    title: z.string(),
+    title:       z.string(),
     description: z.string(),
-    pubDate: z.coerce.date(),
+    pubDate:     z.coerce.date(),
     updatedDate: z.coerce.date().optional(),
-    heroImage: z.string().optional(),
-    tags: z.array(z.string()).optional().default([]),
-    draft: z.boolean().optional().default(false),
+    heroImage:   z.string().optional(),
+    tags:        z.array(z.string()).optional().default([]),
+    draft:       z.boolean().optional().default(false),
   }),
 });
 
