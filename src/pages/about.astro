@@ -11,7 +11,7 @@ import { SITE_TITLE, AUTHOR_NAME } from '../consts';
   <head>
     <BaseHead
       title={`About — ${SITE_TITLE}`}
-      description={`${AUTHOR_NAME}: Financial analyst and writer covering markets, macro, and the global economy.`}
+      description="Qoinra is a knowledge hub for finance, economics, and technology in the modern digital world — helping you understand markets, crypto, trading, and online income."
     />
   </head>
   <body>
@@ -32,13 +32,16 @@ import { SITE_TITLE, AUTHOR_NAME } from '../consts';
           <!-- Sidebar -->
           <aside class="about-aside anim-up anim-up-1">
             <div class="profile-card">
-              <div class="profile-avatar" aria-label={`${AUTHOR_NAME}'s avatar`}>
-                <span aria-hidden="true">{AUTHOR_NAME.charAt(0)}</span>
+              <div class="profile-avatar" aria-label={`${SITE_TITLE} logo`}>
+                <span aria-hidden="true">Q</span>
               </div>
-              <h2 class="profile-name">{AUTHOR_NAME}</h2>
+              <h2 class="profile-name">
+                <span class="en-text">{SITE_TITLE}</span>
+                <span class="ar-text">كوينرا</span>
+              </h2>
               <p class="profile-role label">
-                <span class="en-text">Analyst & Writer</span>
-                <span class="ar-text">محلل وكاتب</span>
+                <span class="en-text">Knowledge Hub</span>
+                <span class="ar-text">منصة معرفية</span>
               </p>
 
               <div class="profile-divider" aria-hidden="true"></div>
@@ -57,10 +60,10 @@ import { SITE_TITLE, AUTHOR_NAME } from '../consts';
                   </a>
                 </li>
                 <li>
-                  <a href="mailto:hello@example.com" class="profile-link">
+                  <a href="mailto:hello@qoinra.com" class="profile-link">
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-                    <span class="en-text">Email</span>
-                    <span class="ar-text">البريد الإلكتروني</span>
+                    <span class="en-text">Email Us</span>
+                    <span class="ar-text">راسلنا</span>
                   </a>
                 </li>
                 <li>
@@ -73,14 +76,50 @@ import { SITE_TITLE, AUTHOR_NAME } from '../consts';
 
               <div class="profile-divider" aria-hidden="true"></div>
 
+              <!-- Topic pills -->
+              <div class="topic-pills">
+                <p class="label" style="margin-bottom:0.6rem; display:block;">
+                  <span class="en-text">What We Cover</span>
+                  <span class="ar-text">ما نغطيه</span>
+                </p>
+                <div class="pills">
+                  <a href="/blog?tag=markets" class="tag">
+                    <span class="en-text">Markets</span>
+                    <span class="ar-text">الأسواق</span>
+                  </a>
+                  <a href="/blog?tag=crypto" class="tag">
+                    <span class="en-text">Crypto</span>
+                    <span class="ar-text">العملات الرقمية</span>
+                  </a>
+                  <a href="/blog?tag=trading" class="tag">
+                    <span class="en-text">Trading</span>
+                    <span class="ar-text">التداول</span>
+                  </a>
+                  <a href="/blog?tag=tech" class="tag">
+                    <span class="en-text">Tech</span>
+                    <span class="ar-text">التكنولوجيا</span>
+                  </a>
+                  <a href="/blog?tag=online-income" class="tag">
+                    <span class="en-text">Online Income</span>
+                    <span class="ar-text">الدخل الرقمي</span>
+                  </a>
+                  <a href="/blog?tag=economics" class="tag">
+                    <span class="en-text">Economics</span>
+                    <span class="ar-text">الاقتصاد</span>
+                  </a>
+                </div>
+              </div>
+
+              <div class="profile-divider" aria-hidden="true"></div>
+
               <div class="disclaimer-card">
                 <p class="label" style="margin-bottom:0.4rem;">
                   <span class="en-text">Disclaimer</span>
                   <span class="ar-text">إخلاء المسؤولية</span>
                 </p>
                 <p>
-                  <span class="en-text">Nothing here is financial advice. All views are personal. Past performance ≠ future results.</span>
-                  <span class="ar-text">لا شيء هنا يُعدّ نصيحة مالية. جميع الآراء شخصية. الأداء السابق لا يعني نتائج مستقبلية.</span>
+                  <span class="en-text">Nothing here is financial advice. All views are for educational purposes. Past performance ≠ future results.</span>
+                  <span class="ar-text">لا شيء هنا يُعدّ نصيحة مالية. جميع المحتوى لأغراض تعليمية. الأداء السابق لا يعني نتائج مستقبلية.</span>
                 </p>
               </div>
             </div>
@@ -90,47 +129,51 @@ import { SITE_TITLE, AUTHOR_NAME } from '../consts';
           <div class="about-content prose anim-up anim-up-2">
 
             <h2>
-              <span class="en-text">Who I Am</span>
-              <span class="ar-text">من أنا</span>
+              <span class="en-text">What Is Qoinra</span>
+              <span class="ar-text">ما هو كوينرا</span>
             </h2>
             <p>
-              <span class="en-text">Financial analyst and writer covering markets, macro, and the global economy. I've spent years studying financial markets, reading earnings transcripts at 6am, and arguing about central bank policy at dinner parties nobody wanted to attend.</span>
-              <span class="ar-text">محلل مالي وكاتب يغطي الأسواق والاقتصاد الكلي والاقتصاد العالمي. أمضيت سنوات في دراسة الأسواق المالية، وقراءة محاضر الأرباح في الساعة السادسة صباحًا، والنقاش في سياسة البنك المركزي في حفلات العشاء التي لم يرد أحد حضورها.</span>
+              <span class="en-text">Qoinra is a knowledge hub dedicated to helping you understand finance, economics, and technology in the modern digital world. We believe that financial literacy and tech awareness are no longer optional — they are essential skills for navigating the future.</span>
+              <span class="ar-text">كوينرا هو منصة معرفية تهدف إلى مساعدتك على فهم عالم المال والاقتصاد والتكنولوجيا في العصر الرقمي الحديث. نؤمن أن الثقافة المالية والوعي التكنولوجي لم يعودا اختياريين — بل هما مهارتان أساسيتان للتعامل مع المستقبل.</span>
             </p>
             <p>
-              <span class="en-text">Capital is my attempt to write clearly about complex things — to cut through the noise of financial media and offer analysis worth reading.</span>
-              <span class="ar-text">كابيتال هو محاولتي للكتابة بوضوح عن الأمور المعقدة — اختراق ضجيج وسائل الإعلام المالية وتقديم تحليل يستحق القراءة.</span>
-            </p>
-
-            <h3>
-              <span class="en-text">What I Cover</span>
-              <span class="ar-text">ما أغطيه</span>
-            </h3>
-            <p>
-              <span class="en-text">My focus is on macroeconomics, equity markets, monetary policy, and the structural forces shaping the global economy. I try to write long-form pieces that age well — analysis you can return to in six months and still find useful.</span>
-              <span class="ar-text">يركز اهتمامي على الاقتصاد الكلي وأسواق الأسهم والسياسة النقدية والقوى الهيكلية التي تشكّل الاقتصاد العالمي. أحاول كتابة مقالات مطوّلة تصمد مع الوقت — تحليلات يمكنك العودة إليها بعد ستة أشهر وتجدها لا تزال مفيدة.</span>
-            </p>
-            <p>
-              <span class="en-text">I also cover crypto markets when they intersect with traditional finance, which is increasingly often.</span>
-              <span class="ar-text">أغطي أيضًا أسواق العملات الرقمية عندما تتقاطع مع التمويل التقليدي، وهو أمر يحدث بشكل متزايد.</span>
+              <span class="en-text">Our blog explores global market trends, innovations in tech, cryptocurrencies, trading, and online income opportunities — all while providing clear insights and guidance to help you make informed decisions.</span>
+              <span class="ar-text">يستكشف مدونتنا الاتجاهات العالمية للأسواق، الابتكارات التقنية، العملات الرقمية، التداول، وفرص الدخل عبر الإنترنت — مع تقديم رؤى واضحة وإرشادات تساعدك على اتخاذ قرارات ذكية.</span>
             </p>
 
             <h3>
-              <span class="en-text">My Approach</span>
-              <span class="ar-text">نهجي</span>
+              <span class="en-text">What We Cover</span>
+              <span class="ar-text">ما نغطيه</span>
             </h3>
             <p>
-              <span class="en-text">I try to be specific rather than vague, right rather than fast, and honest about uncertainty rather than falsely confident. Financial writing is full of people who sound sure of everything. I prefer to show my work.</span>
-              <span class="ar-text">أحاول أن أكون محددًا بدلًا من مبهم، ودقيقًا بدلًا من سريع، وصادقًا تجاه عدم اليقين بدلًا من الثقة الزائفة. الكتابة المالية مليئة بأشخاص يبدون واثقين من كل شيء. أفضّل إظهار عملي.</span>
+              <span class="en-text">Whether you're curious about economic shifts, the digital economy, or emerging technologies, Qoinra is your guide to learning, exploring, and navigating the forces shaping the future of money and business.</span>
+              <span class="ar-text">سواء كنت مهتمًا بالتغيرات الاقتصادية أو الاقتصاد الرقمي أو التكنولوجيا الناشئة، كوينرا هو دليلك لتعلّم واستكشاف وفهم القوى التي تشكل مستقبل المال والأعمال.</span>
+            </p>
+            <p>
+              <span class="en-text">Our topics span global markets and macroeconomics, cryptocurrency and blockchain, trading strategies, fintech and emerging technology, and ways to build income in the digital economy.</span>
+              <span class="ar-text">تشمل مواضيعنا: الأسواق العالمية والاقتصاد الكلي، العملات الرقمية وتقنية البلوك تشين، استراتيجيات التداول، التكنولوجيا المالية والتقنيات الناشئة، وطرق بناء الدخل في الاقتصاد الرقمي.</span>
+            </p>
+
+            <h3>
+              <span class="en-text">Our Approach</span>
+              <span class="ar-text">نهجنا</span>
+            </h3>
+            <p>
+              <span class="en-text">We write for curious, motivated readers who want to truly understand the forces moving markets and technology — not just read headlines about them. Our goal is to break down complex topics into clear, actionable knowledge.</span>
+              <span class="ar-text">نكتب للقراء الفضوليين والمتحمسين الذين يريدون فهم القوى المحركة للأسواق والتكنولوجيا فعلًا — لا مجرد قراءة العناوين. هدفنا تحليل المواضيع المعقدة وتحويلها إلى معرفة واضحة وقابلة للتطبيق.</span>
+            </p>
+            <p>
+              <span class="en-text">We aim to be specific rather than vague, clear rather than jargon-heavy, and honest about uncertainty. We always show our reasoning so you can evaluate it yourself and make your own decisions.</span>
+              <span class="ar-text">نسعى إلى الدقة بدلًا من الغموض، والوضوح بدلًا من المصطلحات المعقدة، والصدق تجاه عدم اليقين. نُظهر دائمًا منطق تفكيرنا حتى تتمكن من تقييمه بنفسك واتخاذ قراراتك.</span>
             </p>
 
             <h3>
               <span class="en-text">Get in Touch</span>
-              <span class="ar-text">تواصل معي</span>
+              <span class="ar-text">تواصل معنا</span>
             </h3>
             <p>
-              <span class="en-text">I love hearing from readers — investors, founders, students, curious people. The best way to reach me is via <a href="https://twitter.com">Twitter</a> or <a href="mailto:hello@example.com">email</a>. I read everything.</span>
-              <span class="ar-text">يسعدني سماع القراء — مستثمرين، مؤسسين، طلابًا، فضوليين. أفضل طريقة للتواصل معي عبر <a href="https://twitter.com">تويتر</a> أو <a href="mailto:hello@example.com">البريد الإلكتروني</a>. أقرأ كل شيء.</span>
+              <span class="en-text">We love hearing from readers — investors, traders, students, curious minds. The best way to reach us is via <a href="https://twitter.com">Twitter</a> or <a href="mailto:hello@qoinra.com">email</a>. We read everything.</span>
+              <span class="ar-text">يسعدنا سماع القراء — مستثمرين، متداولين، طلابًا، عقولًا فضولية. أفضل طريقة للتواصل معنا عبر <a href="https://twitter.com">تويتر</a> أو <a href="mailto:hello@qoinra.com">البريد الإلكتروني</a>. نقرأ كل شيء.</span>
             </p>
           </div>
         </div>
@@ -151,15 +194,28 @@ import { SITE_TITLE, AUTHOR_NAME } from '../consts';
   .about-grid { display: grid; grid-template-columns: 300px 1fr; gap: var(--sp-xl); align-items: start; }
 
   .profile-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--r); padding: var(--sp-lg); position: sticky; top: 80px; }
-  .profile-avatar { width: 72px; height: 72px; background: linear-gradient(135deg, var(--gold-dim), var(--gold)); border-radius: var(--r-sm); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 2.5rem; color: #0c0c0c; margin-bottom: var(--sp-sm); }
+  .profile-avatar {
+    width: 72px; height: 72px;
+    background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+    border-radius: var(--r-sm); display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display); font-size: 2.5rem; color: #0c0c0c;
+    margin-bottom: var(--sp-sm);
+  }
   .profile-name { font-size: var(--s-3xl); margin-bottom: 0.3rem; }
   [dir="rtl"] .profile-name { font-family: var(--font-arabic); font-weight: 700; text-transform: none; letter-spacing: 0; }
   .profile-role { display: block; margin-bottom: 0; }
   .profile-divider { height: 1px; background: var(--border); margin-block: var(--sp-md); }
   .profile-links { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.3rem; }
-  .profile-link { display: flex; align-items: center; gap: 0.6em; font-family: var(--font-mono); font-size: var(--s-xs); letter-spacing: 0.06em; color: var(--fg-muted); text-decoration: none; padding: 0.45em 0.6em; border-radius: var(--r-sm); transition: background var(--t1), color var(--t1); }
+  .profile-link {
+    display: flex; align-items: center; gap: 0.6em;
+    font-family: var(--font-mono); font-size: var(--s-xs); letter-spacing: 0.06em;
+    color: var(--fg-muted); text-decoration: none; padding: 0.45em 0.6em;
+    border-radius: var(--r-sm); transition: background var(--t1), color var(--t1);
+  }
   [dir="rtl"] .profile-link { font-family: var(--font-arabic); letter-spacing: 0; font-size: var(--s-sm); font-weight: 500; }
   .profile-link:hover { background: var(--bg-raised); color: var(--gold); }
+
+  .topic-pills .pills { display: flex; flex-wrap: wrap; gap: 0.35rem; }
 
   .disclaimer-card { background: var(--bg-raised); border: 1px solid var(--border); border-radius: var(--r-sm); padding: var(--sp-sm); }
   .disclaimer-card p { font-family: var(--font-mono); font-size: var(--s-2xs); color: var(--fg-subtle); line-height: 1.55; letter-spacing: 0.03em; margin: 0; }
@@ -168,16 +224,10 @@ import { SITE_TITLE, AUTHOR_NAME } from '../consts';
   /* Prose overrides for RTL */
   [dir="rtl"] .about-content.prose h2,
   [dir="rtl"] .about-content.prose h3 {
-    font-family: var(--font-arabic);
-    font-weight: 700;
-    text-transform: none;
-    letter-spacing: 0;
-    line-height: 1.3;
-    color: var(--fg);
+    font-family: var(--font-arabic); font-weight: 700;
+    text-transform: none; letter-spacing: 0; line-height: 1.3; color: var(--fg);
   }
   [dir="rtl"] .about-content.prose h3 { color: var(--gold); }
-
-  /* First heading no top border/padding */
   .about-content.prose h2:first-child { padding-top: 0; margin-top: 0; border-top: none; }
 
   @media (max-width: 900px) {
