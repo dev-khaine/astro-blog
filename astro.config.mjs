@@ -1,31 +1,29 @@
 import { defineConfig } from 'astro/config';
+import mdx from '@astrojs/mdx';
+import sitemap from '@astrojs/sitemap';
 import cloudflare from '@astrojs/cloudflare';
 
 // https://astro.build/config
 export default defineConfig({
-  // ── OUTPUT ─────────────────────────────────────────────────────────────
-  // "hybrid" = static by default, but individual pages/endpoints can opt
-  // into server rendering with `export const prerender = false`.
-  // This lets /api/revalidate be a live server route while everything else
-  // is pre-rendered at build time from R2 content.
-  output: 'static',
+  site: 'https://perkorbit.co',
 
-  // ── CLOUDFLARE ADAPTER ─────────────────────────────────────────────────
+  // Cloudflare Pages adapter
+  // 'static' output is used here because content is fetched at BUILD time
+  // via r2Loader. Switch to 'server' if you need SSR/edge rendering.
+  output: 'static',
   adapter: cloudflare({
-    // platformProxy enables Cloudflare bindings (R2, KV, etc.) during
-    // local `wrangler dev` / `astro dev` sessions.
-    platformProxy: { enabled: true },
+    platformProxy: {
+      enabled: true,
+    },
   }),
 
-  // ── SITE URL ───────────────────────────────────────────────────────────
-  site: process.env.SITE_URL ?? 'https://perkorbit.co',
+  integrations: [
+    mdx(),
+    sitemap(),
+  ],
 
-  // ── VITE ───────────────────────────────────────────────────────────────
+  // Vite config: expose env vars that start with R2_ to import.meta.env
   vite: {
-    // Ensure env vars are available at build time for the loader
-    define: {
-      'import.meta.env.R2_WORKER_URL':    JSON.stringify(process.env.R2_WORKER_URL ?? ''),
-      'import.meta.env.R2_WORKER_SECRET': JSON.stringify(process.env.R2_WORKER_SECRET ?? ''),
-    },
+    define: {},
   },
 });
