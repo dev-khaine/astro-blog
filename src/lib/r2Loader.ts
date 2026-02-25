@@ -88,8 +88,8 @@ export function r2Loader(): Loader {
 
       for (const post of posts) {
         try {
-          const html  = await marked.parse(post.body ?? '');
-          const entry = await parseData({
+          const html = await marked.parse(post.body ?? '');
+          const data = await parseData({
             id:   post.slug,
             data: {
               title:       post.title,
@@ -103,14 +103,14 @@ export function r2Loader(): Loader {
           });
 
           // Only store if parseData succeeded and returned valid data
-          if (!entry?.data?.title) {
+          if (!data?.title) {
             logger.warn(`[r2Loader] Skipping post "${post.slug}" — parseData returned invalid data`);
             continue;
           }
 
           store.set({
             id:       post.slug,
-            data:     entry.data,
+            data,
             body:     post.body,
             rendered: { html },
           });
