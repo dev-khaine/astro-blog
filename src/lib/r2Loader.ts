@@ -1,11 +1,3 @@
-/**
- * r2Loader — Custom Astro Content Layer loader
- *
- * Fetches all blog posts from the Cloudflare Worker R2 API at build time.
- * If R2_WORKER_URL is not set, or if the Worker is unreachable, the loader
- * warns and returns an empty collection — the build continues successfully.
- */
-
 import type { Loader, LoaderContext } from 'astro/loaders';
 import { marked } from 'marked';
 
@@ -45,41 +37,40 @@ export function r2Loader(): Loader {
     name: 'r2-loader',
 
     async load({ store, logger, parseData }: LoaderContext) {
-      const WORKER_URL = (import.meta.env.R2_WORKER_URL as string | undefined)?.trim();
+
+      // ── Read env vars INSIDE load() so they're available at build time ──
+      const WORKER_URL    = import.meta.env.R2_WORKER_URL as string | undefined;
       const WORKER_SECRET = import.meta.env.R2_WORKER_SECRET as string | undefined;
 
       if (!WORKER_URL) {
-        logger.warn('[r2Loader] R2_WORKER_URL is not set. Blog collection will be empty.');
-        store.clear();
-        return;
+        logger.error('[r2Loader] R2_WORKER_URL is not set in environment variables.');
+        logger.error('[r2Loader] Add R2_WORKER_URL to your Cloudflare Pages environment variables.');
+        throw new Error('[r2Loader] R2_WORKER_URL is not set.');
       }
 
-      logger.info(`[r2Loader] Fetching post list from: ${WORKER_URL}`);
+      logger.info(`[r2Loader] Fetching post list from ${WORKER_URL}/posts ...`);
 
-      // If the Worker is unreachable, warn and return empty instead of crashing
+      // 1. Get post list
       let slugList: { slug: string }[];
       try {
-        const res = await fetchWithRetry(`${WORKER_URL}/posts?limit=500`, WORKER_SECRET);
+        const res  = await fetchWithRetry(`${WORKER_URL}/posts?limit=500`, WORKER_SECRET);
         const data = await res.json() as { posts: { slug: string }[] };
-        slugList = data.posts;
+        slugList   = data.posts;
       } catch (e) {
-        logger.warn(
-          `[r2Loader] Could not reach R2 Worker (${e}). ` +
-          'Blog will be empty. Check R2_WORKER_URL in your Cloudflare Pages env vars.'
-        );
-        store.clear();
-        return;
+        logger.error(`[r2Loader] Failed to fetch post list: ${e}`);
+        throw e;
       }
 
       logger.info(`[r2Loader] Found ${slugList.length} posts. Fetching content...`);
 
+      // 2. Fetch each post in batches
       const BATCH_SIZE = 10;
       const posts: R2Post[] = [];
 
       for (let i = 0; i < slugList.length; i += BATCH_SIZE) {
-        const batch = slugList.slice(i, i + BATCH_SIZE);
+        const batch   = slugList.slice(i, i + BATCH_SIZE);
         const results = await Promise.allSettled(
-          batch.map(async (p) => {
+          batch.map(async p => {
             const res = await fetchWithRetry(`${WORKER_URL}/posts/${p.slug}`, WORKER_SECRET);
             return res.json() as Promise<R2Post>;
           })
@@ -91,10 +82,12 @@ export function r2Loader(): Loader {
       }
 
       logger.info(`[r2Loader] Loaded ${posts.length} posts. Storing...`);
+
+      // 3. Store in content layer
       store.clear();
 
       for (const post of posts) {
-        const html = await marked.parse(post.body ?? '');
+        const html  = await marked.parse(post.body ?? '');
         const entry = await parseData({
           id:   post.slug,
           data: {
@@ -107,10 +100,16 @@ export function r2Loader(): Loader {
             draft:       post.draft ?? false,
           },
         });
-        store.set({ id: post.slug, data: entry.data, body: post.body, rendered: { html } });
+
+        store.set({
+          id:       post.slug,
+          data:     entry.data,
+          body:     post.body,
+          rendered: { html },
+        });
       }
 
-      logger.info('[r2Loader] Done.');
+      logger.info('[r2Loader] ✓ Done. All posts loaded from R2.');
     },
   };
 }
