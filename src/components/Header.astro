@@ -40,6 +40,8 @@ import { SITE_TITLE } from '../consts';
       <span class="t-sep">|</span>
       <span class="t-item"><span class="t-sym">OIL</span>&nbsp;<span class="t-val">81.44</span>&nbsp;<span class="t-dn">−0.38%</span></span>
       <span class="t-sep">|</span>
+      <span class="t-item"><span class="t-sym">ETH</span>&nbsp;<span class="t-val">3,412.00</span>&nbsp;<span class="t-up">+1.8%</span></span>
+      <span class="t-sep">|</span>
       <span class="t-item"><span class="t-sym">SPX</span>&nbsp;<span class="t-val">5,234.18</span>&nbsp;<span class="t-up">+0.82%</span></span>
       <span class="t-sep">|</span>
       <span class="t-item"><span class="t-sym">NDX</span>&nbsp;<span class="t-val">18,290.40</span>&nbsp;<span class="t-up">+1.12%</span></span>
@@ -55,6 +57,8 @@ import { SITE_TITLE } from '../consts';
       <span class="t-item"><span class="t-sym">GOLD</span>&nbsp;<span class="t-val">2,341.20</span>&nbsp;<span class="t-up">+0.6%</span></span>
       <span class="t-sep">|</span>
       <span class="t-item"><span class="t-sym">OIL</span>&nbsp;<span class="t-val">81.44</span>&nbsp;<span class="t-dn">−0.38%</span></span>
+      <span class="t-sep">|</span>
+      <span class="t-item"><span class="t-sym">ETH</span>&nbsp;<span class="t-val">3,412.00</span>&nbsp;<span class="t-up">+1.8%</span></span>
     </div>
   </div>
 
@@ -66,7 +70,7 @@ import { SITE_TITLE } from '../consts';
       <a href="/" class="logo" aria-label={`${SITE_TITLE} — Home`}>
         <span class="logo-text">
           <span class="en-text">{SITE_TITLE}</span>
-          <span class="ar-text">كابيتال</span>
+          <span class="ar-text">كوينرا</span>
         </span>
         <span class="logo-rule" aria-hidden="true"></span>
       </a>
@@ -142,8 +146,8 @@ import { SITE_TITLE } from '../consts';
                 <span class="dl-icon" aria-hidden="true">
                   <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
                 </span>
-                <span class="en-text">Analysis</span>
-                <span class="ar-text">التحليلات</span>
+                <span class="en-text">Articles</span>
+                <span class="ar-text">المقالات</span>
               </a>
 
               <a href="/about" class="dropdown-link" role="menuitem">
@@ -201,8 +205,6 @@ import { SITE_TITLE } from '../consts';
     transform-origin: left center; transform: scaleX(0);
     z-index: 9999; pointer-events: none;
   }
-
-  /* RTL: progress bar grows from right */
   [dir="rtl"] #scroll-progress { transform-origin: right center; }
 
   #site-header {
@@ -224,7 +226,7 @@ import { SITE_TITLE } from '../consts';
   }
   .ticker-track {
     display: flex; align-items: center; white-space: nowrap;
-    animation: run-ticker 45s linear infinite; will-change: transform;
+    animation: run-ticker 55s linear infinite; will-change: transform;
   }
   @keyframes run-ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
   .t-item { display: inline-flex; align-items: center; padding-inline: 1.4em; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.05em; text-transform: uppercase; }
@@ -250,7 +252,6 @@ import { SITE_TITLE } from '../consts';
     line-height: 1; letter-spacing: 0.12em; text-transform: uppercase;
     color: var(--fg); transition: color 0.11s ease;
   }
-  /* Arabic logo: Cairo bold, no uppercase, bigger for visual parity */
   [dir="rtl"] .logo-text {
     font-family: var(--font-arabic); font-weight: 700;
     letter-spacing: 0; text-transform: none; font-size: 1.6rem;
@@ -259,7 +260,6 @@ import { SITE_TITLE } from '../consts';
   .logo-rule { height: 2px; width: 0; background: var(--gold); border-radius: 99px; transition: width 0.25s ease; }
   .logo:hover .logo-rule { width: 100%; }
 
-  /* Right cluster — use logical margin so it flips automatically in RTL */
   .nav-right { display: flex; align-items: center; gap: 0.2rem; margin-inline-start: auto; }
 
   /* Icon buttons */
@@ -278,7 +278,6 @@ import { SITE_TITLE } from '../consts';
   [data-theme="light"] .icon-sun  { display: none; }
   [data-theme="light"] .icon-moon { display: block; }
 
-  /* Divider */
   .nav-divider { display: block; width: 1px; height: 20px; background: var(--border-hi); margin-inline: 0.35rem; flex-shrink: 0; }
 
   /* Menu icon swap */
@@ -288,7 +287,6 @@ import { SITE_TITLE } from '../consts';
   #menu-toggle[aria-expanded="true"] .icon-x    { display: block; }
   #menu-toggle[aria-expanded="true"] { background: var(--bg-raised); color: var(--gold); }
 
-  /* Menu wrap */
   .menu-wrap { position: relative; flex-shrink: 0; }
 
   /* Dropdown */
@@ -296,7 +294,6 @@ import { SITE_TITLE } from '../consts';
     display: none;
     position: absolute;
     top: calc(100% + 10px);
-    /* logical property: inset-inline-start=0 means right:0 in LTR, left:0 in RTL */
     inset-inline-end: 0;
     width: 220px;
     background: var(--bg-card);
@@ -306,7 +303,6 @@ import { SITE_TITLE } from '../consts';
     box-shadow: 0 8px 40px rgba(0,0,0,0.55), 0 2px 10px rgba(0,0,0,0.35);
     z-index: 500; overflow: hidden;
   }
-
   .nav-dropdown.is-open {
     display: block;
     animation: dropdown-in 0.18s ease both;
@@ -315,9 +311,7 @@ import { SITE_TITLE } from '../consts';
     from { opacity: 0; transform: translateY(-8px) scale(0.97); }
     to   { opacity: 1; transform: translateY(0)    scale(1); }
   }
-
   .dropdown-inner { padding: 0.6rem 0.4rem; }
-
   .dropdown-label {
     font-family: var(--font-mono); font-size: 9px; font-weight: 600;
     letter-spacing: 0.16em; text-transform: uppercase;
@@ -393,14 +387,12 @@ import { SITE_TITLE } from '../consts';
     html.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
     html.setAttribute('data-lang', lang);
     localStorage.setItem('lang', lang);
-    // update toggle aria-label
     const btn = document.getElementById('lang-toggle');
     if (btn) {
       btn.setAttribute('aria-label', lang === 'ar' ? 'Switch to English' : 'Switch to Arabic');
     }
   };
 
-  // Apply saved lang on load
   applyLang(getLang());
 
   document.getElementById('lang-toggle')?.addEventListener('click', () => {
@@ -426,49 +418,4 @@ import { SITE_TITLE } from '../consts';
 
   menuToggle?.addEventListener('click', (e) => {
     e.stopPropagation();
-    navDropdown?.classList.contains('is-open') ? closeMenu() : openMenu();
-  });
-  backdrop?.addEventListener('click', closeMenu);
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && navDropdown?.classList.contains('is-open')) {
-      closeMenu(); menuToggle?.focus();
-    }
-  });
-
-  navDropdown?.addEventListener('keydown', (e) => {
-    const links = [...(navDropdown?.querySelectorAll('.dropdown-link') ?? [])] as HTMLElement[];
-    const idx = links.indexOf(document.activeElement as HTMLElement);
-    if (e.key === 'ArrowDown') { e.preventDefault(); links[(idx + 1) % links.length]?.focus(); }
-    else if (e.key === 'ArrowUp') { e.preventDefault(); links[(idx - 1 + links.length) % links.length]?.focus(); }
-    else if (e.key === 'Tab' && !e.shiftKey && idx === links.length - 1) {
-      e.preventDefault(); closeMenu(); menuToggle?.focus();
-    }
-  });
-
-  // Mark active page
-  const p = window.location.pathname.replace(/\/$/, '') || '/';
-  navDropdown?.querySelectorAll<HTMLAnchorElement>('.dropdown-link').forEach(link => {
-    const href = link.getAttribute('href') ?? '';
-    if ((href === '/' && (p === '' || p === '/')) || (href !== '/' && p.startsWith(href))) {
-      link.setAttribute('data-active', 'true');
-      link.setAttribute('aria-current', 'page');
-    }
-  });
-
-  // ── SCROLL ──────────────────────────────────────────────────────
-  const siteHeader = document.getElementById('site-header');
-  window.addEventListener('scroll', () => {
-    siteHeader?.classList.toggle('scrolled', window.scrollY > 10);
-  }, { passive: true });
-
-  const bar = document.getElementById('scroll-progress');
-  if (bar) {
-    const update = () => {
-      const scrolled = document.documentElement.scrollTop;
-      const total = document.documentElement.scrollHeight - window.innerHeight;
-      bar.style.transform = `scaleX(${total > 0 ? scrolled / total : 0})`;
-    };
-    window.addEventListener('scroll', update, { passive: true });
-    update();
-  }
-</script>
+    navDropdown?.classList.contains('is-open') ? closeMenu() 
