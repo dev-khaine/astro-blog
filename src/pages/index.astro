@@ -7,7 +7,7 @@ import FormattedDate from '../components/FormattedDate.astro';
 import { SITE_TITLE, SITE_DESCRIPTION, AUTHOR_NAME } from '../consts';
 import { getCollection } from 'astro:content';
 
-const allPosts = (await getCollection('blog', p => !p.data.draft))
+const allPosts = (await getCollection('blog').then(posts => posts.filter(p => p.data && !p.data.draft)))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
 const [hero, ...rest] = allPosts;

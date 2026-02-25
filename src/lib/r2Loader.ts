@@ -87,26 +87,36 @@ export function r2Loader(): Loader {
       store.clear();
 
       for (const post of posts) {
-        const html  = await marked.parse(post.body ?? '');
-        const entry = await parseData({
-          id:   post.slug,
-          data: {
-            title:       post.title,
-            description: post.description,
-            pubDate:     new Date(post.pubDate),
-            updatedDate: post.updatedDate ? new Date(post.updatedDate) : undefined,
-            heroImage:   post.heroImage,
-            tags:        post.tags ?? [],
-            draft:       post.draft ?? false,
-          },
-        });
+        try {
+          const html  = await marked.parse(post.body ?? '');
+          const entry = await parseData({
+            id:   post.slug,
+            data: {
+              title:       post.title,
+              description: post.description,
+              pubDate:     new Date(post.pubDate),
+              updatedDate: post.updatedDate ? new Date(post.updatedDate) : undefined,
+              heroImage:   post.heroImage,
+              tags:        post.tags ?? [],
+              draft:       post.draft ?? false,
+            },
+          });
 
-        store.set({
-          id:       post.slug,
-          data:     entry.data,
-          body:     post.body,
-          rendered: { html },
-        });
+          // Only store if parseData succeeded and returned valid data
+          if (!entry?.data?.title) {
+            logger.warn(`[r2Loader] Skipping post "${post.slug}" — parseData returned invalid data`);
+            continue;
+          }
+
+          store.set({
+            id:       post.slug,
+            data:     entry.data,
+            body:     post.body,
+            rendered: { html },
+          });
+        } catch (e) {
+          logger.warn(`[r2Loader] Skipping post "${post.slug}" due to error: ${e}`);
+        }
       }
 
       logger.info('[r2Loader] ✓ Done. All posts loaded from R2.');
