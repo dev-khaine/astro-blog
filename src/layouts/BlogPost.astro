@@ -10,8 +10,15 @@ import { AUTHOR_NAME } from '../consts';
 type Props = CollectionEntry<'blog'>['data'] & { rawContent?: string };
 
 const {
-  title, description, pubDate, updatedDate,
-  heroImage, tags = [], rawContent = '',
+  title,
+  title_ar,
+  description,
+  description_ar,
+  pubDate,
+  updatedDate,
+  heroImage,
+  tags = [],
+  rawContent = '',
 } = Astro.props;
 ---
 
@@ -36,8 +43,31 @@ const {
             </div>
           )}
 
-          <h1 class="art-title anim-up anim-up-1" itemprop="headline">{title}</h1>
-          <p class="art-desc anim-up anim-up-2">{description}</p>
+          <!-- Title: shows EN or AR based on data-lang -->
+          <h1 class="art-title anim-up anim-up-1" itemprop="headline">
+            {title_ar
+              ? (
+                <>
+                  <span class="en-text">{title}</span>
+                  <span class="ar-text">{title_ar}</span>
+                </>
+              )
+              : title
+            }
+          </h1>
+
+          <!-- Description: shows EN or AR based on data-lang -->
+          <p class="art-desc anim-up anim-up-2">
+            {description_ar
+              ? (
+                <>
+                  <span class="en-text">{description}</span>
+                  <span class="ar-text">{description_ar}</span>
+                </>
+              )
+              : description
+            }
+          </p>
 
           <div class="art-meta anim-up anim-up-3">
             <span class="meta-item" itemprop="author" itemscope itemtype="https://schema.org/Person">
@@ -78,6 +108,12 @@ const {
         </header>
 
         <!-- Body -->
+        <!--
+          In your .md files, wrap content like this:
+          <div class="en-block">English content...</div>
+          <div class="ar-block">المحتوى بالعربية...</div>
+          The CSS in global.css already hides the inactive language block.
+        -->
         <div class="prose art-body" itemprop="articleBody">
           <slot />
         </div>
@@ -135,10 +171,7 @@ const {
               <span class="en-text">Discussion</span>
               <span class="ar-text">النقاش</span>
             </h2>
-            <div class="giscus-wrap" id="giscus-wrap">
-              <!-- Giscus is injected by JS below so we can set the correct
-                   theme + language dynamically on first load -->
-            </div>
+            <div class="giscus-wrap" id="giscus-wrap"></div>
           </div>
 
           <!-- Back -->
@@ -168,12 +201,25 @@ const {
     line-height: 0.92; letter-spacing: 0.02em; text-transform: uppercase;
     color: var(--fg); margin-bottom: var(--sp-md);
   }
-  [dir="rtl"] .art-title { font-family: var(--font-arabic); font-weight: 700; text-transform: none; letter-spacing: 0; line-height: 1.2; }
+  [dir="rtl"] .art-title {
+    font-family: var(--font-arabic); font-weight: 700;
+    text-transform: none; letter-spacing: 0; line-height: 1.2;
+  }
 
-  .art-desc { font-family: var(--font-serif); font-size: var(--s-lg); font-style: italic; color: var(--fg-muted); line-height: 1.6; margin-bottom: var(--sp-md); padding-bottom: var(--sp-md); border-bottom: 1px solid var(--border); }
+  .art-desc {
+    font-family: var(--font-serif); font-size: var(--s-lg);
+    font-style: italic; color: var(--fg-muted); line-height: 1.6;
+    margin-bottom: var(--sp-md); padding-bottom: var(--sp-md);
+    border-bottom: 1px solid var(--border);
+  }
   [dir="rtl"] .art-desc { font-family: var(--font-arabic); font-style: normal; line-height: 1.8; }
 
-  .art-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem; font-family: var(--font-mono); font-size: var(--s-2xs); color: var(--fg-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: var(--sp-lg); }
+  .art-meta {
+    display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem;
+    font-family: var(--font-mono); font-size: var(--s-2xs);
+    color: var(--fg-muted); letter-spacing: 0.08em; text-transform: uppercase;
+    margin-bottom: var(--sp-lg);
+  }
   [dir="rtl"] .art-meta { font-family: var(--font-arabic); letter-spacing: 0; font-size: var(--s-xs); }
   .meta-item { display: inline-flex; align-items: center; gap: 0.35em; }
   .meta-sep { color: var(--gold-dim); }
@@ -181,41 +227,93 @@ const {
   .art-hero { border-radius: var(--r); overflow: hidden; border: 1px solid var(--border); margin-top: var(--sp-lg); }
   .art-hero img { width: 100%; height: auto; display: block; }
 
+  /* ── BILINGUAL BODY BLOCKS ──
+     .en-block / .ar-block inside .prose are handled by global.css.
+     These extra rules ensure block-level display is preserved correctly
+     within the prose container.
+  ── */
+  .prose :global(.en-block),
+  .prose :global(.ar-block) {
+    display: block;
+  }
+  [data-lang="ar"] .prose :global(.en-block) { display: none; }
+  [data-lang="en"] .prose :global(.ar-block) { display: none; }
+
   /* RTL prose support */
-  [dir="rtl"] .prose p,
-  [dir="rtl"] .prose li { font-family: var(--font-arabic); line-height: 2; letter-spacing: 0; }
-  [dir="rtl"] .prose h2,
-  [dir="rtl"] .prose h3,
-  [dir="rtl"] .prose h4 { font-family: var(--font-arabic); font-weight: 700; text-transform: none; letter-spacing: 0; line-height: 1.3; }
-  [dir="rtl"] .prose > p:first-of-type::first-letter { font-size: inherit; font-family: inherit; line-height: inherit; float: none; margin: 0; color: inherit; }
+  [dir="rtl"] .prose :global(p),
+  [dir="rtl"] .prose :global(li) { font-family: var(--font-arabic); line-height: 2; letter-spacing: 0; }
+  [dir="rtl"] .prose :global(h2),
+  [dir="rtl"] .prose :global(h3),
+  [dir="rtl"] .prose :global(h4) {
+    font-family: var(--font-arabic); font-weight: 700;
+    text-transform: none; letter-spacing: 0; line-height: 1.3;
+  }
+  [dir="rtl"] .prose :global(> p:first-of-type::first-letter) {
+    font-size: inherit; font-family: inherit;
+    line-height: inherit; float: none; margin: 0; color: inherit;
+  }
 
   .art-footer { margin-top: var(--sp-xl); }
-  .art-footer-divider { display: flex; align-items: center; gap: 1rem; margin-bottom: var(--sp-lg); }
-  .art-footer-divider::before, .art-footer-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .art-footer-divider {
+    display: flex; align-items: center; gap: 1rem; margin-bottom: var(--sp-lg);
+  }
+  .art-footer-divider::before,
+  .art-footer-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
   .divider-text { white-space: nowrap; }
 
   .share-block { margin-block: var(--sp-xl); }
   .share-label { margin-bottom: var(--sp-sm); display: block; }
   .share-btns { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-  .share-btn { display: inline-flex; align-items: center; gap: 0.45em; padding: 0.5em 1em; border: 1px solid var(--border-hi); border-radius: var(--r-sm); background: var(--bg-card); color: var(--fg-muted); font-family: var(--font-mono); font-size: var(--s-2xs); font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: all var(--t1); }
-  [dir="rtl"] .share-btn { font-family: var(--font-arabic); letter-spacing: 0; font-size: var(--s-xs); text-transform: none; }
+  .share-btn {
+    display: inline-flex; align-items: center; gap: 0.45em;
+    padding: 0.5em 1em; border: 1px solid var(--border-hi);
+    border-radius: var(--r-sm); background: var(--bg-card);
+    color: var(--fg-muted); font-family: var(--font-mono);
+    font-size: var(--s-2xs); font-weight: 500; letter-spacing: 0.08em;
+    text-transform: uppercase; text-decoration: none;
+    cursor: pointer; transition: all var(--t1);
+  }
+  [dir="rtl"] .share-btn {
+    font-family: var(--font-arabic); letter-spacing: 0;
+    font-size: var(--s-xs); text-transform: none;
+  }
   .share-btn:hover { border-color: var(--gold-dim); color: var(--gold); background: var(--gold-glow); }
   .share-btn.copied { border-color: var(--positive); color: var(--positive); background: rgba(76,175,130,0.1); }
 
-  .author-card { display: flex; align-items: flex-start; gap: var(--sp-md); background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--r); padding: var(--sp-md); margin-block: var(--sp-xl); }
-  .author-avatar { width: 52px; height: 52px; border-radius: var(--r-sm); background: linear-gradient(135deg, var(--gold-dim), var(--gold)); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 1.8rem; color: #0c0c0c; flex-shrink: 0; }
+  .author-card {
+    display: flex; align-items: flex-start; gap: var(--sp-md);
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--r); padding: var(--sp-md); margin-block: var(--sp-xl);
+  }
+  .author-avatar {
+    width: 52px; height: 52px; border-radius: var(--r-sm);
+    background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display); font-size: 1.8rem;
+    color: #0c0c0c; flex-shrink: 0;
+  }
   .author-name { margin-bottom: 0.35rem; display: block; }
-  .author-bio { font-family: var(--font-sans); font-size: var(--s-sm); font-weight: 300; color: var(--fg-muted); line-height: 1.6; margin: 0; }
+  .author-bio {
+    font-family: var(--font-sans); font-size: var(--s-sm);
+    font-weight: 300; color: var(--fg-muted); line-height: 1.6; margin: 0;
+  }
   [dir="rtl"] .author-bio { font-family: var(--font-arabic); font-weight: 400; line-height: 1.8; }
 
-  .comments-section { margin-block: var(--sp-xl); padding-top: var(--sp-lg); border-top: 1px solid var(--border); }
+  .comments-section {
+    margin-block: var(--sp-xl); padding-top: var(--sp-lg);
+    border-top: 1px solid var(--border);
+  }
   .comments-heading { font-size: var(--s-3xl); margin-bottom: var(--sp-sm); }
-  [dir="rtl"] .comments-heading { font-family: var(--font-arabic); font-weight: 700; text-transform: none; letter-spacing: 0; }
-  .comments-note { font-family: var(--font-sans); font-size: var(--s-sm); color: var(--fg-muted); margin-bottom: var(--sp-md); }
-  [dir="rtl"] .comments-note { font-family: var(--font-arabic); line-height: 1.8; }
+  [dir="rtl"] .comments-heading {
+    font-family: var(--font-arabic); font-weight: 700;
+    text-transform: none; letter-spacing: 0;
+  }
   .giscus-wrap { margin-top: var(--sp-md); }
 
-  .back-link { margin-top: var(--sp-xl); padding-top: var(--sp-lg); border-top: 1px solid var(--border); }
+  .back-link {
+    margin-top: var(--sp-xl); padding-top: var(--sp-lg);
+    border-top: 1px solid var(--border);
+  }
 
   /* Flip arrow in RTL */
   [dir="rtl"] .arrow-icon { transform: scaleX(-1); }
@@ -223,111 +321,105 @@ const {
 
 <script>
   const url = window.location.href;
-  const lang = document.documentElement.getAttribute('data-lang') || 'en';
 
-  // Fix share links with current URL
-  const xBtn = document.getElementById('share-x') as HTMLAnchorElement | null;
-  const liBtn = document.getElementById('share-li') as HTMLAnchorElement | null;
+  // ── SHARE LINKS ──────────────────────────────────────────────────────────
+  const xBtn  = document.getElementById('share-x')    as HTMLAnchorElement | null;
+  const liBtn = document.getElementById('share-li')   as HTMLAnchorElement | null;
   const copyBtn = document.getElementById('share-copy');
   const copyLabelEn = document.querySelector('.copy-label-en') as HTMLElement | null;
   const copyLabelAr = document.querySelector('.copy-label-ar') as HTMLElement | null;
 
-  if (xBtn) { const u = new URL(xBtn.href); u.searchParams.set('url', url); xBtn.href = u.toString(); }
+  if (xBtn)  { const u = new URL(xBtn.href); u.searchParams.set('url', url); xBtn.href = u.toString(); }
   if (liBtn) { liBtn.href = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`; }
 
-  // Show correct copy label based on lang
+  // ── COPY LABEL BILINGUAL SYNC ────────────────────────────────────────────
   const updateCopyLabel = () => {
-    const currentLang = document.documentElement.getAttribute('data-lang') || 'en';
-    if (copyLabelEn) copyLabelEn.style.display = currentLang === 'ar' ? 'none' : '';
-    if (copyLabelAr) copyLabelAr.style.display = currentLang === 'ar' ? '' : 'none';
+    const lang = document.documentElement.getAttribute('data-lang') || 'en';
+    if (copyLabelEn) copyLabelEn.style.display = lang === 'ar' ? 'none' : '';
+    if (copyLabelAr) copyLabelAr.style.display = lang === 'ar' ? '' : 'none';
   };
   updateCopyLabel();
-
-  const observer = new MutationObserver(updateCopyLabel);
-  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-lang'] });
+  new MutationObserver(updateCopyLabel).observe(document.documentElement, {
+    attributes: true, attributeFilter: ['data-lang'],
+  });
 
   copyBtn?.addEventListener('click', async () => {
     try {
       await navigator.clipboard.writeText(url);
-      const currentLang = document.documentElement.getAttribute('data-lang') || 'en';
+      const lang = document.documentElement.getAttribute('data-lang') || 'en';
       copyBtn.classList.add('copied');
-      if (copyLabelEn) copyLabelEn.textContent = currentLang === 'ar' ? '' : '✓ Copied';
-      if (copyLabelAr) copyLabelAr.textContent = currentLang === 'ar' ? '✓ تم النسخ' : '';
+      if (copyLabelEn) copyLabelEn.textContent = lang === 'ar' ? '' : '✓ Copied';
+      if (copyLabelAr) copyLabelAr.textContent = lang === 'ar' ? '✓ تم النسخ' : '';
       setTimeout(() => {
         copyBtn.classList.remove('copied');
-        if (copyLabelEn) { copyLabelEn.textContent = 'Copy link'; updateCopyLabel(); }
-        if (copyLabelAr) { copyLabelAr.textContent = 'نسخ الرابط'; }
+        if (copyLabelEn) copyLabelEn.textContent = 'Copy link';
+        if (copyLabelAr) copyLabelAr.textContent = 'نسخ الرابط';
+        updateCopyLabel();
       }, 2200);
     } catch {}
   });
 
-  // ── GISCUS: DYNAMIC INJECTION + THEME + LANG SYNC ────────────
-  // We inject Giscus via JS so we can read the correct theme and
-  // language at runtime rather than hardcoding them as attributes.
+  // ── X SHARE: use Arabic title when lang is AR ────────────────────────────
+  // We embed both titles as data attributes on the button so JS can swap them.
+  const updateShareTitle = () => {
+    if (!xBtn) return;
+    const lang     = document.documentElement.getAttribute('data-lang') || 'en';
+    const titleEn  = xBtn.dataset.titleEn  || '';
+    const titleAr  = xBtn.dataset.titleAr  || '';
+    const activeTitle = lang === 'ar' && titleAr ? titleAr : titleEn;
+    const u = new URL(xBtn.href);
+    u.searchParams.set('text', activeTitle);
+    u.searchParams.set('url',  url);
+    xBtn.href = u.toString();
+  };
+  updateShareTitle();
+  new MutationObserver(updateShareTitle).observe(document.documentElement, {
+    attributes: true, attributeFilter: ['data-lang'],
+  });
 
-  // Map site theme → Giscus built-in theme name
-  // We use a custom transparent theme so Giscus inherits our CSS variables
+  // ── GISCUS: DYNAMIC INJECTION + THEME + LANG SYNC ────────────────────────
   const getGiscusTheme = (): string => {
     const t = document.documentElement.getAttribute('data-theme') ?? 'dark';
-    // 'dark'  → dark_dimmed (closest to our #0c0c0c bg)
-    // 'light' → light       (clean white, closest to our warm paper)
     return t === 'light' ? 'light' : 'dark_dimmed';
   };
-
   const getGiscusLang = (): string => {
     const l = document.documentElement.getAttribute('data-lang') ?? 'en';
     return l === 'ar' ? 'ar' : 'en';
   };
 
-  // Inject the Giscus script once on load
   const injectGiscus = () => {
     const wrap = document.getElementById('giscus-wrap');
     if (!wrap) return;
-
     const script = document.createElement('script');
     script.src = 'https://giscus.app/client.js';
-    script.setAttribute('data-repo',            'dev-khaine/m-comments');
-    script.setAttribute('data-repo-id',         'R_kgDORXPjlA');
-    script.setAttribute('data-category',        'Announcements');
-    script.setAttribute('data-category-id',     'DIC_kwDORXPjlM4C3E8w');
-    script.setAttribute('data-mapping',         'pathname');
-    script.setAttribute('data-strict',          '0');
+    script.setAttribute('data-repo',             'dev-khaine/m-comments');
+    script.setAttribute('data-repo-id',          'R_kgDORXPjlA');
+    script.setAttribute('data-category',         'Announcements');
+    script.setAttribute('data-category-id',      'DIC_kwDORXPjlM4C3E8w');
+    script.setAttribute('data-mapping',          'pathname');
+    script.setAttribute('data-strict',           '0');
     script.setAttribute('data-reactions-enabled','1');
-    script.setAttribute('data-emit-metadata',   '0');
-    script.setAttribute('data-input-position',  'bottom');
-    script.setAttribute('data-theme',           getGiscusTheme()); // ← dynamic
-    script.setAttribute('data-lang',            getGiscusLang());  // ← dynamic
-    script.setAttribute('crossorigin',          'anonymous');
+    script.setAttribute('data-emit-metadata',    '0');
+    script.setAttribute('data-input-position',   'bottom');
+    script.setAttribute('data-theme',            getGiscusTheme());
+    script.setAttribute('data-lang',             getGiscusLang());
+    script.setAttribute('crossorigin',           'anonymous');
     script.async = true;
     wrap.appendChild(script);
   };
-
   injectGiscus();
 
-  // Send a postMessage to the loaded Giscus iframe to update config
   const sendGiscusMessage = (config: Record<string, unknown>) => {
     const iframe = document.querySelector<HTMLIFrameElement>('iframe.giscus-frame');
     iframe?.contentWindow?.postMessage({ giscus: { setConfig: config } }, 'https://giscus.app');
   };
 
-  // Sync theme when user toggles dark/light
-  const themeObserver = new MutationObserver(() => {
-    sendGiscusMessage({ theme: getGiscusTheme() });
-  });
-  themeObserver.observe(document.documentElement, {
-    attributes: true, attributeFilter: ['data-theme']
-  });
+  new MutationObserver(() => sendGiscusMessage({ theme: getGiscusTheme() }))
+    .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
-  // Sync language when user toggles EN/AR
-  const langObserver = new MutationObserver(() => {
-    sendGiscusMessage({ lang: getGiscusLang() });
-  });
-  langObserver.observe(document.documentElement, {
-    attributes: true, attributeFilter: ['data-lang']
-  });
+  new MutationObserver(() => sendGiscusMessage({ lang: getGiscusLang() }))
+    .observe(document.documentElement, { attributes: true, attributeFilter: ['data-lang'] });
 
-  // Once Giscus iframe fires its ready message, do an immediate sync
-  // (handles the case where theme/lang changed before iframe finished loading)
   window.addEventListener('message', (e: MessageEvent) => {
     if (e.origin !== 'https://giscus.app') return;
     if (e.data?.giscus?.discussion !== undefined) {
