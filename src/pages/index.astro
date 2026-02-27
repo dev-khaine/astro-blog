@@ -13,6 +13,10 @@ const allPosts = (await getCollection('blog').then(posts => posts.filter(p => p.
 const [hero, ...rest] = allPosts;
 const secondary = rest.slice(0, 2);
 const latest = rest.slice(2, 7);
+
+// Helper: render a bilingual text node — if _ar exists, output both spans;
+// otherwise output the EN string directly. Used via Astro's set:html isn't
+// needed here since we output JSX-style elements inline.
 ---
 
 <!doctype html>
@@ -24,8 +28,9 @@ const latest = rest.slice(2, 7);
     <Header />
     <main id="main-content">
 
-      <!-- Hero section -->
+      <!-- ── HERO SECTION ── -->
       <section class="hero-section" aria-labelledby="hero-heading">
+
         <!-- Masthead -->
         <div class="masthead anim-up">
           <div class="masthead-side">
@@ -36,7 +41,7 @@ const latest = rest.slice(2, 7);
           </div>
           <h1 id="hero-heading" class="masthead-title">
             <span class="en-text">{SITE_TITLE}</span>
-            <span class="ar-text">كابيتال</span>
+            <span class="ar-text">كوينرا</span>
           </h1>
           <div class="masthead-side masthead-side--right">
             <span class="label masthead-date">
@@ -47,7 +52,7 @@ const latest = rest.slice(2, 7);
 
         <p class="hero-tagline anim-up anim-up-1">
           <span class="en-text">{SITE_DESCRIPTION}</span>
-          <span class="ar-text">تحليل دقيق للأسواق والمال والقوى التي تشكّل الاقتصاد العالمي.</span>
+          <span class="ar-text">فهم المال والاقتصاد والتكنولوجيا في العصر الرقمي الحديث.</span>
         </p>
 
         <!-- Hero post -->
@@ -66,8 +71,27 @@ const latest = rest.slice(2, 7);
                     {hero.data.tags.slice(0, 2).map((t: string) => <span class="tag">{t}</span>)}
                   </div>
                 )}
-                <h2 class="hero-post-title">{hero.data.title}</h2>
-                <p class="hero-post-desc">{hero.data.description}</p>
+
+                <!-- Bilingual title -->
+                <h2 class="hero-post-title">
+                  {hero.data.title_ar ? (
+                    <>
+                      <span class="en-text">{hero.data.title}</span>
+                      <span class="ar-text">{hero.data.title_ar}</span>
+                    </>
+                  ) : hero.data.title}
+                </h2>
+
+                <!-- Bilingual description -->
+                <p class="hero-post-desc">
+                  {hero.data.description_ar ? (
+                    <>
+                      <span class="en-text">{hero.data.description}</span>
+                      <span class="ar-text">{hero.data.description_ar}</span>
+                    </>
+                  ) : hero.data.description}
+                </p>
+
                 <p class="hero-meta">
                   <span class="label">{AUTHOR_NAME}</span>
                   <span class="meta-sep">—</span>
@@ -89,7 +113,17 @@ const latest = rest.slice(2, 7);
                     )}
                     <div class="sec-body">
                       {post.data.tags && <span class="tag">{post.data.tags[0]}</span>}
-                      <h3 class="sec-title">{post.data.title}</h3>
+
+                      <!-- Bilingual title -->
+                      <h3 class="sec-title">
+                        {post.data.title_ar ? (
+                          <>
+                            <span class="en-text">{post.data.title}</span>
+                            <span class="ar-text">{post.data.title_ar}</span>
+                          </>
+                        ) : post.data.title}
+                      </h3>
+
                       <p class="sec-meta">
                         <time datetime={post.data.pubDate.toISOString()}>
                           <FormattedDate date={post.data.pubDate} />
@@ -104,13 +138,13 @@ const latest = rest.slice(2, 7);
         )}
       </section>
 
-      <!-- Latest articles -->
+      <!-- ── LATEST ARTICLES ── -->
       {latest.length > 0 && (
         <section class="latest-section" aria-labelledby="latest-heading">
           <div class="section-head">
             <h2 class="section-title" id="latest-heading">
-              <span class="en-text">Latest Analysis</span>
-              <span class="ar-text">أحدث التحليلات</span>
+              <span class="en-text">Latest Articles</span>
+              <span class="ar-text">أحدث المقالات</span>
             </h2>
             <a href="/blog" class="btn btn-outline">
               <span class="en-text">View archive</span>
@@ -125,16 +159,35 @@ const latest = rest.slice(2, 7);
                   <span class="latest-num label">0{i + 1}</span>
                   <div class="latest-body">
                     <div class="latest-meta">
-                      {post.data.tags && post.data.tags.slice(0,1).map((t: string) => (
+                      {post.data.tags && post.data.tags.slice(0, 1).map((t: string) => (
                         <span class="tag">{t}</span>
                       ))}
                       <time class="latest-date" datetime={post.data.pubDate.toISOString()}>
                         <FormattedDate date={post.data.pubDate} />
                       </time>
                     </div>
-                    <h3 class="latest-title">{post.data.title}</h3>
-                    <p class="latest-desc">{post.data.description}</p>
+
+                    <!-- Bilingual title -->
+                    <h3 class="latest-title">
+                      {post.data.title_ar ? (
+                        <>
+                          <span class="en-text">{post.data.title}</span>
+                          <span class="ar-text">{post.data.title_ar}</span>
+                        </>
+                      ) : post.data.title}
+                    </h3>
+
+                    <!-- Bilingual description -->
+                    <p class="latest-desc">
+                      {post.data.description_ar ? (
+                        <>
+                          <span class="en-text">{post.data.description}</span>
+                          <span class="ar-text">{post.data.description_ar}</span>
+                        </>
+                      ) : post.data.description}
+                    </p>
                   </div>
+
                   {post.data.heroImage && (
                     <div class="latest-thumb">
                       <img src={post.data.heroImage} alt="" width={180} height={110} loading="lazy" decoding="async" />
@@ -203,6 +256,7 @@ const latest = rest.slice(2, 7);
   .hero-img-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 50%, rgba(12,12,12,0.8) 100%); }
   .hero-content { padding: var(--sp-md) var(--sp-lg) var(--sp-lg); }
   .hero-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.75rem; }
+
   .hero-post-title {
     font-family: var(--font-display); font-size: clamp(2rem, 3.5vw, 3.2rem);
     line-height: 0.95; letter-spacing: 0.02em; text-transform: uppercase;
@@ -210,8 +264,10 @@ const latest = rest.slice(2, 7);
   }
   [dir="rtl"] .hero-post-title { font-family: var(--font-arabic); font-weight: 700; text-transform: none; letter-spacing: 0; line-height: 1.3; }
   .hero-feature:hover .hero-post-title { color: var(--gold); }
+
   .hero-post-desc { font-family: var(--font-serif); font-size: var(--s-sm); color: var(--fg-muted); line-height: 1.65; margin-bottom: var(--sp-sm); font-style: italic; }
   [dir="rtl"] .hero-post-desc { font-family: var(--font-arabic); font-style: normal; line-height: 1.8; }
+
   .hero-meta { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: var(--s-2xs); color: var(--fg-subtle); letter-spacing: 0.08em; text-transform: uppercase; margin: 0; }
   [dir="rtl"] .hero-meta { font-family: var(--font-arabic); letter-spacing: 0; }
   .meta-sep { color: var(--gold-dim); }
@@ -223,9 +279,14 @@ const latest = rest.slice(2, 7);
   .sec-img img { width: 100%; height: 100%; object-fit: cover; border-radius: 0; transition: transform var(--t3) var(--ease); }
   .secondary-post:hover .sec-img img { transform: scale(1.04); }
   .sec-body { padding: var(--sp-sm) var(--sp-md); }
-  .sec-title { font-family: var(--font-display); font-size: var(--s-2xl); line-height: 0.95; text-transform: uppercase; color: var(--fg); margin-block: 0.4rem; transition: color var(--t1); }
+
+  .sec-title {
+    font-family: var(--font-display); font-size: var(--s-2xl); line-height: 0.95;
+    text-transform: uppercase; color: var(--fg); margin-block: 0.4rem; transition: color var(--t1);
+  }
   [dir="rtl"] .sec-title { font-family: var(--font-arabic); font-weight: 700; text-transform: none; letter-spacing: 0; line-height: 1.3; }
   .secondary-post:hover .sec-title { color: var(--gold); }
+
   .sec-meta { font-family: var(--font-mono); font-size: var(--s-2xs); color: var(--fg-subtle); letter-spacing: 0.06em; text-transform: uppercase; margin: 0; }
   [dir="rtl"] .sec-meta { font-family: var(--font-arabic); letter-spacing: 0; }
 
@@ -239,19 +300,32 @@ const latest = rest.slice(2, 7);
   .latest-row { border-bottom: 1px solid var(--border); }
   .latest-row-link { display: grid; grid-template-columns: 60px 1fr auto 24px; gap: var(--sp-md); align-items: center; padding: var(--sp-md) 0; text-decoration: none; color: inherit; border-radius: var(--r-sm); transition: background var(--t1); }
   .latest-row-link:hover { background: var(--bg-raised); padding-inline: var(--sp-sm); margin-inline: calc(-1 * var(--sp-sm)); }
+
   .latest-num { font-family: var(--font-display); font-size: var(--s-3xl); color: var(--border-hi); line-height: 1; text-align: center; letter-spacing: 0.05em; transition: color var(--t1); }
   [dir="rtl"] .latest-num { font-family: var(--font-arabic); font-weight: 700; font-size: var(--s-2xl); letter-spacing: 0; }
   .latest-row-link:hover .latest-num { color: var(--gold-dim); }
+
   .latest-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.3rem; }
   .latest-date { font-family: var(--font-mono); font-size: var(--s-2xs); color: var(--fg-subtle); letter-spacing: 0.06em; text-transform: uppercase; }
   [dir="rtl"] .latest-date { font-family: var(--font-arabic); letter-spacing: 0; }
-  .latest-title { font-family: var(--font-display); font-size: var(--s-2xl); line-height: 0.95; text-transform: uppercase; color: var(--fg); margin-bottom: 0.3rem; transition: color var(--t1); }
+
+  .latest-title {
+    font-family: var(--font-display); font-size: var(--s-2xl); line-height: 0.95;
+    text-transform: uppercase; color: var(--fg); margin-bottom: 0.3rem; transition: color var(--t1);
+  }
   [dir="rtl"] .latest-title { font-family: var(--font-arabic); font-weight: 700; text-transform: none; letter-spacing: 0; line-height: 1.3; }
   .latest-row-link:hover .latest-title { color: var(--gold); }
-  .latest-desc { font-family: var(--font-sans); font-size: var(--s-sm); font-weight: 300; color: var(--fg-muted); line-height: 1.55; margin: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+  .latest-desc {
+    font-family: var(--font-sans); font-size: var(--s-sm); font-weight: 300;
+    color: var(--fg-muted); line-height: 1.55; margin: 0;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
   [dir="rtl"] .latest-desc { font-family: var(--font-arabic); font-weight: 400; line-height: 1.7; }
+
   .latest-thumb { width: 120px; aspect-ratio: 16/10; border-radius: var(--r-sm); overflow: hidden; border: 1px solid var(--border); flex-shrink: 0; }
   .latest-thumb img { width: 100%; height: 100%; object-fit: cover; border-radius: 0; display: block; }
+
   .latest-arrow { font-family: var(--font-mono); color: var(--fg-subtle); transition: color var(--t1), transform var(--t1); font-size: 1.1rem; }
   .latest-row-link:hover .latest-arrow { color: var(--gold); }
   [dir="ltr"] .latest-row-link:hover .latest-arrow { transform: translateX(3px); }
