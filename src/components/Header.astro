@@ -68,11 +68,10 @@ import { SITE_TITLE } from '../consts';
 
       <!-- Logo -->
       <a href="/" class="logo" aria-label={`${SITE_TITLE} — Home`}>
-        <span class="logo-text">
-          <span class="en-text">{SITE_TITLE}</span>
-          <span class="ar-text">كوينرا</span>
-        </span>
-        <span class="logo-rule" aria-hidden="true"></span>
+        <svg class="logo-svg" width="320" height="320" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M253.889 51.6667C253.889 56.5759 257.869 60.5556 262.778 60.5556H311.111C316.02 60.5556 320 64.5353 320 69.4444V162.222C320 164.419 319.186 166.538 317.716 168.171L183.622 317.06C181.937 318.931 179.536 320 177.017 320H47.7778C21.3908 320 0 298.609 0 272.222V47.7778C4.582e-06 21.3908 21.3908 0 47.7778 0H245C249.909 0 253.889 3.97969 253.889 8.88889V51.6667ZM320 311.111C320 316.02 316.02 320 311.111 320H262.778C257.869 320 253.889 316.02 253.889 311.111V268.333C253.889 263.424 257.869 259.444 262.778 259.444H311.111C316.02 259.444 320 263.424 320 268.333V311.111ZM100.771 75.5556C86.8451 75.5556 75.5556 86.8451 75.5556 100.771V219.229C75.5556 233.155 86.8451 244.444 100.771 244.444H219.229C233.155 244.444 244.444 233.155 244.444 219.229V100.771C244.444 86.8451 233.155 75.5556 219.229 75.5556H100.771ZM192.778 181.111C192.778 186.02 188.798 190 183.889 190H135.556C130.646 190 126.667 186.02 126.667 181.111V138.333C126.667 133.424 130.646 129.444 135.556 129.444H183.889C188.798 129.444 192.778 133.424 192.778 138.333V181.111Z" fill="currentColor"/>
+        </svg>
+        <span class="logo-wordmark">{SITE_TITLE}</span>
       </a>
 
       <!-- Right cluster: search · theme · lang · divider · menu -->
@@ -246,19 +245,26 @@ import { SITE_TITLE } from '../consts';
   }
 
   /* Logo */
-  .logo { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; text-decoration: none; flex-shrink: 0; }
-  .logo-text {
-    font-family: var(--font-display); font-size: 1.85rem;
+  .logo {
+    display: flex; flex-direction: row; align-items: center;
+    gap: 0.55rem; text-decoration: none; flex-shrink: 0;
+  }
+  .logo-svg {
+    width: 28px; height: 28px; flex-shrink: 0;
+    color: var(--fg);
+    transition: color 0.11s ease;
+  }
+  .logo:hover .logo-svg { color: var(--gold); }
+  .logo-wordmark {
+    font-family: var(--font-display); font-size: 1.65rem;
     line-height: 1; letter-spacing: 0.12em; text-transform: uppercase;
     color: var(--fg); transition: color 0.11s ease;
   }
-  [dir="rtl"] .logo-text {
+  [dir="rtl"] .logo-wordmark {
     font-family: var(--font-arabic); font-weight: 700;
-    letter-spacing: 0; text-transform: none; font-size: 1.6rem;
+    letter-spacing: 0; text-transform: none; font-size: 1.5rem;
   }
-  .logo:hover .logo-text { color: var(--gold); }
-  .logo-rule { height: 2px; width: 0; background: var(--gold); border-radius: 99px; transition: width 0.25s ease; }
-  .logo:hover .logo-rule { width: 100%; }
+  .logo:hover .logo-wordmark { color: var(--gold); }
 
   .nav-right { display: flex; align-items: center; gap: 0.2rem; margin-inline-start: auto; }
 
@@ -352,8 +358,9 @@ import { SITE_TITLE } from '../consts';
 
   @media (max-width: 720px) {
     .ticker-strip { display: none; }
-    .logo-text { font-size: 1.5rem; }
-    [dir="rtl"] .logo-text { font-size: 1.3rem; }
+    .logo-svg { width: 22px; height: 22px; }
+    .logo-wordmark { font-size: 1.35rem; }
+    [dir="rtl"] .logo-wordmark { font-size: 1.2rem; }
   }
   @media (prefers-reduced-motion: reduce) {
     .ticker-track { animation: none; }

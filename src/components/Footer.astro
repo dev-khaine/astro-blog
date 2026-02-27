@@ -9,7 +9,7 @@ const year = new Date().getFullYear();
     <div class="nl-left">
       <p class="label nl-label">
         <span class="en-text">The Qoinra Brief</span>
-        <span class="ar-text">نشرة كوينرا</span>
+        <span class="ar-text">نشرة Qoinra</span>
       </p>
       <h2 id="newsletter-heading" class="nl-heading">
         <span class="en-text">The digital economy<br/>moves fast. <span class="nl-gold">Stay ahead.</span></span>
@@ -51,9 +51,11 @@ const year = new Date().getFullYear();
   <div class="footer-inner">
     <!-- Brand col -->
     <div class="footer-brand">
-      <a href="/" class="f-logo">
-        <span class="en-text">{SITE_TITLE}</span>
-        <span class="ar-text">كوينرا</span>
+      <a href="/" class="f-logo" aria-label="Qoinra — Home">
+        <svg class="f-logo-svg" width="320" height="320" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M253.889 51.6667C253.889 56.5759 257.869 60.5556 262.778 60.5556H311.111C316.02 60.5556 320 64.5353 320 69.4444V162.222C320 164.419 319.186 166.538 317.716 168.171L183.622 317.06C181.937 318.931 179.536 320 177.017 320H47.7778C21.3908 320 0 298.609 0 272.222V47.7778C4.582e-06 21.3908 21.3908 0 47.7778 0H245C249.909 0 253.889 3.97969 253.889 8.88889V51.6667ZM320 311.111C320 316.02 316.02 320 311.111 320H262.778C257.869 320 253.889 316.02 253.889 311.111V268.333C253.889 263.424 257.869 259.444 262.778 259.444H311.111C316.02 259.444 320 263.424 320 268.333V311.111ZM100.771 75.5556C86.8451 75.5556 75.5556 86.8451 75.5556 100.771V219.229C75.5556 233.155 86.8451 244.444 100.771 244.444H219.229C233.155 244.444 244.444 233.155 244.444 219.229V100.771C244.444 86.8451 233.155 75.5556 219.229 75.5556H100.771ZM192.778 181.111C192.778 186.02 188.798 190 183.889 190H135.556C130.646 190 126.667 186.02 126.667 181.111V138.333C126.667 133.424 130.646 129.444 135.556 129.444H183.889C188.798 129.444 192.778 133.424 192.778 138.333V181.111Z" fill="currentColor"/>
+        </svg>
+        <span class="f-logo-word">{SITE_TITLE}</span>
       </a>
       <p class="f-desc">
         <span class="en-text">Understanding finance, economics, and technology in the modern digital world.</span>
@@ -123,7 +125,7 @@ const year = new Date().getFullYear();
           <span class="ar-text">إخلاء المسؤولية:</span>
         </strong>
         <span class="en-text">{SITE_TITLE} is for informational and educational purposes only. Nothing on this site constitutes financial, investment, legal, or tax advice. Past performance is not indicative of future results. Always do your own research.</span>
-        <span class="ar-text">كوينرا للأغراض الإعلامية والتعليمية فقط. لا يُعدّ أي شيء في هذا الموقع نصيحة مالية أو استثمارية أو قانونية أو ضريبية. الأداء السابق لا يدل على النتائج المستقبلية. قم دائمًا بإجراء بحثك الخاص.</span>
+        <span class="ar-text">Qoinra للأغراض الإعلامية والتعليمية فقط. لا يُعدّ أي شيء في هذا الموقع نصيحة مالية أو استثمارية أو قانونية أو ضريبية. الأداء السابق لا يدل على النتائج المستقبلية. قم دائمًا بإجراء بحثك الخاص.</span>
       </p>
     </div>
   </div>
@@ -134,7 +136,7 @@ const year = new Date().getFullYear();
       <p>
         &copy; {year}
         <span class="en-text">{SITE_TITLE}. All rights reserved.</span>
-        <span class="ar-text">كوينرا. جميع الحقوق محفوظة.</span>
+        <span class="ar-text">Qoinra. جميع الحقوق محفوظة.</span>
       </p>
       <p>
         <span class="en-text">Built with</span>
@@ -213,16 +215,25 @@ const year = new Date().getFullYear();
     padding-block: var(--sp-xl);
   }
   .f-logo {
-    font-family: var(--font-display); font-size: 2.2rem;
-    letter-spacing: 0.08em; text-transform: uppercase;
-    color: var(--fg); text-decoration: none; display: block;
+    display: flex; align-items: center; gap: 0.6rem;
+    text-decoration: none; color: var(--fg);
     margin-bottom: 0.75rem; transition: color var(--t1);
   }
-  [dir="rtl"] .f-logo {
-    font-family: var(--font-arabic); font-weight: 700;
-    letter-spacing: 0; text-transform: none; font-size: 1.8rem;
-  }
   .f-logo:hover { color: var(--gold); }
+  .f-logo-svg {
+    width: 32px; height: 32px; flex-shrink: 0;
+    color: var(--fg); transition: color var(--t1);
+  }
+  .f-logo:hover .f-logo-svg { color: var(--gold); }
+  .f-logo-word {
+    font-family: var(--font-display); font-size: 2rem;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    line-height: 1; transition: color var(--t1);
+  }
+  [dir="rtl"] .f-logo-word {
+    font-family: var(--font-arabic); font-weight: 700;
+    letter-spacing: 0; text-transform: none; font-size: 1.7rem;
+  }
   .f-desc {
     font-family: var(--font-sans); font-size: var(--s-xs); font-weight: 300;
     color: var(--fg-muted); line-height: 1.65; max-width: 340px; margin-bottom: var(--sp-md);
